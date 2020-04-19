@@ -64,7 +64,7 @@ SetsCAP3BenchT1 = [
 ]
 ProgCAP3BenchT1 = Progression(
     type = PeriodProgression(),
-    name = "CAP 3 Bench T1",
+    name = "nSuns CAP 3 Bench T1",
     sessions = 2,
     period = 3,
     setScheme = SetsCAP3BenchT1,
@@ -126,28 +126,20 @@ SetsCAP3BenchT2 = [
 ]
 ProgCAP3BenchT2 = Progression(
     type = PeriodProgression(),
-    name = "CAP 3 Bench T2",
+    name = "nSuns CAP 3 Bench T2",
     sessions = 2,
     period = 3,
     setScheme = SetsCAP3BenchT2,
 )
 
 Programmes = Dict{Integer, Programme}()
-push!(Programmes,
-        1 => Programme(
-            "NSuns CAP3",
-            [BenchT1, BenchT2],
-            [ProgCAP3BenchT1, ProgCAP3BenchT2],
-        )
-    )
+push!(
+    Programmes,
+    1 => Programme(
+        "nSuns CAP3",
+        [BenchT1, BenchT2],
+        [ProgCAP3BenchT1, ProgCAP3BenchT2],
+    ),
+)
 
-# Programme()
-# function display(programme::Programme)
-# end
-
-# for i in eachindex(cap3.progression[2].setScheme)
-#     for name in fieldnames(SetScheme)
-#         # println(name)
-#         println(i, '\t', name, '\t', getfield(cap3.progression[2].setScheme[i], name))
-#     end
-# end
+display(Programmes[1])
