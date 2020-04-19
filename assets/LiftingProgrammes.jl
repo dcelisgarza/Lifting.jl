@@ -346,3 +346,23 @@ push!(
 )
 
 display(Programmes[1])
+
+Day1 = [(
+    ProgCAP3BenchT1.name,
+    [
+        Tuple(ProgCAP3BenchT1.setScheme[1].type),
+        Tuple(ProgCAP3BenchT1.setScheme[1].sets),
+        Tuple(ProgCAP3BenchT1.setScheme[1].reps),
+        Tuple(ProgCAP3BenchT1.setScheme[1].setWeight),
+        Tuple(ProgCAP3BenchT1.setScheme[1].rpe),
+    ],
+),(
+    ProgCAP3BenchT2.name,
+    [
+        Tuple(ProgCAP3BenchT2.setScheme[1].type),
+        Tuple(ProgCAP3BenchT2.setScheme[1].sets),
+        Tuple(ProgCAP3BenchT2.setScheme[1].reps),
+        Tuple(ProgCAP3BenchT2.setScheme[1].setWeight),
+        Tuple(ProgCAP3BenchT2.setScheme[1].rpe),
+    ],
+)]
