@@ -1,6 +1,7 @@
 using Lifting, Revise
 include("LiftingDictionaries.jl")
 
+###
 # Bench 1
 BenchT1 = Exercise(
     name = bench[1],
@@ -132,13 +133,215 @@ ProgCAP3BenchT2 = Progression(
     setScheme = SetsCAP3BenchT2,
 )
 
+###
+# Deadlift T1
+DeadliftT1 = Exercise(
+    name = deadlift[1],
+    equipment = equipment[1],
+    modality = modality[1],
+    muscles = [
+        muscles[11],
+        muscles[10],
+        muscles[9],
+        muscles[5],
+        muscles[4],
+        muscles[7],
+    ],
+    trainingMax = 160,
+)
+SetsCAP3DeadliftT1 = [
+    # Week 1
+    SetScheme(
+        type = [setType[5], setType[5], setType[5]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 2],
+        intensity = [0.795, 0.835, 0.885],
+        roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType[1], setType[1], setType[2]],
+        sets = [4, 2, 1],
+        reps = [4, 4, 4],
+        intensity = [0.74, 0.75, 0.75],
+        addWeight = [2.5, 5, 10],
+        roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType[1], setType[1], setType[2]],
+        sets = [4, 3, 1],
+        reps = [3, 3, 3],
+        intensity = [0.77, 0.77, 0.77],
+        addWeight = [5, 7.5, 12.5],
+        roundMode = [floor, ceil, ceil],
+    ),
+]
+ProgCAP3DeadliftT1 = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Deadlift T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3DeadliftT1,
+)
+
+# Deadlift T2
+DeadliftT2 = Exercise(
+    name = deadlift[2],
+    equipment = equipment[1],
+    modality = modality[1],
+    muscles = [
+        muscles[9],
+        muscles[10],
+        muscles[11],
+        muscles[5],
+        muscles[4],
+        muscles[7],
+    ],
+    trainingMax = 140,
+)
+SetsCAP3DeadliftT2 = [
+    # Week 1
+    SetScheme(
+        type = [setType[1], setType[1], setType[6]],
+        sets = [4, 4, 1],
+        reps = [5, 4, 4],
+        intensity = [0.73, 0.74, 0.755],
+        addWeight = [0, 2.5, 5],
+        roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType[1], setType[1], setType[6]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [0.62, 0.625, 0.65],
+        addWeight = [0, 2.5, 5],
+        roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType[1], setType[1], setType[2]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [0.68, 0.68, 0.7],
+        addWeight = [0, 2.5, 5],
+        roundMode = [floor, ceil, ceil],
+    ),
+]
+ProgCAP3DeadliftT2 = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Deadlift T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3DeadliftT2,
+)
+
+###
+# Squat T1
+SquatT1 = Exercise(
+    name = squat[2],
+    equipment = equipment[1],
+    modality = modality[1],
+    muscles = [muscles[9], muscles[10], muscles[5], muscles[8]],
+    trainingMax = 112.5,
+)
+SetsCAP3SquatT1 = [
+    # Week 1
+    SetScheme(
+        type = [setType[1], setType[1], setType[6], setType[1]],
+        sets = [4, 2, 1, 1],
+        reps = [3, 3, 3, 3],
+        intensity = [0.77, 0.77, 0.77, 0.77],
+        addWeight = [2.5, 7.5, 7.5, 12.5],
+        roundMode = [floor, ceil, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType[5], setType[5], setType[5]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 2],
+        intensity = [0.795, 0.835, 0.885],
+        roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType[1], setType[1], setType[2]],
+        sets = [3, 3, 1],
+        reps = [4, 4, 4],
+        intensity = [0.735, 0.74, 0.755],
+        addWeight = [5, 7.5, 10],
+        roundMode = [floor, ceil, ceil],
+    ),
+]
+ProgCAP3SquatT1 = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Squat T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3SquatT1,
+)
+
+# Squat T2
+SquatT2 = Exercise(
+    name = squat[3],
+    equipment = equipment[1],
+    modality = modality[1],
+    muscles = [muscles[9], muscles[10], muscles[8]],
+    trainingMax = 77.5,
+)
+SetsCAP3SquatT2 = [
+    # Week 1
+    SetScheme(
+        type = [setType[1], setType[1], setType[6]],
+        sets = [4, 4, 1],
+        reps = [5, 4, 4],
+        intensity = [0.73, 0.74, 0.755],
+        addWeight = [0, 0, 5],
+        roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType[1], setType[1], setType[2]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [0.62, 0.625, 0.65],
+        addWeight = [0, 2.5, 5],
+        roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType[1], setType[1], setType[2]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [0.68, 0.68, 0.7],
+        addWeight = [0, 2.5, 5],
+        roundMode = [floor, ceil, ceil],
+    ),
+]
+ProgCAP3SquatT2 = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Squat T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3SquatT2,
+)
+
+###
 Programmes = Dict{Integer, Programme}()
 push!(
     Programmes,
     1 => Programme(
         "nSuns CAP3",
-        [BenchT1, BenchT2],
-        [ProgCAP3BenchT1, ProgCAP3BenchT2],
+        [BenchT1, BenchT2, DeadliftT2, SquatT1, DeadliftT1, SquatT2],
+        [
+            ProgCAP3BenchT1,
+            ProgCAP3BenchT2,
+            ProgCAP3DeadliftT2,
+            ProgCAP3SquatT1,
+            ProgCAP3DeadliftT1,
+            ProgCAP3SquatT2,
+        ],
     ),
 )
 

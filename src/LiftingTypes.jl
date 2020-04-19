@@ -14,6 +14,10 @@ function intensity(reps::Integer, rpe::Real = 10)
     return 1 / (0.995 + reps / (3 * rpe))
 end
 
+function RPE(reps::Integer, intensity::Real)
+    return reps / (3 * (1 / intensity - 0.995))
+end
+
 function intensityArb(var::Integer)
     return 1 / (0.995 + (0.0333 * var))
 end
@@ -46,6 +50,7 @@ struct SetScheme{
     sets::T2
     reps::T2
     intensity::T3
+    rpe::T3
     addWeight::T3
     roundMode::T4
     setWeight::T3
@@ -71,7 +76,13 @@ struct SetScheme{
                 length(addWeight) ==
                 length(roundMode) "lengths of sets $(length(sets)), reps $(length(reps)), intensity $(length(intensity)), addWeight $(length(addWeight)) and roundMode $(length(roundMode)) must be equal."
 
-        rpeMode ? intensity = intensity.(reps, intensity) : nothing
+        rpe = zeros(length(intensity))
+        if rpeMode
+            rpe = intensity
+            intensity = intensity.(reps, intensity)
+        else
+            rpe = RPE.(reps, intensity)
+        end
         setWeight = zeros(length(sets))
 
         new{typeof(type), typeof(sets), typeof(intensity), typeof(roundMode)}(
@@ -79,6 +90,7 @@ struct SetScheme{
             sets,
             reps,
             intensity,
+            rpe,
             convert.(eltype(intensity), addWeight),
             roundMode,
             setWeight,
@@ -243,8 +255,13 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
     addWeight = setScheme.addWeight
     roundMode = setScheme.roundMode
 
+    # Calculate wieghts.
     setScheme.setWeight .=
         round.(trainingMax * intensity + addWeight, roundBase, roundMode)
+
+    # Calculate target minimum RPE for a set.
+    intense = setScheme.setWeight / trainingMax
+    setScheme.rpe .= RPE.(reps, intense)
 
     return setScheme
 end
