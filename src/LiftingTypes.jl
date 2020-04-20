@@ -203,8 +203,8 @@ struct Exercise{
     function Exercise(;
         name::T1,
         equipment::T2,
-        modality::T3,
-        muscles::T4,
+        modality::T3 = "Default",
+        muscles::T4 = "NA",
         trainingMax::T6,
         size::T5 = "NA",
         roundBase::T7 = 2.5,
@@ -261,7 +261,7 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
 
     # Calculate target minimum RPE for a set.
     intense = setScheme.setWeight / trainingMax
-    setScheme.rpe .= RPE.(reps, intense)
+    setScheme.rpe .= round.(RPE.(reps, intense), digits = 2)
 
     return setScheme
 end
@@ -283,15 +283,18 @@ struct Programme{
     T1 <: AbstractString,
     T2 <: Union{<:Exercise, Vector{<:Exercise}},
     T3 <: Union{<:Progression, Vector{<:Progression}},
+    T4 <: Any,
 }
     name::T1
     exercise::T2
     progression::T3
+    days::T4
 
     function Programme(
         name::T1,
         exercise::T2,
         progression::T3,
+        days::Any,
     ) where {
         T1 <: AbstractString,
         T2 <: Union{<:Exercise, Vector{<:Exercise}},
@@ -303,10 +306,47 @@ struct Programme{
             calcWeights.(exercise[i], progression[i].setScheme)
         end
 
-        new{typeof(name), typeof(exercise), typeof(progression)}(
+        new{typeof(name), typeof(exercise), typeof(progression), typeof(days)}(
             name,
             exercise,
             progression,
+            days,
         )
     end
+end
+
+import Base: push!
+function push!(
+    A::AbstractArray{T, 1} where {T},
+    exercise::Exercise,
+    progression::Progression,
+    i::Integer,
+)
+    if exercise.modality == "Default"
+        push!(
+            A,
+            (
+                name = exercise.name,
+                type = Tuple(progression.setScheme[i].type),
+                sets = Tuple(progression.setScheme[i].sets),
+                reps = Tuple(progression.setScheme[i].reps),
+                setWeight = Tuple(progression.setScheme[i].setWeight),
+                rpe = Tuple(progression.setScheme[i].rpe),
+            ),
+        )
+    else
+        push!(
+            A,
+            (
+                name = exercise.name,
+                modality = exercise.modality,
+                type = Tuple(progression.setScheme[i].type),
+                sets = Tuple(progression.setScheme[i].sets),
+                reps = Tuple(progression.setScheme[i].reps),
+                setWeight = Tuple(progression.setScheme[i].setWeight),
+                rpe = Tuple(progression.setScheme[i].rpe),
+            ),
+        )
+    end
+
 end

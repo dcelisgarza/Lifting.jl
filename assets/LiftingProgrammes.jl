@@ -6,7 +6,6 @@ include("LiftingDictionaries.jl")
 BenchT1 = Exercise(
     name = bench[1],
     equipment = equipment[1],
-    modality = modality[1],
     muscles = [muscles[1], muscles[2], muscles[3]],
     trainingMax = 92.5,
 )
@@ -74,7 +73,6 @@ ProgCAP3BenchT1 = Progression(
 BenchT2 = Exercise(
     name = bench[4],
     equipment = equipment[1],
-    modality = modality[1],
     muscles = [muscles[1], muscles[2], muscles[3]],
     trainingMax = 75,
 )
@@ -138,7 +136,6 @@ ProgCAP3BenchT2 = Progression(
 DeadliftT1 = Exercise(
     name = deadlift[1],
     equipment = equipment[1],
-    modality = modality[1],
     muscles = [
         muscles[11],
         muscles[10],
@@ -189,7 +186,6 @@ ProgCAP3DeadliftT1 = Progression(
 DeadliftT2 = Exercise(
     name = deadlift[2],
     equipment = equipment[1],
-    modality = modality[1],
     muscles = [
         muscles[9],
         muscles[10],
@@ -242,7 +238,6 @@ ProgCAP3DeadliftT2 = Progression(
 SquatT1 = Exercise(
     name = squat[2],
     equipment = equipment[1],
-    modality = modality[1],
     muscles = [muscles[9], muscles[10], muscles[5], muscles[8]],
     trainingMax = 112.5,
 )
@@ -286,7 +281,6 @@ ProgCAP3SquatT1 = Progression(
 SquatT2 = Exercise(
     name = squat[3],
     equipment = equipment[1],
-    modality = modality[1],
     muscles = [muscles[9], muscles[10], muscles[8]],
     trainingMax = 77.5,
 )
@@ -328,6 +322,28 @@ ProgCAP3SquatT2 = Progression(
 )
 
 ###
+days = []
+# Day 1
+push!(days, BenchT1, ProgCAP3BenchT1, 1)
+push!(days, BenchT2, ProgCAP3BenchT2, 1)
+# Day 2
+push!(days, DeadliftT2, ProgCAP3DeadliftT2, 1)
+push!(days, DeadliftT2, ProgCAP3DeadliftT2, 1)
+# Day 3
+push!(days, SquatT1, ProgCAP3SquatT1, 1)
+push!(days, SquatT1, ProgCAP3SquatT1, 1)
+# Day 4
+push!(days, BenchT1, ProgCAP3BenchT1, 2)
+push!(days, BenchT2, ProgCAP3BenchT2, 2)
+# Day 5
+push!(days, "Rest")
+# Day 6
+push!(days, DeadliftT1, ProgCAP3DeadliftT1, 1)
+push!(days, DeadliftT1, ProgCAP3DeadliftT1, 1)
+# Day 7
+push!(days, SquatT2, ProgCAP3SquatT2, 1)
+push!(days, SquatT2, ProgCAP3SquatT2, 1)
+
 Programmes = Dict{Integer, Programme}()
 push!(
     Programmes,
@@ -342,27 +358,20 @@ push!(
             ProgCAP3DeadliftT1,
             ProgCAP3SquatT2,
         ],
+        [
+            days[1:2],
+            days[3:4],
+            days[5:6],
+            days[7:8],
+            days[9],
+            days[10:11],
+            days[12:13],
+        ],
     ),
 )
 
+Programmes[1]
 display(Programmes[1])
+# Programmes[1].days[1][1][4]
 
-Day1 = [(
-    ProgCAP3BenchT1.name,
-    [
-        Tuple(ProgCAP3BenchT1.setScheme[1].type),
-        Tuple(ProgCAP3BenchT1.setScheme[1].sets),
-        Tuple(ProgCAP3BenchT1.setScheme[1].reps),
-        Tuple(ProgCAP3BenchT1.setScheme[1].setWeight),
-        Tuple(ProgCAP3BenchT1.setScheme[1].rpe),
-    ],
-),(
-    ProgCAP3BenchT2.name,
-    [
-        Tuple(ProgCAP3BenchT2.setScheme[1].type),
-        Tuple(ProgCAP3BenchT2.setScheme[1].sets),
-        Tuple(ProgCAP3BenchT2.setScheme[1].reps),
-        Tuple(ProgCAP3BenchT2.setScheme[1].setWeight),
-        Tuple(ProgCAP3BenchT2.setScheme[1].rpe),
-    ],
-)]
+RPE(6, 0.65)
