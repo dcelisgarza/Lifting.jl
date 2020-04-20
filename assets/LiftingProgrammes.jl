@@ -372,11 +372,29 @@ push!(
     ),
 )
 
-
+calcRPE(5,55/72.5)
 showDays(programmes[1])
+# function intensity2(reps::Integer, rpe::Real = 10)
+#     return 1-1/(0.995 + 4.5*rpe/(reps + 10 - rpe) + 0.0025*(reps-1)/reps - 0.2*(reps-1)/rpe)
+#     # return 1/(0.995 + 0.0333*(reps + 10 - rpe))
+# end
 
-# for i in range(0, stop=10,step=0.5)
-#     println(i, ", ", intensity(2,i))
+function intensity2(reps::Integer, rpe::Real = 10)
+    return 1 / (
+        0.995 +
+        0.0333 * (reps + 10 - rpe) +
+        (reps - 1) * (0.0025 / reps + 0.1 / rpe)
+    )
+end
+
+calcIntensity(12,6)
+calcRPE(12,calcIntensity(12,6))
+calcReps(calcIntensity(12,6), 6)
+
+intensity2(12,6)
+
+# for i in range(10, stop=0,step=-0.5)
+#     println(i, ", ", intensity2(12,i))
 # end
 # length(programmes[1].days)
 # programmes[1]

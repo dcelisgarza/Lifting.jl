@@ -10,13 +10,43 @@ struct BlockProgression <: AbstractProgression end
 import Base: round, length, getindex, iterate, @_inline_meta
 round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
 
-function intensity(reps::Integer, rpe::Real = 10)
-    return 1/(0.995 + 0.0333*(reps + 10 - rpe))
+function calcIntensity(reps::Integer, rpe::Real = 10)
+    a = 0.995
+    b = 0.0333
+    c = 0.0025
+    d = 0.1
+    return 1 / (
+        a +
+        b * (reps + 10 - rpe) +
+        (reps - 1) * (c / reps + d / rpe)
+    )
 end
 
-function RPE(reps::Integer, intensity::Real)
-    return 0.995/0.0333 - 1/(0.0333*intensity) + reps + 10
+function calcRPE(reps::Integer, intensity::Real)
+    a = 0.995
+    b = 0.0333
+    c = 0.0025
+    d = 0.1
+
+    rpe = (sqrt((a*reps*intensity + b*reps^2*intensity + 10*b*reps*intensity + c*reps*intensity - c*intensity - reps)^2 + 4*b*reps*intensity*(d*reps^2*intensity - d*reps*intensity)) + a*reps*intensity + b*reps^2*intensity + 10*b*reps*intensity + c*reps*intensity - c*intensity - reps)/(2*b*reps*intensity)
+
+    return rpe
 end
+
+function calcReps(intensity::Real, rpe::Real)
+    a = 0.995
+    b = 0.0333
+    c = 0.0025
+    d = 0.1
+
+    reps = (sqrt((a*rpe*intensity - b*rpe^2*intensity + 10*b*rpe*intensity + c*rpe*intensity - d*intensity - rpe)^2 + 4*c*rpe*intensity*(b*rpe*intensity + d*intensity)) - a*rpe*intensity + b*rpe^2*intensity - 10*b*rpe*intensity - c*rpe*intensity + d*intensity + rpe)/(2*intensity*(b*rpe + d))
+
+    return Int(round(reps, digits=0))
+end
+
+# function calcRPE(reps::Integer, intensity::Real)
+#     return 0.995/0.0333 - 1/(0.0333*intensity) + reps + 10
+# end
 
 function intensityArb(var::Integer)
     return 1 / (0.995 + (0.0333 * var))
@@ -79,9 +109,9 @@ struct SetScheme{
         rpe = zeros(length(intensity))
         if rpeMode
             rpe = intensity
-            intensity = intensity.(reps, intensity)
+            intensity = calcIntensity.(reps, intensity)
         else
-            rpe = RPE.(reps, intensity)
+            rpe = calcRPE.(reps, intensity)
         end
         wght = zeros(length(sets))
 
@@ -261,7 +291,7 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
 
     # Calculate target minimum RPE for a set.
     intense = setScheme.wght / trainingMax
-    setScheme.rpe .= round.(RPE.(reps, intense), digits = 2)
+    setScheme.rpe .= round.(calcRPE.(reps, intense), digits = 2)
 
     return setScheme
 end
