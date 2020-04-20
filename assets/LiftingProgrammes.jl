@@ -69,6 +69,7 @@ ProgCAP3BenchT1 = Progression(
     period = 3,
     setScheme = SetsCAP3BenchT1,
 )
+calcWeights.(BenchT1, SetsCAP3BenchT1)
 # Bench 2
 BenchT2 = Exercise(
     name = bench[4],
@@ -130,7 +131,7 @@ ProgCAP3BenchT2 = Progression(
     period = 3,
     setScheme = SetsCAP3BenchT2,
 )
-
+calcWeights.(BenchT2, SetsCAP3BenchT2)
 ###
 # Deadlift T1
 DeadliftT1 = Exercise(
@@ -181,7 +182,7 @@ ProgCAP3DeadliftT1 = Progression(
     period = 3,
     setScheme = SetsCAP3DeadliftT1,
 )
-
+calcWeights.(DeadliftT1, SetsCAP3DeadliftT1)
 # Deadlift T2
 DeadliftT2 = Exercise(
     name = deadlift[2],
@@ -232,7 +233,7 @@ ProgCAP3DeadliftT2 = Progression(
     period = 3,
     setScheme = SetsCAP3DeadliftT2,
 )
-
+calcWeights.(DeadliftT2, SetsCAP3DeadliftT2)
 ###
 # Squat T1
 SquatT1 = Exercise(
@@ -276,7 +277,7 @@ ProgCAP3SquatT1 = Progression(
     period = 3,
     setScheme = SetsCAP3SquatT1,
 )
-
+calcWeights.(SquatT1, SetsCAP3SquatT1)
 # Squat T2
 SquatT2 = Exercise(
     name = squat[3],
@@ -320,7 +321,7 @@ ProgCAP3SquatT2 = Progression(
     period = 3,
     setScheme = SetsCAP3SquatT2,
 )
-
+calcWeights.(SquatT2, SetsCAP3SquatT2)
 ###
 days = []
 # Day 1
@@ -336,6 +337,7 @@ push!(days, SquatT1, ProgCAP3SquatT1, 1)
 push!(days, BenchT1, ProgCAP3BenchT1, 2)
 push!(days, BenchT2, ProgCAP3BenchT2, 2)
 # Day 5
+# push!(days, (name="Rest",))
 push!(days, "Rest")
 # Day 6
 push!(days, DeadliftT1, ProgCAP3DeadliftT1, 1)
@@ -344,9 +346,9 @@ push!(days, DeadliftT1, ProgCAP3DeadliftT1, 1)
 push!(days, SquatT2, ProgCAP3SquatT2, 1)
 push!(days, SquatT2, ProgCAP3SquatT2, 1)
 
-Programmes = Dict{Integer, Programme}()
+programmes = Dict{Integer, Programme}()
 push!(
-    Programmes,
+    programmes,
     1 => Programme(
         "nSuns CAP3",
         [BenchT1, BenchT2, DeadliftT2, SquatT1, DeadliftT1, SquatT2],
@@ -370,9 +372,22 @@ push!(
     ),
 )
 
-Programmes[1]
-display(Programmes[1])
-# Programmes[1].days[1][1][4]
 
-RPE(6, 0.65)
-SetsCAP3SquatT2[1]
+showDays(programmes[1])
+
+# for i in range(0, stop=10,step=0.5)
+#     println(i, ", ", intensity(2,i))
+# end
+# length(programmes[1].days)
+# programmes[1]
+# function intensity2(reps::Integer, rpe::Real = 10)
+#     den = (0.995 + 0.0333*(reps + 10 - rpe))
+#     # den = (0.995 + reps / (3 * rpe))
+#     # println(reps/(3*rpe-10))
+#     return 1 / den
+# end
+# # function intensity(reps::Integer, rpe::Real = 10)
+# #     return 1 / (0.995 + reps / (3 * rpe))
+# # end
+#
+# intensity2(1,11)

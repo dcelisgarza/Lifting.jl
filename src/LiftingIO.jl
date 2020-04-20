@@ -1,5 +1,47 @@
 import Base: display
 
+function showDays(programme::Programme)
+    days = programme.days
+    numDays = length(days)
+
+    println("="^80)
+    println("Programme: ", programme.name, "\n")
+    for i in 1:numDays
+        println("Day ", i)
+        if typeof(days[i]) == String
+            println("\t",days[i],"\n")
+            continue
+        end
+
+        numExercises = length(days[i])
+        for j in 1:numExercises
+            println("\tExercise ", j)
+            keyArr = keys(days[i][j])
+            for key in keyArr
+                print("\t\t",key, ": ")
+                vals = getfield(days[i][j], key)
+                if typeof(vals) == String
+                    println(vals)
+                else
+                    numVals = length(vals)
+                    for i in 1:numVals
+                        if typeof(vals[i]) == String
+                            print(vals[i][1:end])
+                            i < numVals ? print(", ") : nothing
+                        else
+                            print(vals[i])
+                            i < numVals ? print(", ") : nothing
+                        end
+                    end
+                    println("")
+                end
+            end
+            println("")
+        end
+        println("-"^80)
+    end
+end
+
 function display(programme::Programme)
     name = programme.name
     exercise = programme.exercise
@@ -26,7 +68,7 @@ function display(programme::Programme)
                 push!(lst, ["Type: "; setScheme[j].type])
                 push!(lst, ["Sets: "; setScheme[j].sets])
                 push!(lst, ["Reps: "; setScheme[j].reps])
-                push!(lst, ["Wght: "; setScheme[j].setWeight])
+                push!(lst, ["Wght: "; setScheme[j].wght])
                 push!(lst, ["RPE: "; round.(setScheme[j].rpe, digits=2)])
                 print("\t")
                 println("Session: $(j1).$(j2)")

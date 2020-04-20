@@ -11,11 +11,11 @@ import Base: round, length, getindex, iterate, @_inline_meta
 round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
 
 function intensity(reps::Integer, rpe::Real = 10)
-    return 1 / (0.995 + reps / (3 * rpe))
+    return 1/(0.995 + 0.0333*(reps + 10 - rpe))
 end
 
 function RPE(reps::Integer, intensity::Real)
-    return reps / (3 * (1 / intensity - 0.995))
+    return 0.995/0.0333 - 1/(0.0333*intensity) + reps + 10
 end
 
 function intensityArb(var::Integer)
@@ -36,7 +36,7 @@ struct SetScheme{
     intensity::T3
     addWeight::T3
     roundMode::T4
-    setWeight::T3
+    wght::T3
 end
 ```
 """
@@ -53,7 +53,7 @@ struct SetScheme{
     rpe::T3
     addWeight::T3
     roundMode::T4
-    setWeight::T3
+    wght::T3
 
     function SetScheme(;
         type::T1 = "Default",
@@ -83,7 +83,7 @@ struct SetScheme{
         else
             rpe = RPE.(reps, intensity)
         end
-        setWeight = zeros(length(sets))
+        wght = zeros(length(sets))
 
         new{typeof(type), typeof(sets), typeof(intensity), typeof(roundMode)}(
             type,
@@ -93,7 +93,7 @@ struct SetScheme{
             rpe,
             convert.(eltype(intensity), addWeight),
             roundMode,
-            setWeight,
+            wght,
         )
     end
 end
@@ -256,11 +256,11 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
     roundMode = setScheme.roundMode
 
     # Calculate wieghts.
-    setScheme.setWeight .=
+    setScheme.wght .=
         round.(trainingMax * intensity + addWeight, roundBase, roundMode)
 
     # Calculate target minimum RPE for a set.
-    intense = setScheme.setWeight / trainingMax
+    intense = setScheme.wght / trainingMax
     setScheme.rpe .= round.(RPE.(reps, intense), digits = 2)
 
     return setScheme
@@ -330,7 +330,7 @@ function push!(
                 type = Tuple(progression.setScheme[i].type),
                 sets = Tuple(progression.setScheme[i].sets),
                 reps = Tuple(progression.setScheme[i].reps),
-                setWeight = Tuple(progression.setScheme[i].setWeight),
+                wght = Tuple(progression.setScheme[i].wght),
                 rpe = Tuple(progression.setScheme[i].rpe),
             ),
         )
@@ -343,7 +343,7 @@ function push!(
                 type = Tuple(progression.setScheme[i].type),
                 sets = Tuple(progression.setScheme[i].sets),
                 reps = Tuple(progression.setScheme[i].reps),
-                setWeight = Tuple(progression.setScheme[i].setWeight),
+                wght = Tuple(progression.setScheme[i].wght),
                 rpe = Tuple(progression.setScheme[i].rpe),
             ),
         )

@@ -12,7 +12,7 @@
 
 It's a tool for creating and analysing lifting programmes.
 
-To create a minimal programme you must first create an exercise, set scheme, progression and training days which will be pushed to the programme.
+To create a minimal programme you must first create an exercise, set scheme, progression, calculate set weights, training days and then construct the programme.
 
 We start by creating an exercise. This is a bench press with chains, whose unrounded training max is 101.3 units, `trainingMax` will be rounded down to the nearest multiple of 2.5 that is less than 101.3.
 ```
@@ -50,6 +50,11 @@ ProgBench = Progression(
     period = 1,                 # Number of weeks before progression cycles again.
     setScheme = FiveByFive,     # Set scheme defined by the user. Its length must be equal to `sessions*period`.
 )
+```
+
+After this we calculate the set weights and RPEs before we make our training day.
+```
+calcWeights.(Bench, ProgBench.setScheme)
 ```
 
 The exercise and its progression are then pushed into an empty array representing a training day. Push other exercises or accessories you want to do this day the array. You can do this for multiple days or keep a single array and slice it appropriately later.
