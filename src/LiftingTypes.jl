@@ -41,10 +41,10 @@ end
 ```
 """
 struct SetScheme{
-    T1 <: Vector{<:AbstractString},
-    T2 <: Vector{<:Integer},
-    T3 <: Vector{<:Real},
-    T4 <: Vector{<:Function},
+    T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
+    T2 <: Union{<:Integer, Vector{<:Integer}},
+    T3 <: Union{<:Real, Vector{<:Real}},
+    T4 <: Union{<:Function, Vector{<:Function}},
 }
     type::T1
     sets::T2
@@ -56,18 +56,18 @@ struct SetScheme{
     setWeight::T3
 
     function SetScheme(;
-        type::T1,
-        sets::T2,
-        reps::T2,
-        intensity::T3,
+        type::T1 = "Default",
+        sets::T2 = 5,
+        reps::T2 = 5,
+        intensity::T3 = 0.75,
         addWeight::T4 = zeros(length(intensity)),
         roundMode::T5 = fill(floor, length(intensity)),
         rpeMode::Bool = false,
     ) where {
-        T1 <: Vector{<:AbstractString},
-        T2 <: Vector{<:Integer},
-        T3 <: Vector{<:Real},
-        T4 <: Vector{<:Real},
+        T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
+        T2 <: Union{<:Integer, Vector{<:Integer}},
+        T3 <: Union{<:Real, Vector{<:Real}},
+        T4 <: Union{<:Real, Vector{<:Real}},
         T5 <: Vector{<:Function},
     }
         @assert length(sets) ==
@@ -202,7 +202,7 @@ struct Exercise{
 
     function Exercise(;
         name::T1,
-        equipment::T2,
+        equipment::T2 = "Barbell",
         modality::T3 = "Default",
         muscles::T4 = "NA",
         trainingMax::T6,
@@ -320,7 +320,7 @@ function push!(
     A::AbstractArray{T, 1} where {T},
     exercise::Exercise,
     progression::Progression,
-    i::Integer,
+    i::Integer=1,
 )
     if exercise.modality == "Default"
         push!(

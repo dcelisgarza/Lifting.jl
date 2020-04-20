@@ -375,3 +375,4 @@ display(Programmes[1])
 # Programmes[1].days[1][1][4]
 
 RPE(6, 0.65)
+SetsCAP3SquatT2[1]
