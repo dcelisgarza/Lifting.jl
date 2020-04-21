@@ -10,6 +10,7 @@ function showDays(programme::Programme)
         println("Day ", i)
         if typeof(days[i]) == String
             println("\t",days[i],"\n")
+            println("-"^80)
             continue
         end
 

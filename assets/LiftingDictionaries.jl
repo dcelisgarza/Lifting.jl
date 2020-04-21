@@ -1,142 +1,213 @@
 modality = Dict(
-    1 => "Default",
-    2 => "Belt",
-    3 => "Tempo",
-    4 => "Paused",
-    5 => "Speed",
-    6 => "Deficit",
-    7 => "Chains",
-    8 => "Bands",
-    9 => "Reverse Bands",
-    10 => "Box/Block",
-    11 => "Pin",
-    12 => "Isometric",
-    13 => "Standing",
-    14 => "Seated",
+    "default" => "Default",
+    "belt" => "Belt",
+    "tempo" => "Tempo",
+    "paused" => "Paused",
+    "speed" => "Speed",
+    "deficit" => "Deficit",
+    "chains" => "Chains",
+    "bands" => "Bands",
+    "reverse bands" => "Reverse Bands",
+    "box" => "Box",
+    "block" => "Block",
+    "pin" => "Pin",
+    "iso" => "Isometric",
+    "standing" => "Standing",
+    "seated" => "Seated",
+    "unilateral" => "Unilateral",
+    "reverse grip" => "Reverse Grip",
+    "kneeling" => "Kneeling",
+    "side" => "Side",
+    "cheat" => "Cheat",
 )
 
 setType = Dict(
-    1 => "Default",
-    2 => "AMRAP",
-    3 => "EMOM",
-    4 => "AMRAP EMOM",
-    5 => "Test",
-    6 => "Optional",
+    "default" => "Default",
+    "amrap" => "AMRAP",
+    "emom" => "EMOM",
+    "amrap emom" => "AMRAP EMOM",
+    "test" => "Test",
+    "optional" => "Optional",
 )
 
 scale = Dict(
-    1 => "NA",
-    2 => "Tiny",
-    3 => "Small",
-    4 => "Medium",
-    5 => "Large",
-    6 => "Extra Large",
+    "na" => "NA",
+    "tiny" => "Tiny",
+    "s" => "Small",
+    "m" => "Medium",
+    "m" => "Large",
+    "xl" => "Extra Large",
 )
 
 equipment = Dict(
-    1 => "Barbell",
-    2 => "Dumbell",
-    3 => "Safety Squat Bar",
-    4 => "Trap Bar",
-    5 => "Fat Grips/Axle",
-    6 => "Deadlift Bar",
-    7 => "Squat Bar",
-    8 => "Stiff Bar",
-    9 => "Olympic Bar",
-    10 => "Swiss Bar",
-    11 => "Duffalo Bar",
-    12 => "SlingShot",
-    13 => "Cable Machine",
-    14 => "Other Machine",
+    "bb" => "Barbell",
+    "db" => "Dumbell",
+    "ssb" => "Safety Squat Bar",
+    "trap bar" => "Trap Bar",
+    "fat grips" => "Fat Grips",
+    "axle" => "Axle",
+    "dl bar" => "Deadlift Bar",
+    "squat bar" => "Squat Bar",
+    "stiff bar" => "Stiff Bar",
+    "oly bar" => "Olympic Bar",
+    "swiss bar" => "Swiss Bar",
+    "duffalo bar" => "Duffalo Bar",
+    "sling shot" => "SlingShot",
+    "cable" => "Cable Machine",
+    "other" => "Other Machine",
+    "t bar" => "T-bar",
+    "ez bar" => "EZ Bar",
 )
 
 muscles = Dict(
-    1 => "Chest",
-    2 => "Triceps",
-    3 => "Shoulders",
-    4 => "Traps",
-    5 => "Lats",
-    6 => "Biceps",
-    7 => "Forearms",
-    8 => "Core",
-    9 => "Quads",
-    10 => "Glutes",
-    11 => "Hamstrings",
-    12 => "Calves",
+    "pecs" => "Pecs",
+    "triceps" => "Triceps",
+    "front delts" => "Front Delts",
+    "side delts" => "Side Delts",
+    "rear delts" => "Rear Delts",
+    "rhomboids" => "Rhomboids",
+    "traps" => "Traps",
+    "lats" => "Lats",
+    "biceps" => "Biceps",
+    "wrist flexors" => "Wrist Flexors",
+    "wrist extensors" => "Wrist Extensors",
+    "finger flexors" => "Finger Flexors",
+    "finger extensors" => "Finger Extensors",
+    "core" => "Core",
+    "rectus abdominis" => "Rectus Abdominis",
+    "transverse abdominis" => "Transverse Abdominis",
+    "obliques" => "Obliques",
+    "quads" => "Quads",
+    "glute major" => "Glute Major",
+    "glute minor" => "Glute Minor",
+    "glutes" => "Glutes",
+    "hamstrings" => "Hamstrings",
+    "calves" => "Calves",
+    "spinal erectors" => "Spinal Erectors",
 )
 
 grip = Dict(
     # Wrist
-    1 => "Wrist Curl",
-    2 => "Wrist Extension",
-    3 => "Resisted Ulnar Deviation",
-    4 => "Resisted Radial Deviation",
-    5 => "Resisted Supination",
-    6 => "Resisted Pronation",
+    "wrist curl" => "Wrist Curl",
+    "wrist extension" => "Wrist Extension",
+    "ulnar dev" => "Resisted Ulnar Deviation",
+    "radial dev" => "Resisted Radial Deviation",
+    "supination" => "Resisted Supination",
+    "pronation" => "Resisted Pronation",
     # Support hold
-    7 => "Dead Hang",
-    8 => "Active Hang",
+    "dead hang" => "Dead Hang",
+    "active hang" => "Active Hang",
     # Pinch
-    9 => "Plate Pinch",
-    10 => "Plate Flip",
+    "plate pinch" => "Plate Pinch",
+    "plate flip" => "Plate Flip",
     # Dynamic
-    11 => "Finger Curl",
-    12 => "Crusher",
+    "finger curl" => "Finger Curl",
+    "crusher" => "Crusher",
     # Open Hand
-    13 => "Blob",
-    14 => "Hub",
+    "blob" => "Blob",
+    "hub" => "Hub",
     # Rolling
-    15 => "Rolling Thunder",
+    "rolling thunder" => "Rolling Thunder",
 )
 
 squat = Dict(
     # Main variations
-    1 => "High Bar Squat",
-    2 => "Low Bar Squat",
-    3 => "Front Squat",
+    "high" => "High Bar Squat",
+    "low" => "Low Bar Squat",
+    "front" => "Front Squat",
     # Novelty variations
-    4 => "Zercher Squat",
-    5 => "Hatfield Squat",
-    6 => "Goblet Squat",
+    "zercher" => "Zercher Squat",
+    "hatfield" => "Hatfield Squat",
+    "goblet" => "Goblet Squat",
     # Unilateral
-    7 => "Bulgarian Split Squat",
-    8 => "Lunge",
-    9 => "Pistol Squat",
-    10 => "Shrimp Squat",
+    "bulgarian" => "Bulgarian Split Squat",
+    "lunge" => "Lunge",
+    "pistol" => "Pistol Squat",
+    "shrimp" => "Shrimp Squat",
     # Enforced bodyweight.
-    11 => "Sissy Squat",
+    "sissy" => "Sissy Squat",
     # Calf raises.
-    12 => "Calf Raise",
+    "calf raise" => "Calf Raise",
 )
 
 bench = Dict(
     # Main variations.
-    1 => "Flat Bench",
-    2 => "Decline Bench",
-    3 => "Incline Bench",
-    4 => "Close Grip Bench",
-    5 => "Feet Up Bench",
-    6 => "Spoto Bench",
+    "flat" => "Flat Bench",
+    "decline" => "Decline Bench",
+    "incline" => "Incline Bench",
+    "cg" => "Close Grip Bench",
+    "feet up" => "Feet Up Bench",
+    "spotto" => "Spoto Bench",
     # Novelty variations.
-    7 => "JM Press",
+    "jm" => "JM Press",
     # Bodyweight
-    8 => "Dips",
-    9 => "Pushup",
-    10 => "Diamond Pushup",
-    11 => "Archer Pushup",
-    12 => "One Arm Pushup",
-    13 => "Handstand Push Up",
+    "dips" => "Dips",
+    "pushup" => "Pushup",
+    "diamond" => "Diamond Pushup",
+    "archer" => "Archer Pushup",
 )
 
 deadlift = Dict(
     # Main variations.
-    1 => "Deadlift",
-    2 => "Sumo Deadlift",
-    3 => "Romanian Deadlift",
-    # Unilateral.
-    4 => "Single Legged Deadlift",
+    "dl" => "Deadlift",
+    "sumo" => "Sumo Deadlift",
+    "rdl" => "Romanian Deadlift",
     # Novelty.
-    5 => "Rack Pull",
-    6 => "Jefferson",
-    7 => "Zercher",
+    "rack pull" => "Rack Pull",
+    "jefferson" => "Jefferson",
+    "zercher" => "Zercher",
+)
+
+press = Dict(
+    "ohp" => "Overhead Press",
+    "push" => "Push Press",
+    "z" => "Z Press",
+    "hspu" => "Handstand Push Up",
+)
+
+row = Dict(
+    "strict" => "Strict Row",
+    "pendlay" => "Pendlay Row",
+    "kroc" => "Kroc Row",
+    "other" => "Other Row",
+)
+
+vertPull = Dict(
+    "face" => "Face Pull",
+    "pullup" => "Pullup",
+    "mu" => "Muscle Up",
+    "chin up" => "Chin Up",
+)
+
+lowBack = Dict(
+    "nordic" => "Nordic Curl",
+    "ghr" => "Glute-Ham Raise",
+    "hyper extension" => "Hyper Extension",
+)
+
+curl = Dict(
+    "hammer" => "Hammer Curl",
+    "curl" => "Curl",
+    "zottman" => "Zottman Curl",
+)
+
+core = Dict(
+    "dragon flag" => "Dragon Flag",
+    "hanging leg raise" => "Hanging Leg Raise",
+    "toes to bar" => "Toes to Bar",
+    "windshield wipers" => "Windshield Wipers",
+    "ab wheel" => "Ab Wheel",
+    "parallette crunch" => "Parallette Crunch",
+    "l-sit" => "L-Sit",
+    "v-sit" => "V-Sit",
+    "landmine" => "Land Mine Anti-Rotation",
+    "plank" => "Plank",
+    "other" => "Other",
+)
+
+isometric = Dict(
+    "back" => "Back Lever",
+    "front" => "Front Lever",
+    "planche" => "Planche",
+    "other" => "Other",
 )
