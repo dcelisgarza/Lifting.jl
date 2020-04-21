@@ -9,6 +9,7 @@ struct BlockProgression <: AbstractProgression end
 
 import Base: round, length, getindex, iterate, @_inline_meta
 round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
+length(x::Function) = 1
 
 function calcIntensity(reps::Integer, rpe::Real = 10)
     a = 0.995
@@ -70,7 +71,7 @@ struct SetScheme{
 end
 ```
 """
-struct SetScheme{
+mutable struct SetScheme{
     T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
     T2 <: Union{<:Integer, Vector{<:Integer}},
     T3 <: Union{<:Real, Vector{<:Real}},
@@ -90,30 +91,44 @@ struct SetScheme{
         sets::T2 = 5,
         reps::T2 = 5,
         intensity::T3 = 0.75,
-        addWeight::T4 = zeros(length(intensity)),
-        roundMode::T5 = fill(floor, length(intensity)),
+        addWeight::T4 = 0,
+        roundMode::T5 = floor,
         rpeMode::Bool = false,
     ) where {
         T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
         T2 <: Union{<:Integer, Vector{<:Integer}},
         T3 <: Union{<:Real, Vector{<:Real}},
         T4 <: Union{<:Real, Vector{<:Real}},
-        T5 <: Vector{<:Function},
+        T5 <: Union{<:Function, Vector{<:Function}},
     }
+        difSets = length(sets)
+        if difSets > 1 && length(intensity) == 1
+            intensity = fill(0.75, difSets)
+        end
+        if difSets > 1 && length(addWeight) == 1
+            addWeight = zeros(difSets)
+        end
+        if difSets > 1 && length(roundMode) == 1
+            roundMode = fill(floor, difSets)
+        end
+
         @assert length(sets) ==
                 length(reps) ==
                 length(intensity) ==
                 length(addWeight) ==
                 length(roundMode) "lengths of sets $(length(sets)), reps $(length(reps)), intensity $(length(intensity)), addWeight $(length(addWeight)) and roundMode $(length(roundMode)) must be equal."
-
-        rpe = zeros(length(intensity))
+        rpe = 0.
+        wght = 0.
+        if difSets > 1
+            rpe = zeros(difSets)
+            wght = zeros(difSets)
+        end
         if rpeMode
             rpe = intensity
             intensity = calcIntensity.(reps, intensity)
         else
             rpe = calcRPE.(reps, intensity)
         end
-        wght = zeros(length(sets))
 
         new{typeof(type), typeof(sets), typeof(intensity), typeof(roundMode)}(
             type,
@@ -235,7 +250,7 @@ struct Exercise{
         equipment::T2 = "Barbell",
         modality::T3 = "Default",
         muscles::T4 = "NA",
-        trainingMax::T6,
+        trainingMax::T6=0,
         size::T5 = "NA",
         roundBase::T7 = 2.5,
         roundMode::T8 = floor,
@@ -286,12 +301,12 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
     roundMode = setScheme.roundMode
 
     # Calculate wieghts.
-    setScheme.wght .=
+    setScheme.wght =
         round.(trainingMax * intensity + addWeight, roundBase, roundMode)
 
     # Calculate target minimum RPE for a set.
     intense = setScheme.wght / trainingMax
-    setScheme.rpe .= round.(calcRPE.(reps, intense), digits = 2)
+    setScheme.rpe = round.(calcRPE.(reps, intense), digits = 2)
 
     return setScheme
 end

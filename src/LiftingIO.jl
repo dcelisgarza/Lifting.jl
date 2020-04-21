@@ -30,8 +30,12 @@ function showDays(programme::Programme)
                             print(vals[i][1:end])
                             i < numVals ? print(", ") : nothing
                         else
-                            print(vals[i])
-                            i < numVals ? print(", ") : nothing
+                            if typeof(vals[i]) == Char
+                                print(vals[i])
+                            else
+                                print(vals[i])
+                                i < numVals ? print(", ") : nothing
+                            end
                         end
                     end
                     println("")

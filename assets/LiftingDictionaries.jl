@@ -19,6 +19,9 @@ modality = Dict(
     "kneeling" => "Kneeling",
     "side" => "Side",
     "cheat" => "Cheat",
+    "dragon" =>"Dragon",
+    "walking" => "Walking",
+    "backstep" => "Backstep",
 )
 
 setType = Dict(
@@ -57,6 +60,12 @@ equipment = Dict(
     "other" => "Other Machine",
     "t bar" => "T-bar",
     "ez bar" => "EZ Bar",
+    "none" => "None",
+    "pullup bar" => "Pullup Bar",
+    "chain belt" => "Chain Belt",
+    "plate" => "Plate",
+    "parallette" => "Parallette",
+    "ab wheel" =>"Ab Wheel",
 )
 
 muscles = Dict(
@@ -73,6 +82,7 @@ muscles = Dict(
     "wrist extensors" => "Wrist Extensors",
     "finger flexors" => "Finger Flexors",
     "finger extensors" => "Finger Extensors",
+    "hand" => "Hand Muscles",
     "core" => "Core",
     "rectus abdominis" => "Rectus Abdominis",
     "transverse abdominis" => "Transverse Abdominis",
@@ -84,6 +94,8 @@ muscles = Dict(
     "hamstrings" => "Hamstrings",
     "calves" => "Calves",
     "spinal erectors" => "Spinal Erectors",
+    "brachialis" => "Brachialis",
+    "rot cuff" => "Rotator Cuff",
 )
 
 grip = Dict(
@@ -163,6 +175,7 @@ press = Dict(
     "push" => "Push Press",
     "z" => "Z Press",
     "hspu" => "Handstand Push Up",
+    "side raise" => "Side Raise"
 )
 
 row = Dict(
@@ -172,11 +185,14 @@ row = Dict(
     "other" => "Other Row",
 )
 
-vertPull = Dict(
+pull = Dict(
     "face" => "Face Pull",
     "pullup" => "Pullup",
     "mu" => "Muscle Up",
     "chin up" => "Chin Up",
+    "hammer" => "Hammer Curl",
+    "curl" => "Curl",
+    "zottman" => "Zottman Curl",
 )
 
 lowBack = Dict(
@@ -185,23 +201,18 @@ lowBack = Dict(
     "hyper extension" => "Hyper Extension",
 )
 
-curl = Dict(
-    "hammer" => "Hammer Curl",
-    "curl" => "Curl",
-    "zottman" => "Zottman Curl",
-)
-
 core = Dict(
     "dragon flag" => "Dragon Flag",
     "hanging leg raise" => "Hanging Leg Raise",
     "toes to bar" => "Toes to Bar",
     "windshield wipers" => "Windshield Wipers",
-    "ab wheel" => "Ab Wheel",
+    "ab roll" => "Ab Rollout",
     "parallette crunch" => "Parallette Crunch",
-    "l-sit" => "L-Sit",
-    "v-sit" => "V-Sit",
+    "l sit" => "L-Sit",
+    "v sit" => "V-Sit",
     "landmine" => "Land Mine Anti-Rotation",
     "plank" => "Plank",
+    "leg raise" => "Leg Raise",
     "other" => "Other",
 )
 
