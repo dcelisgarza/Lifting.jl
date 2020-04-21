@@ -9,17 +9,17 @@ function showDays(programme::Programme)
     for i in 1:numDays
         println("Day ", i)
         if typeof(days[i]) == String
-            println("\t",days[i],"\n")
+            println("  ",days[i])
             println("-"^80)
             continue
         end
 
         numExercises = length(days[i])
         for j in 1:numExercises
-            println("\tExercise ", j)
+            println("  Exercise ", j)
             keyArr = keys(days[i][j])
             for key in keyArr
-                print("\t\t",key, ": ")
+                print("    ",key, ": ")
                 vals = getfield(days[i][j], key)
                 if typeof(vals) == String
                     println(vals)
@@ -37,7 +37,7 @@ function showDays(programme::Programme)
                     println("")
                 end
             end
-            println("")
+            # println("")
         end
         println("-"^80)
     end

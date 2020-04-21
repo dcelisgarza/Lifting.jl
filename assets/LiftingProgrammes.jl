@@ -638,12 +638,14 @@ push!(days, RowT1, ProgCAP3RowT1, 3)
 # Day 22
 push!(days, SquatT2, ProgCAP3SquatT2, 3)
 push!(days, PressT1, ProgCAP3PressT1, 2)
+# Day 23
+push!(days, "Rest")
 
-programmes = Dict{Integer, Programme}()
+programmes = Dict{String, Programme}()
 push!(
     programmes,
-    1 => Programme(
-        "nSuns CAP3",
+    "current" => Programme(
+        "nSuns CAP3-LP Hybrid",
         [BenchT1, BenchT2, DeadliftT2, SquatT1, DeadliftT1, SquatT2],
         [
             ProgCAP3BenchT1,
@@ -658,12 +660,12 @@ push!(
             days[3:4],
             days[5:6],
             days[7:8],
-            days[9],
+            days[9],    # Rest
             days[10:11],
             days[12:13],
             days[14:15],
             days[16:17],
-            days[18],
+            days[18],   # Rest
             days[19:20],
             days[21:22],
             days[23:24],
@@ -673,11 +675,23 @@ push!(
             days[30:31],
             days[32:33],
             days[34:35],
-            days[36],
+            days[36],   # Rest
             days[37:38],
             days[39:40],
+            days[41],   # Rest
         ],
     ),
 )
+test = (1, 2, 3)
+u = [test[i] for i in 1:3]
+showDays(programmes["current"])
 
-showDays(programmes[1])
+type = programmes["current"].days[1][1].type
+set = programmes["current"].days[1][1].sets
+reps = programmes["current"].days[1][1].reps
+wght = programmes["current"].days[1][1].wght
+rpe = programmes["current"].days[1][1].rpe
+
+println(type[1])
+println(set[1], " × ", reps[1], " × ", wght[1], "\t(rpe: ", rpe[1], ")")
+println(set[2], " × ", reps[2], " × ", wght[2], "\t(rpe: ", rpe[2], ")")
