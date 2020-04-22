@@ -27,7 +27,7 @@ DeadliftT1 = Exercise(
         muscles["lats"],
         muscles["finger flexors"],
     ],
-    trainingMax = 160,
+    trainingMax = 162.5,
 )
 DeadliftT2 = Exercise(
     name = deadlift["sumo"],
@@ -52,13 +52,13 @@ SquatT1 = Exercise(
         muscles["spinal erectors"],
         muscles["transverse abdominis"],
     ],
-    trainingMax = 112.5,
+    trainingMax = 115,
 )
 SquatT2 = Exercise(
     name = squat["front"],
     equipment = equipment["bb"],
     muscles = [muscles["quads"], muscles["glutes"], muscles["core"]],
-    trainingMax = 77.5,
+    trainingMax = 80,
 )
 RowT1 = Exercise(
     name = row["pendlay"],
@@ -71,7 +71,7 @@ RowT1 = Exercise(
         muscles["rhomboids"],
         muscles["finger flexors"],
     ],
-    trainingMax = 125,
+    trainingMax = 132.5,
 )
 RowT2 = Exercise(
     name = row["kroc"],
@@ -83,23 +83,23 @@ RowT2 = Exercise(
         muscles["rhomboids"],
         muscles["finger flexors"],
     ],
-    trainingMax = 45,
+    trainingMax = 42.5,
 )
 PressT1 = Exercise(
     name = press["ohp"],
     equipment = equipment["bb"],
     muscles = [muscles["front delts"], muscles["triceps"], muscles["traps"]],
-    trainingMax = 57.5,
+    trainingMax = 60,
 )
-calcWeights.(BenchT1, SetsCAP3BenchT1)
-calcWeights.(BenchT2, SetsCAP3BenchT2)
-calcWeights.(DeadliftT1, SetsCAP3DeadliftT1)
-calcWeights.(DeadliftT2, SetsCAP3DeadliftT2)
-calcWeights.(SquatT1, SetsCAP3SquatT1)
-calcWeights.(SquatT2, SetsCAP3SquatT2)
-calcWeights.(RowT1, SetsCAP3RowT1)
-calcWeights.(RowT2, SetsCAP3RowT2)
-calcWeights.(PressT1, Sets6DayPressT1)
+calcWeights(BenchT1, ProgCAP3BenchT1)
+calcWeights(BenchT2, ProgCAP3BenchT2)
+calcWeights(DeadliftT1, ProgCAP3DeadliftT1)
+calcWeights(DeadliftT2, ProgCAP3DeadliftT2)
+calcWeights(SquatT1, ProgCAP3SquatT1)
+calcWeights(SquatT2, ProgCAP3SquatT2)
+calcWeights(RowT1, ProgCAP3RowT1)
+calcWeights(RowT2, ProgCAP3RowT2)
+calcWeights(PressT1, Prog6DayPressT1)
 
 ### Accessories
 # Squat accessories.
@@ -108,55 +108,61 @@ lunges = Exercise(;
     modality = [modality["walking"], modality["backstep"], modality["dragon"]],
     equipment = equipment["db"],
     muscles = [muscles["quads"], muscles["glutes"]],
-    trainingMax = 25,
+    trainingMax = 47.5,
     )
 bulgarianSplit = Exercise(;
     name = squat["bulgarian"],
     equipment = equipment["db"],
     muscles = [muscles["quads"], muscles["glutes"]],
-    trainingMax = 25,
+    trainingMax = 37.5,
 )
 calfRaise = Exercise(;
     name = squat["calf raise"],
     modality = modality["standing"],
     equipment = equipment["db"],
     muscles = muscles["calves"],
-    trainingMax = 25,
+    trainingMax = 20,
 )
-calcWeights.(lunges, h23_lmh.setScheme)
-calcWeights.(bulgarianSplit, h23_lmh.setScheme)
-calcWeights.(calfRaise, l23_lmh.setScheme)
+ProgLunges = deepcopy(h23_lmh)
+ProgBulg = deepcopy(h23_lmh)
+ProgCalfRaise = deepcopy(l23_lmh)
+calcWeights(lunges, ProgLunges)
+calcWeights(bulgarianSplit, ProgBulg)
+calcWeights(calfRaise, ProgCalfRaise)
 
 # Grip
 wristExt = Exercise(;
     name = grip["wrist extension"],
     equipment = equipment["db"],
     muscles = muscles["wrist extensors"],
-    trainingMax = 10,
+    trainingMax = 8,
 )
 wristCurl = Exercise(;
     name = grip["wrist curl"],
     equipment = equipment["db"],
     muscles = muscles["wrist extensors"],
-    trainingMax = 10,
+    trainingMax = 8,
 )
 platePinch = Exercise(;
     name = grip["plate pinch"],
     equipment = equipment["plate"],
     muscles = muscles["hand"],
-    trainingMax = 22.5,
+    trainingMax = 27.5,
 )
 fingerCurl = Exercise(;
     name = grip["finger curl"],
     equipment = equipment["db"],
     muscles = muscles["finger flexors"],
-    trainingMax = 25,
-    roundMode = ceil,
+    trainingMax = 20,
 )
-calcWeights(wristExt, gripAMRAP)
-calcWeights(wristCurl, gripAMRAP)
-calcWeights(platePinch, gripAMRAP)
-calcWeights(fingerCurl, gripAMRAP)
+ProgWristExt = deepcopy(ProgGrip)
+ProgWristCurl = deepcopy(ProgGrip)
+ProgPlatePinch = deepcopy(ProgGrip)
+ProgFingerCurl = deepcopy(ProgGrip)
+calcWeights(wristExt, ProgWristExt)
+calcWeights(wristCurl, ProgWristCurl)
+calcWeights(platePinch, ProgPlatePinch)
+calcWeights(fingerCurl, ProgFingerCurl)
 
 # Pulling
 facePull = Exercise(;
@@ -169,13 +175,13 @@ pullup = Exercise(;
     name = pull["pullup"],
     equipment = equipment["pullup bar"],
     muscles = [muscles["lats"], muscles["biceps"], muscles["brachialis"]],
-    trainingMax = 15,
+    trainingMax = 12.5,
 )
 hammerCurl = Exercise(;
     name = pull["hammer"],
     equipment = [equipment["db"], equipment["fat grips"]],
     muscles = [muscles["brachialis"], muscles["biceps"]],
-    trainingMax = 15,
+    trainingMax = 20,
 )
 zottmanCurl = Exercise(;
     name = pull["zottman"],
@@ -183,14 +189,18 @@ zottmanCurl = Exercise(;
     muscles = [muscles["biceps"], muscles["brachialis"]],
     trainingMax = 12.5,
 )
-calcWeights.(facePull, l23_lmh.setScheme)
-calcWeights.(pullup, h23_lmh.setScheme)
-calcWeights.(hammerCurl, l23_lmh.setScheme)
-calcWeights.(zottmanCurl, l23_lmh.setScheme)
+ProgFacePull = deepcopy(l23_lmh)
+ProgPullup = deepcopy(h23_lmh)
+ProgHammerCurl = deepcopy(l23_lmh)
+ProgZottmanCurl = deepcopy(l23_lmh)
+calcWeights(facePull, ProgFacePull)
+calcWeights(pullup, ProgPullup)
+calcWeights(hammerCurl, ProgHammerCurl)
+calcWeights(zottmanCurl, ProgZottmanCurl)
 
 # Pushing
 inclineDBBench = Exercise(;
-    name = bench["incline"],
+    name = bench["db incline"],
     equipment = equipment["db"],
     muscles = [muscles["pecs"], muscles["triceps"], muscles["front delts"]],
     trainingMax = 45,
@@ -199,7 +209,7 @@ dips = Exercise(;
     name = bench["dips"],
     equipment = [equipment["parallette"], equipment["chain belt"]],
     muscles = [muscles["pecs"], muscles["triceps"], muscles["front delts"]],
-    trainingMax = 15,
+    trainingMax = 12.5,
 )
 sideRaise = Exercise(;
     name = press["side raise"],
@@ -207,41 +217,50 @@ sideRaise = Exercise(;
     muscles = muscles["side delts"],
     trainingMax = 12.5,
 )
-calcWeights.(inclineDBBench, m23_lmh.setScheme)
-calcWeights.(dips, m23_lmh.setScheme)
-calcWeights.(sideRaise, l23_lmh.setScheme)
+ProgInclineDBBench = deepcopy(m23_lmh)
+ProgDips = deepcopy(m23_lmh)
+ProgSideRaise = deepcopy(l23_lmh)
+calcWeights(inclineDBBench, ProgInclineDBBench)
+calcWeights(dips, ProgDips)
+calcWeights(sideRaise, ProgSideRaise)
 
 # Core
 dragonFlag = Exercise(;
     name = core["dragon flag"],
     equipment = equipment["none"],
     muscles = muscles["core"],
+    trainingMax = 10,
 )
 vsit = Exercise(;
     name = core["v sit"],
     equipment = equipment["parallette"],
     muscles = muscles["core"],
+    trainingMax = 10,
 )
 legRaise = Exercise(;
     name = core["leg raise"],
     equipment = equipment["pullup bar"],
     muscles = muscles["core"],
+    trainingMax = 12.5,
 )
 toeToBar = Exercise(;
     name = core["toes to bar"],
     equipment = equipment["pullup bar"],
     muscles = muscles["core"],
+    trainingMax = 10,
 )
 abRollout =  Exercise(;
     name = core["ab roll"],
+    modality = modality["kneeling"],
     equipment = equipment["ab wheel"],
     muscles = muscles["core"],
+    trainingMax = 10,
 )
 landMine =  Exercise(;
     name = core["landmine"],
     equipment = equipment["bb"],
     muscles = muscles["core"],
-    trainingMax = 40,
+    trainingMax = 50,
 )
 paraCrunch = Exercise(;
     name = core["parallette crunch"],
@@ -249,208 +268,219 @@ paraCrunch = Exercise(;
     muscles = muscles["core"],
     trainingMax = 15,
 )
-calcWeights(dragonFlag, calisthenics)
-calcWeights(vsit, calisthenics)
-calcWeights.(legRaise, m23_lmh.setScheme)
-calcWeights(toeToBar, calisthenics)
-calcWeights(abRollout, calisthenics)
-calcWeights.(landMine, m23_lmh.setScheme)
-calcWeights.(paraCrunch, m23_lmh.setScheme)
+ProgDragonFlag = deepcopy(ProgCali)
+ProgVsit = deepcopy(ProgCali)
+ProgLegRaise = deepcopy(m23_lmh)
+ProgToeToBar = deepcopy(ProgCali)
+ProgAbRollout = deepcopy(ProgCali)
+ProgLandMine = deepcopy(m23_lmh)
+ProgParaCrunch = deepcopy(m23_lmh)
+calcWeights(dragonFlag, ProgDragonFlag)
+calcWeights(vsit, ProgVsit)
+calcWeights(legRaise, ProgLegRaise)
+calcWeights(toeToBar, ProgToeToBar)
+calcWeights(abRollout, ProgAbRollout)
+calcWeights(landMine, ProgLandMine)
+calcWeights(paraCrunch, ProgParaCrunch)
 
 # Calisthenics Isometrics
 frontLever = Exercise(;
     name = isometric["front"],
+    modality = modality["one leg out"],
     equipment = equipment["pullup bar"],
     muscles = [muscles["lats"], muscles["core"]],
+    trainingMax = 15,
 )
 backLever = Exercise(;
     name = isometric["back"],
+    modality = modality["straddle"],
     equipment = equipment["pullup bar"],
     muscles = [muscles["lats"], muscles["pecs"], muscles["front delts"], muscles["core"]],
+    trainingMax = 15,
 )
-calcWeights(frontLever, calisthenics)
-calcWeights(backLever, calisthenics)
+ProgFrontLever = deepcopy(ProgCali)
+ProgBackLever = deepcopy(ProgCali)
+calcWeights(frontLever, ProgFrontLever)
+calcWeights(backLever, ProgBackLever)
 ###
 week1 = [[],[],[],[],[],[],[]]
 week2 = [[],[],[],[],[],[],[]]
 week3 = [[],[],[],[],[],[],[]]
-
 # Week1
 push!(week1[1], BenchT1, ProgCAP3BenchT1, 1)
 push!(week1[1], BenchT2, ProgCAP3BenchT2, 1)
-push!(week1[1], wristCurl, ProgGrip)
-push!(week1[1], wristExt, ProgGrip)
-push!(week1[1], dragonFlag, ProgCali)
-push!(week1[1], frontLever, ProgCali)
-push!(week1[1], lunges, h23_lmh, 2)
-push!(week1[1], facePull, l23_lmh, 2)
-push!(week1[1], legRaise, m23_lmh,2)
+push!(week1[1], wristCurl, ProgWristCurl)
+push!(week1[1], wristExt, ProgWristExt)
+push!(week1[1], dragonFlag, ProgDragonFlag)
+push!(week1[1], frontLever, ProgFrontLever)
+push!(week1[1], lunges, ProgLunges, 2)
+push!(week1[1], facePull, ProgFacePull, 2)
+push!(week1[1], legRaise, ProgLegRaise, 2)
 
 push!(week1[2], DeadliftT2, ProgCAP3DeadliftT2, 1)
 push!(week1[2], RowT2, ProgCAP3RowT2, 1)
-push!(week1[2], sideRaise, l23_lmh, 2)
-push!(week1[2], hammerCurl, l23_lmh, 2)
-push!(week1[2], inclineDBBench, m23_lmh, 3)
-push!(week1[2], platePinch, ProgGrip)
-push!(week1[2], zottmanCurl, l23_lmh, 2)
-push!(week1[2], vsit, ProgCali)
+push!(week1[2], sideRaise, ProgSideRaise, 2)
+push!(week1[2], hammerCurl, ProgHammerCurl, 2)
+push!(week1[2], inclineDBBench, ProgInclineDBBench, 3)
+push!(week1[2], platePinch, ProgPlatePinch)
+push!(week1[2], zottmanCurl, ProgZottmanCurl, 2)
+push!(week1[2], vsit, ProgVsit)
 
 push!(week1[3], SquatT1, ProgCAP3SquatT1, 1)
 push!(week1[3], PressT1, Prog6DayPressT1, 1)
-push!(week1[3], backLever, ProgCali)
-push!(week1[3], pullup, h23_lmh, 2)
-push!(week1[3], calfRaise, l23_lmh, 1)
-push!(week1[3], fingerCurl, ProgGrip)
-push!(week1[3], dips, m23_lmh, 3)
-push!(week1[3], abRollout, ProgCali)
+push!(week1[3], backLever, ProgBackLever)
+push!(week1[3], pullup, ProgPullup, 2)
+push!(week1[3], calfRaise, ProgCalfRaise, 1)
+push!(week1[3], fingerCurl, ProgFingerCurl)
+push!(week1[3], dips, ProgDips, 3)
+push!(week1[3], abRollout, ProgAbRollout)
 
 push!(week1[4], BenchT1, ProgCAP3BenchT1, 2)
 push!(week1[4], BenchT2, ProgCAP3BenchT2, 2)
-push!(week1[4], wristCurl, ProgGrip)
-push!(week1[4], wristExt, ProgGrip)
-push!(week1[4], landMine, m23_lmh, 1)
-push!(week1[4], frontLever, ProgCali)
-push!(week1[4], bulgarianSplit, h23_lmh, 2)
-push!(week1[4], facePull, l23_lmh, 2)
-push!(week1[4], toeToBar, ProgCali)
+push!(week1[4], wristCurl, ProgWristCurl)
+push!(week1[4], wristExt, ProgWristExt)
+push!(week1[4], landMine, ProgLandMine, 1)
+push!(week1[4], frontLever, ProgFrontLever)
+push!(week1[4], bulgarianSplit, ProgBulg, 2)
+push!(week1[4], facePull, ProgFacePull, 2)
+push!(week1[4], toeToBar, ProgToeToBar)
 
 push!(week1[5], "Rest")
 
 push!(week1[6], DeadliftT1, ProgCAP3DeadliftT1, 1)
 push!(week1[6], RowT1, ProgCAP3RowT1, 1)
-push!(week1[6], sideRaise, l23_lmh, 2)
-push!(week1[6], hammerCurl, l23_lmh, 2)
-push!(week1[6], inclineDBBench, m23_lmh, 3)
-push!(week1[6], platePinch, ProgGrip)
-push!(week1[6], zottmanCurl, l23_lmh, 2)
-push!(week1[6], vsit, ProgCali)
+push!(week1[6], sideRaise, ProgSideRaise, 2)
+push!(week1[6], hammerCurl, ProgHammerCurl, 2)
+push!(week1[6], inclineDBBench, ProgInclineDBBench, 3)
+push!(week1[6], platePinch, ProgPlatePinch)
+push!(week1[6], zottmanCurl, ProgZottmanCurl, 2)
+push!(week1[6], vsit, ProgVsit)
 
 push!(week1[7], SquatT2, ProgCAP3SquatT2, 1)
 push!(week1[7], PressT1, Prog6DayPressT1, 2)
-push!(week1[7], backLever, ProgCali)
-push!(week1[7], pullup, h23_lmh, 2)
-push!(week1[7], calfRaise, l23_lmh, 1)
-push!(week1[7], fingerCurl, ProgGrip)
-push!(week1[7], dips, m23_lmh, 3)
-push!(week1[7], paraCrunch, m23_lmh, 1)
+push!(week1[7], backLever, ProgBackLever)
+push!(week1[7], pullup, ProgPullup, 2)
+push!(week1[7], calfRaise, ProgCalfRaise, 1)
+push!(week1[7], fingerCurl, ProgFingerCurl)
+push!(week1[7], dips, ProgDips, 3)
+push!(week1[7], paraCrunch, ProgParaCrunch, 1)
 
 # Week 2
 push!(week2[1], BenchT1, ProgCAP3BenchT1, 3)
 push!(week2[1], BenchT2, ProgCAP3BenchT2, 3)
-push!(week2[1], wristCurl, ProgGrip)
-push!(week2[1], wristExt, ProgGrip)
-push!(week2[1], dragonFlag, ProgCali)
-push!(week2[1], frontLever, ProgCali)
-push!(week2[1], lunges, h23_lmh, 1)
-push!(week2[1], facePull, l23_lmh, 3)
-push!(week2[1], legRaise, m23_lmh, 3)
+push!(week2[1], wristCurl, ProgWristCurl)
+push!(week2[1], wristExt, ProgWristExt)
+push!(week2[1], dragonFlag, ProgDragonFlag)
+push!(week2[1], frontLever, ProgFrontLever)
+push!(week2[1], lunges, ProgLunges, 1)
+push!(week2[1], facePull, ProgFacePull, 3)
+push!(week2[1], legRaise, ProgLegRaise, 3)
 
 push!(week2[2], DeadliftT2, ProgCAP3DeadliftT2, 2)
 push!(week2[2], RowT2, ProgCAP3RowT2, 2)
-push!(week2[2], sideRaise, l23_lmh, 3)
-push!(week2[2], hammerCurl, l23_lmh, 3)
-push!(week2[2], inclineDBBench, m23_lmh, 1)
-push!(week2[2], platePinch, ProgGrip)
-push!(week2[2], zottmanCurl, l23_lmh, 3)
-push!(week2[2], vsit, ProgCali)
+push!(week2[2], sideRaise, ProgSideRaise, 3)
+push!(week2[2], hammerCurl, ProgHammerCurl, 3)
+push!(week2[2], inclineDBBench, ProgInclineDBBench, 1)
+push!(week2[2], platePinch, ProgPlatePinch)
+push!(week2[2], zottmanCurl, ProgZottmanCurl, 3)
+push!(week2[2], vsit, ProgVsit)
 
 push!(week2[3], "Rest")
 
 push!(week2[4], SquatT1, ProgCAP3SquatT1, 2)
 push!(week2[4], PressT1, Prog6DayPressT1, 1)
-push!(week2[4], backLever, ProgCali)
-push!(week2[4], pullup, h23_lmh, 3)
-push!(week2[4], calfRaise, l23_lmh, 2)
-push!(week2[4], fingerCurl, ProgGrip)
-push!(week2[4], dips, m23_lmh, 1)
-push!(week2[4], abRollout, ProgCali)
+push!(week2[4], backLever, ProgBackLever)
+push!(week2[4], pullup, ProgPullup, 3)
+push!(week2[4], calfRaise, ProgCalfRaise, 2)
+push!(week2[4], fingerCurl, ProgFingerCurl)
+push!(week2[4], dips, ProgDips, 1)
+push!(week2[4], abRollout, ProgAbRollout)
 
 push!(week2[5], BenchT1, ProgCAP3BenchT1, 4)
 push!(week2[5], BenchT2, ProgCAP3BenchT2, 4)
-push!(week2[5], wristCurl, ProgGrip)
-push!(week2[5], wristExt, ProgGrip)
-push!(week2[5], landMine, m23_lmh, 3)
-push!(week2[5], frontLever, ProgCali)
-push!(week2[5], bulgarianSplit, h23_lmh, 1)
-push!(week2[5], facePull, l23_lmh, 3)
-push!(week2[5], toeToBar, ProgCali)
+push!(week2[5], wristCurl, ProgWristCurl)
+push!(week2[5], wristExt, ProgWristExt)
+push!(week2[5], landMine, ProgLandMine, 3)
+push!(week2[5], frontLever, ProgFrontLever)
+push!(week2[5], bulgarianSplit, ProgBulg, 1)
+push!(week2[5], facePull, ProgFacePull, 3)
+push!(week2[5], toeToBar, ProgToeToBar)
 
 push!(week2[6], DeadliftT1, ProgCAP3DeadliftT1, 2)
 push!(week2[6], RowT1, ProgCAP3RowT1, 2)
-push!(week2[6], sideRaise, l23_lmh, 2)
-push!(week2[6], hammerCurl, l23_lmh, 2)
-push!(week2[6], inclineDBBench, m23_lmh, 3)
-push!(week2[6], platePinch, ProgGrip)
-push!(week2[6], zottmanCurl, l23_lmh, 2)
-push!(week2[6], vsit, ProgCali)
+push!(week2[6], sideRaise, ProgSideRaise, 2)
+push!(week2[6], hammerCurl, ProgHammerCurl, 2)
+push!(week2[6], inclineDBBench, ProgInclineDBBench, 3)
+push!(week2[6], platePinch, ProgPlatePinch)
+push!(week2[6], zottmanCurl, ProgZottmanCurl, 2)
+push!(week2[6], vsit, ProgVsit)
 
 push!(week2[7], SquatT2, ProgCAP3SquatT2, 1)
 push!(week2[7], PressT1, Prog6DayPressT1, 2)
-push!(week2[7], backLever, ProgCali)
-push!(week2[7], pullup, h23_lmh, 2)
-push!(week2[7], calfRaise, l23_lmh, 1)
-push!(week2[7], fingerCurl, ProgGrip)
-push!(week2[7], dips, m23_lmh, 3)
-push!(week2[7], paraCrunch, m23_lmh, 3)
+push!(week2[7], backLever, ProgBackLever)
+push!(week2[7], pullup, ProgPullup, 2)
+push!(week2[7], calfRaise, ProgCalfRaise, 1)
+push!(week2[7], fingerCurl, ProgFingerCurl)
+push!(week2[7], dips, ProgDips, 3)
+push!(week2[7], paraCrunch, ProgParaCrunch, 3)
 
 # Week3
 push!(week3[1], "Rest")
-
 push!(week3[2], BenchT1, ProgCAP3BenchT1, 5)
 push!(week3[2], BenchT2, ProgCAP3BenchT2, 5)
-push!(week3[2], wristCurl, ProgGrip)
-push!(week3[2], wristExt, ProgGrip)
-push!(week3[2], dragonFlag, ProgCali)
-push!(week3[2], frontLever, ProgCali)
-push!(week3[2], lunges, h23_lmh, 3)
-push!(week3[2], facePull, l23_lmh, 1)
-push!(week3[2], legRaise, m23_lmh, 1)
+push!(week3[2], wristCurl, ProgWristCurl)
+push!(week3[2], wristExt, ProgWristExt)
+push!(week3[2], dragonFlag, ProgDragonFlag)
+push!(week3[2], frontLever, ProgFrontLever)
+push!(week3[2], lunges, ProgLunges, 3)
+push!(week3[2], facePull, ProgFacePull, 1)
+push!(week3[2], legRaise, ProgLegRaise, 1)
 
 push!(week3[3], DeadliftT2, ProgCAP3DeadliftT2, 3)
 push!(week3[3], RowT2, ProgCAP3RowT2, 3)
-push!(week3[3], sideRaise, l23_lmh, 1)
-push!(week3[3], hammerCurl, l23_lmh, 1)
-push!(week3[3], inclineDBBench, m23_lmh, 2)
-push!(week3[3], platePinch, ProgGrip)
-push!(week3[3], zottmanCurl, l23_lmh, 1)
-push!(week3[3], vsit, ProgCali)
+push!(week3[3], sideRaise, ProgSideRaise, 1)
+push!(week3[3], hammerCurl, ProgHammerCurl, 1)
+push!(week3[3], inclineDBBench, ProgInclineDBBench, 2)
+push!(week3[3], platePinch, ProgPlatePinch)
+push!(week3[3], zottmanCurl, ProgZottmanCurl, 1)
+push!(week3[3], vsit, ProgVsit)
 
 push!(week3[4], SquatT1, ProgCAP3SquatT1, 3)
 push!(week3[4], PressT1, Prog6DayPressT1, 1)
-push!(week3[4], backLever, ProgCali)
-push!(week3[4], pullup, h23_lmh, 1)
-push!(week3[4], calfRaise, l23_lmh, 3)
-push!(week3[4], fingerCurl, ProgGrip)
-push!(week3[4], dips, m23_lmh, 2)
-push!(week3[4], abRollout, ProgCali)
+push!(week3[4], backLever, ProgBackLever)
+push!(week3[4], pullup, ProgPullup, 1)
+push!(week3[4], calfRaise, ProgCalfRaise, 3)
+push!(week3[4], fingerCurl, ProgFingerCurl)
+push!(week3[4], dips, ProgDips, 2)
+push!(week3[4], abRollout, ProgAbRollout)
 
 push!(week3[5], BenchT1, ProgCAP3BenchT1, 6)
 push!(week3[5], BenchT2, ProgCAP3BenchT2, 6)
-push!(week3[5], wristCurl, ProgGrip)
-push!(week3[5], wristExt, ProgGrip)
-push!(week3[5], landMine, m23_lmh, 2)
-push!(week3[5], frontLever, ProgCali)
-push!(week3[5], bulgarianSplit, h23_lmh, 2)
-push!(week3[5], facePull, l23_lmh, 1)
-push!(week3[5], toeToBar, ProgCali)
+push!(week3[5], wristCurl, ProgWristCurl)
+push!(week3[5], wristExt, ProgWristExt)
+push!(week3[5], landMine, ProgLandMine, 2)
+push!(week3[5], frontLever, ProgFrontLever)
+push!(week3[5], bulgarianSplit, ProgBulg, 2)
+push!(week3[5], facePull, ProgFacePull, 1)
+push!(week3[5], toeToBar, ProgToeToBar)
 
 push!(week3[6], DeadliftT1, ProgCAP3DeadliftT1, 3)
 push!(week3[6], RowT1, ProgCAP3RowT1, 3)
-push!(week3[6], sideRaise, l23_lmh, 1)
-push!(week3[6], hammerCurl, l23_lmh, 1)
-push!(week3[6], inclineDBBench, m23_lmh, 2)
-push!(week3[6], platePinch, ProgGrip)
-push!(week3[6], zottmanCurl, l23_lmh, 1)
-push!(week3[6], vsit, ProgCali)
+push!(week3[6], sideRaise, ProgSideRaise, 1)
+push!(week3[6], hammerCurl, ProgHammerCurl, 1)
+push!(week3[6], inclineDBBench, ProgInclineDBBench, 2)
+push!(week3[6], platePinch, ProgPlatePinch)
+push!(week3[6], zottmanCurl, ProgZottmanCurl, 1)
+push!(week3[6], vsit, ProgVsit)
 
 push!(week3[7], SquatT2, ProgCAP3SquatT2, 1)
 push!(week3[7], PressT1, Prog6DayPressT1, 2)
-push!(week3[7], backLever, ProgCali)
-push!(week3[7], pullup, h23_lmh, 1)
-push!(week3[7], calfRaise, l23_lmh, 3)
-push!(week3[7], fingerCurl, ProgGrip)
-push!(week3[7], dips, m23_lmh, 2)
-push!(week3[7], paraCrunch, m23_lmh, 2)
+push!(week3[7], backLever, ProgBackLever)
+push!(week3[7], pullup, ProgPullup, 1)
+push!(week3[7], calfRaise, ProgCalfRaise, 3)
+push!(week3[7], fingerCurl, ProgFingerCurl)
+push!(week3[7], dips, ProgDips, 2)
+push!(week3[7], paraCrunch, ProgParaCrunch, 2)
 
 programmes = Dict{String, Programme}()
 push!(
@@ -473,16 +503,18 @@ push!(
         ],
     ),
 )
-test = (1, 2, 3)
-u = [test[i] for i in 1:3]
+# test = (1, 2, 3)
+# u = [test[i] for i in 1:3]
 showDays(programmes["current"])
 
-type = programmes["current"].days[1][1].type
-set = programmes["current"].days[1][1].sets
-reps = programmes["current"].days[1][1].reps
-wght = programmes["current"].days[1][1].wght
-rpe = programmes["current"].days[1][1].rpe
-
-println(type[1])
-println(set[1], " × ", reps[1], " × ", wght[1], "\t(rpe: ", rpe[1], ")")
-println(set[2], " × ", reps[2], " × ", wght[2], "\t(rpe: ", rpe[2], ")")
+programmes["current"][1]
+#
+# type = programmes["current"].days[1][1]
+# set = programmes["current"].days[1][1].sets
+# reps = programmes["current"].days[1][1].reps
+# wght = programmes["current"].days[1][1].wght
+# rpe = programmes["current"].days[1][1].rpe
+# programmes["current"].days
+# println(type[1])
+# println(set[1], " × ", reps[1], " × ", wght[1], "\t(rpe: ", rpe[1], ")")
+# println(set[2], " × ", reps[2], " × ", wght[2], "\t(rpe: ", rpe[2], ")")

@@ -374,57 +374,57 @@ Prog6DayPressT1 = Progression(
 # Low, mid, high reps.
 # High intensity burnout.
 H1 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [4, 6, 3],
     intensity = [9, 8, 7],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, ceil],
     rpeMode = true,
 )
 H2 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [6, 8, 4],
     intensity = [9, 8, 7],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, ceil],
     rpeMode = true,
 )
 H3 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [8, 10, 6],
     intensity = [9, 8, 7],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, ceil],
     rpeMode = true,
 )
 # Mid intensity burnout.
 M1 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [6, 8, 4],
     intensity = [8, 7, 6],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 M2 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [8, 10, 6],
     intensity = [8, 7, 6],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 M3 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [10, 12, 8],
     intensity = [8, 7, 6],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 # Low intensity burnout.
 L1 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [8, 10, 6],
     intensity = [7, 6, 5],
@@ -432,7 +432,7 @@ L1 = SetScheme(
     rpeMode = true,
 )
 L2 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [10, 12, 8],
     intensity = [7, 6, 5],
@@ -440,7 +440,7 @@ L2 = SetScheme(
     rpeMode = true,
 )
 L3 = SetScheme(
-    type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [12, 14, 10],
     intensity = [7, 6, 5],
@@ -474,8 +474,8 @@ calisthenics = SetScheme(;
     type = setType["amrap"],
     sets = 5,
     reps = 12,
-    intensity = 10,
-    rpeMode = true,
+    intensity = 1.0,
+    rpeMode = false,
 )
 ProgCali = Progression(
     type = LinearProgression(),

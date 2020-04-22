@@ -22,6 +22,11 @@ modality = Dict(
     "dragon" =>"Dragon",
     "walking" => "Walking",
     "backstep" => "Backstep",
+    "straddle" => "Straddle",
+    "full" => "Full",
+    "one leg out" => "One Leg Out",
+    "tuck" => "Tuck",
+    "adv tuck" => "Advanced Tuck",
 )
 
 setType = Dict(
@@ -31,6 +36,7 @@ setType = Dict(
     "amrap emom" => "AMRAP EMOM",
     "test" => "Test",
     "optional" => "Optional",
+    "opt amrap emom" => "Opt AMRAP EMOM"
 )
 
 scale = Dict(
@@ -147,6 +153,7 @@ bench = Dict(
     "flat" => "Flat Bench",
     "decline" => "Decline Bench",
     "incline" => "Incline Bench",
+    "db incline" => "DB Incline Bench",
     "cg" => "Close Grip Bench",
     "feet up" => "Feet Up Bench",
     "spotto" => "Spoto Bench",
