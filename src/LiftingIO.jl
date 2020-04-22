@@ -41,33 +41,6 @@ function showDays(programme::Programme)
                     println("      ", set[k], " × ", reps[k], " × ", wght[k], "\t(", type[k], ", rpe: ", rpe[k], ", ", intensity[k], "%)")
                 end
             end
-
-            #=
-            keyArr = keys(days[i][j])
-            for key in keyArr
-                print("    ",key, ": ")
-                vals = getfield(days[i][j], key)
-                if typeof(vals) == String
-                    println(vals)
-                else
-                    numVals = length(vals)
-                    for i in 1:numVals
-                        if typeof(vals[i]) == String
-                            print(vals[i][1:end])
-                            i < numVals ? print(", ") : nothing
-                        else
-                            if typeof(vals[i]) == Char
-                                print(vals[i])
-                            else
-                                print(vals[i])
-                                i < numVals ? print(", ") : nothing
-                            end
-                        end
-                    end
-                    println("")
-                end
-            end
-            =#
         end
         println("\n","-"^80)
     end

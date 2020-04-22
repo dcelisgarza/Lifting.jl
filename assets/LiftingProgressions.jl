@@ -378,7 +378,7 @@ H1 = SetScheme(
     sets = [1, 3, 1],
     reps = [4, 6, 3],
     intensity = [9, 8, 7],
-    roundMode = [ceil, ceil, ceil],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 H2 = SetScheme(
@@ -386,7 +386,7 @@ H2 = SetScheme(
     sets = [1, 3, 1],
     reps = [6, 8, 4],
     intensity = [9, 8, 7],
-    roundMode = [ceil, ceil, ceil],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 H3 = SetScheme(
@@ -394,7 +394,7 @@ H3 = SetScheme(
     sets = [1, 3, 1],
     reps = [8, 10, 6],
     intensity = [9, 8, 7],
-    roundMode = [ceil, ceil, ceil],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 # Mid intensity burnout.
@@ -428,7 +428,7 @@ L1 = SetScheme(
     sets = [1, 3, 1],
     reps = [8, 10, 6],
     intensity = [7, 6, 5],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 L2 = SetScheme(
@@ -436,7 +436,7 @@ L2 = SetScheme(
     sets = [1, 3, 1],
     reps = [10, 12, 8],
     intensity = [7, 6, 5],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 L3 = SetScheme(
@@ -444,7 +444,7 @@ L3 = SetScheme(
     sets = [1, 3, 1],
     reps = [12, 14, 10],
     intensity = [7, 6, 5],
-    roundMode = [ceil, floor, floor],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 h23_lmh = Progression(
@@ -474,8 +474,7 @@ calisthenics = SetScheme(;
     type = setType["amrap"],
     sets = 5,
     reps = 12,
-    intensity = 1.0,
-    rpeMode = false,
+    intensity = 0.8,
 )
 ProgCali = Progression(
     type = LinearProgression(),

@@ -135,13 +135,13 @@ wristExt = Exercise(;
     name = grip["wrist extension"],
     equipment = equipment["db"],
     muscles = muscles["wrist extensors"],
-    trainingMax = 8,
+    trainingMax = 10,
 )
 wristCurl = Exercise(;
     name = grip["wrist curl"],
     equipment = equipment["db"],
     muscles = muscles["wrist extensors"],
-    trainingMax = 8,
+    trainingMax = 10,
 )
 platePinch = Exercise(;
     name = grip["plate pinch"],
