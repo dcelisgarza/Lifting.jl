@@ -109,7 +109,7 @@ lunges = Exercise(;
     equipment = equipment["db"],
     muscles = [muscles["quads"], muscles["glutes"]],
     trainingMax = 47.5,
-    )
+)
 bulgarianSplit = Exercise(;
     name = squat["bulgarian"],
     equipment = equipment["db"],
@@ -168,7 +168,11 @@ calcWeights(fingerCurl, ProgFingerCurl)
 facePull = Exercise(;
     name = pull["face"],
     equipment = equipment["cable"],
-    muscles = [muscles["rear delts"], muscles["rhomboids"], muscles["rot cuff"]],
+    muscles = [
+        muscles["rear delts"],
+        muscles["rhomboids"],
+        muscles["rot cuff"],
+    ],
     trainingMax = 30,
 )
 pullup = Exercise(;
@@ -249,14 +253,14 @@ toeToBar = Exercise(;
     muscles = muscles["core"],
     trainingMax = 10,
 )
-abRollout =  Exercise(;
+abRollout = Exercise(;
     name = core["ab roll"],
     modality = modality["kneeling"],
     equipment = equipment["ab wheel"],
     muscles = muscles["core"],
     trainingMax = 10,
 )
-landMine =  Exercise(;
+landMine = Exercise(;
     name = core["landmine"],
     equipment = equipment["bb"],
     muscles = muscles["core"],
@@ -295,7 +299,12 @@ backLever = Exercise(;
     name = isometric["back"],
     modality = modality["straddle"],
     equipment = equipment["pullup bar"],
-    muscles = [muscles["lats"], muscles["pecs"], muscles["front delts"], muscles["core"]],
+    muscles = [
+        muscles["lats"],
+        muscles["pecs"],
+        muscles["front delts"],
+        muscles["core"],
+    ],
     trainingMax = 15,
 )
 ProgFrontLever = deepcopy(ProgCali)
@@ -303,9 +312,9 @@ ProgBackLever = deepcopy(ProgCali)
 calcWeights(frontLever, ProgFrontLever)
 calcWeights(backLever, ProgBackLever)
 ###
-week1 = [[],[],[],[],[],[],[]]
-week2 = [[],[],[],[],[],[],[]]
-week3 = [[],[],[],[],[],[],[]]
+week1 = [[], [], [], [], [], [], []]
+week2 = [[], [], [], [], [], [], []]
+week3 = [[], [], [], [], [], [], []]
 # Week1
 push!(week1[1], BenchT1, ProgCAP3BenchT1, 1)
 push!(week1[1], BenchT2, ProgCAP3BenchT2, 1)
@@ -497,9 +506,28 @@ push!(
             ProgCAP3SquatT2,
         ],
         [
-            week1[1], week1[2], week1[3], week1[4], week1[5][1], week1[6], week1[7],
-            week2[1], week2[2], week2[3][1], week2[4], week2[5], week2[6], week2[7],
-            week3[1][1], week3[2], week3[3], week3[4], week3[5], "Rest", week3[6], week3[7],
+            week1[1],
+            week1[2],
+            week1[3],
+            week1[4],
+            week1[5][1],
+            week1[6],
+            week1[7],
+            week2[1],
+            week2[2],
+            week2[3][1],
+            week2[4],
+            week2[5],
+            week2[6],
+            week2[7],
+            week3[1][1],
+            week3[2],
+            week3[3],
+            week3[4],
+            week3[5],
+            "Rest",
+            week3[6],
+            week3[7],
         ],
     ),
 )

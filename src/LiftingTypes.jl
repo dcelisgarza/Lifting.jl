@@ -16,11 +16,7 @@ function calcIntensity(reps::Integer, rpe::Real = 10)
     b = 0.0333
     c = 0.0025
     d = 0.1
-    return 1 / (
-        a +
-        b * (reps + 10 - rpe) +
-        (reps - 1) * (c / reps + d / rpe)
-    )
+    return 1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe))
 end
 
 function calcRPE(reps::Integer, intensity::Real)
@@ -29,7 +25,26 @@ function calcRPE(reps::Integer, intensity::Real)
     c = 0.0025
     d = 0.1
 
-    rpe = (sqrt((a*reps*intensity + b*reps^2*intensity + 10*b*reps*intensity + c*reps*intensity - c*intensity - reps)^2 + 4*b*reps*intensity*(d*reps^2*intensity - d*reps*intensity)) + a*reps*intensity + b*reps^2*intensity + 10*b*reps*intensity + c*reps*intensity - c*intensity - reps)/(2*b*reps*intensity)
+    rpe =
+        (
+            sqrt(
+                (
+                    a * reps * intensity +
+                    b * reps^2 * intensity +
+                    10 * b * reps * intensity +
+                    c * reps * intensity - c * intensity - reps
+                )^2 +
+                4 *
+                b *
+                reps *
+                intensity *
+                (d * reps^2 * intensity - d * reps * intensity),
+            ) +
+            a * reps * intensity +
+            b * reps^2 * intensity +
+            10 * b * reps * intensity +
+            c * reps * intensity - c * intensity - reps
+        ) / (2 * b * reps * intensity)
 
     return rpe
 end
@@ -40,9 +55,22 @@ function calcReps(intensity::Real, rpe::Real)
     c = 0.0025
     d = 0.1
 
-    reps = (sqrt((a*rpe*intensity - b*rpe^2*intensity + 10*b*rpe*intensity + c*rpe*intensity - d*intensity - rpe)^2 + 4*c*rpe*intensity*(b*rpe*intensity + d*intensity)) - a*rpe*intensity + b*rpe^2*intensity - 10*b*rpe*intensity - c*rpe*intensity + d*intensity + rpe)/(2*intensity*(b*rpe + d))
+    reps =
+        (
+            sqrt(
+                (
+                    a * rpe * intensity - b * rpe^2 * intensity +
+                    10 * b * rpe * intensity +
+                    c * rpe * intensity - d * intensity - rpe
+                )^2 +
+                4 * c * rpe * intensity * (b * rpe * intensity + d * intensity),
+            ) - a * rpe * intensity + b * rpe^2 * intensity -
+            10 * b * rpe * intensity - c * rpe * intensity +
+            d * intensity +
+            rpe
+        ) / (2 * intensity * (b * rpe + d))
 
-    return Int(round(reps, digits=0))
+    return Int(round(reps, digits = 0))
 end
 
 # function calcRPE(reps::Integer, intensity::Real)
@@ -119,8 +147,8 @@ mutable struct SetScheme{
                 length(intensity) ==
                 length(addWeight) ==
                 length(roundMode) "lengths of sets $(length(sets)), reps $(length(reps)), intensity $(length(intensity)), addWeight $(length(addWeight)) and roundMode $(length(roundMode)) must be equal."
-        rpe = 0.
-        wght = 0.
+        rpe = 0.0
+        wght = 0.0
         if difSets > 1
             rpe = zeros(difSets)
             wght = zeros(difSets)
@@ -131,7 +159,13 @@ mutable struct SetScheme{
         else
             rpe = calcRPE.(reps, intensity)
         end
-        new{typeof(type), typeof(sets), typeof(intensity), typeof(roundMode), typeof(rpeMode)}(
+        new{
+            typeof(type),
+            typeof(sets),
+            typeof(intensity),
+            typeof(roundMode),
+            typeof(rpeMode),
+        }(
             type,
             sets,
             reps,
@@ -252,7 +286,7 @@ struct Exercise{
         equipment::T2 = "Barbell",
         modality::T3 = "Default",
         muscles::T4 = "NA",
-        trainingMax::T6=0,
+        trainingMax::T6 = 0,
         size::T5 = "NA",
         roundBase::T7 = 2.5,
         roundMode::T8 = floor,
@@ -309,7 +343,7 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
     # Calculate target minimum RPE for a set.
     intense = setScheme.wght / trainingMax
     setScheme.rpe = round.(calcRPE.(reps, intense), digits = 2)
-    setScheme.intensity = setScheme.wght/trainingMax
+    setScheme.intensity = setScheme.wght / trainingMax
 
     return setScheme
 end
@@ -372,7 +406,7 @@ function push!(
     A::AbstractArray{T, 1} where {T},
     exercise::Exercise,
     progression::Progression,
-    i::Integer=1,
+    i::Integer = 1,
 )
     if typeof(progression.setScheme[i].type) == String
         type = progression.setScheme[i].type

@@ -470,12 +470,8 @@ l23_lmh = Progression(
 )
 
 # Calisthenics.
-calisthenics = SetScheme(;
-    type = setType["amrap"],
-    sets = 5,
-    reps = 12,
-    intensity = 0.8,
-)
+calisthenics =
+    SetScheme(; type = setType["amrap"], sets = 5, reps = 12, intensity = 0.8)
 ProgCali = Progression(
     type = LinearProgression(),
     name = "Calisthenics AMRAP",

@@ -19,7 +19,7 @@ modality = Dict(
     "kneeling" => "Kneeling",
     "side" => "Side",
     "cheat" => "Cheat",
-    "dragon" =>"Dragon",
+    "dragon" => "Dragon",
     "walking" => "Walking",
     "backstep" => "Backstep",
     "straddle" => "Straddle",
@@ -36,7 +36,7 @@ setType = Dict(
     "amrap emom" => "AMRAP EMOM",
     "test" => "Test",
     "optional" => "Optional",
-    "opt amrap emom" => "Opt AMRAP EMOM"
+    "opt amrap emom" => "Opt AMRAP EMOM",
 )
 
 scale = Dict(
@@ -71,7 +71,7 @@ equipment = Dict(
     "chain belt" => "Chain Belt",
     "plate" => "Plate",
     "parallette" => "Parallette",
-    "ab wheel" =>"Ab Wheel",
+    "ab wheel" => "Ab Wheel",
 )
 
 muscles = Dict(
@@ -182,7 +182,7 @@ press = Dict(
     "push" => "Push Press",
     "z" => "Z Press",
     "hspu" => "Handstand Push Up",
-    "side raise" => "Side Raise"
+    "side raise" => "Side Raise",
 )
 
 row = Dict(
