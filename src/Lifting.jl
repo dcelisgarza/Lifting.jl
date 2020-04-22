@@ -6,12 +6,15 @@ export AbstractProgression,
 export calcIntensity,
     calcRPE,
     calcReps,
+    calcIntensityRatio,
+    calcRPERatio,
+    calcRepsRatio,
+    calcRepMax,
     intensityArb,
     SetScheme,
     Progression,
     Exercise,
     calcWeights,
-    Programme,
-    showDays
+    Programme
 include("LiftingIO.jl")
 end # module

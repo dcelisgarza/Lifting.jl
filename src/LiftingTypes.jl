@@ -73,9 +73,49 @@ function calcReps(intensity::Real, rpe::Real)
     return Int(round(reps, digits = 0))
 end
 
-# function calcRPE(reps::Integer, intensity::Real)
-#     return 0.995/0.0333 - 1/(0.0333*intensity) + reps + 10
-# end
+function calcIntensityRatio(
+    actualReps::Integer,
+    actualRPE::Real,
+    targetReps::Integer,
+    targetRPE::Real,
+)
+    actualIntensity = calcIntensity(actualReps, actualRPE)
+    targetIntensity = calcIntensity(targetReps, targetRPE)
+    return targetIntensity / actualIntensity
+end
+
+function calcRepRatio(
+    actualIntensity::Real,
+    actualRPE::Real,
+    targetIntensity::Real,
+    targetRPE::Real,
+)
+    actualReps = calcReps(actualIntensity, actualRPE)
+    targetReps = calcReps(targetIntensity, targetRPE)
+    return targetReps / actualReps
+end
+
+function calcRPERatio(
+    actualReps::Integer,
+    actualIntensity::Real,
+    targetReps::Integer,
+    targetIntensity::Real,
+)
+    actualRPE = calcRPE(actualReps, actualIntensity)
+    targetRPE = calcRPE(targetReps, targetIntensity)
+    return targetRPE / actualRPE
+end
+
+function calcRepMax(
+    weight::Real,
+    actualReps::Integer,
+    actualRPE::Real,
+    targetReps::Integer,
+    targetRPE::Real,
+)
+    intensity = calcIntensityRatio(actualReps, actualRPE, targetReps, targetRPE)
+    return weight * intensity
+end
 
 function intensityArb(var::Integer)
     return 1 / (0.995 + (0.0333 * var))
@@ -83,19 +123,22 @@ end
 
 """
 ```
-struct SetScheme{
-    T1 <: Vector{<:AbstractString},
-    T2 <: Vector{<:Integer},
-    T3 <: Vector{<:Real},
-    T4 <: Vector{<:Function},
+mutable struct SetScheme{
+    T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
+    T2 <: Union{<:Integer, Vector{<:Integer}},
+    T3 <: Union{<:Real, Vector{<:Real}},
+    T4 <: Union{<:Function, Vector{<:Function}},
+    T5 <: Bool,
 }
     type::T1
     sets::T2
     reps::T2
     intensity::T3
+    rpe::T3
     addWeight::T3
     roundMode::T4
     wght::T3
+    rpeMode::T5
 end
 ```
 """
@@ -185,7 +228,7 @@ iterate(A::SetScheme, i = 1) =
 
 """
 ```
-struct Progression{
+mutable struct Progression{
     T1 <: AbstractProgression,
     T2 <: AbstractString,
     T3 <: Integer,
@@ -344,7 +387,6 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
     intense = setScheme.wght / trainingMax
     setScheme.rpe = round.(calcRPE.(reps, intense), digits = 2)
     setScheme.intensity = setScheme.wght / trainingMax
-
     return setScheme
 end
 function calcWeights(exercise::Exercise, prog::Progression)
@@ -353,52 +395,26 @@ end
 
 """
 ```
-struct Programme{
-    T1 <: AbstractString,
-    T2 <: Union{<:Exercise, Vector{<:Exercise}},
-    T3 <: Union{<:Progression, Vector{<:Progression}},
-}
+struct Programme{T1 <: AbstractString, T2 <: Any}
     name::T1
-    exercise::T2
-    progression::T3
+    days::T2
 end
 ```
 """
-struct Programme{
-    T1 <: AbstractString,
-    T2 <: Union{<:Exercise, Vector{<:Exercise}},
-    T3 <: Union{<:Progression, Vector{<:Progression}},
-    T4 <: Any,
-}
+struct Programme{T1 <: AbstractString, T2 <: Any}
     name::T1
-    exercise::T2
-    progression::T3
-    days::T4
+    days::T2
 
     function Programme(
         name::T1,
-        exercise::T2,
-        progression::T3,
-        days::Any,
-    ) where {
-        T1 <: AbstractString,
-        T2 <: Union{<:Exercise, Vector{<:Exercise}},
-        T3 <: Union{<:Progression, Vector{<:Progression}},
-    }
-        @assert length(exercise) == length(progression) "$(name): the number of exerices, $(length(exercise)), must equal the number of progressions, $(length(progression))"
+        days::T2,
+    ) where {T1 <: AbstractString, T2 <: Any}
 
-        for i = 1:length(exercise)
-            calcWeights.(exercise[i], progression[i].setScheme)
-        end
-
-        new{typeof(name), typeof(exercise), typeof(progression), typeof(days)}(
-            name,
-            exercise,
-            progression,
-            days,
-        )
+        new{typeof(name), typeof(days)}(name, days)
     end
 end
+
+getindex(p::Programme, idx...) = [p.days[i] for i in idx]
 getindex(p::Programme, i) = p.days[i]
 
 import Base: push!
@@ -408,6 +424,7 @@ function push!(
     progression::Progression,
     i::Integer = 1,
 )
+    calcWeights.(exercise, progression.setScheme[i])
     if typeof(progression.setScheme[i].type) == String
         type = progression.setScheme[i].type
     else
@@ -441,5 +458,4 @@ function push!(
             ),
         )
     end
-
 end
