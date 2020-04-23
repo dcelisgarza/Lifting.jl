@@ -418,7 +418,7 @@ struct Programme{T1 <: AbstractString, T2 <: Any}
 end
 ```
 """
-mutable struct Programme{T1 <: AbstractString, T2 <: Dict{Any, Any}, T3 <: Any}
+struct Programme{T1 <: AbstractString, T2 <: Dict{Any, Any}, T3 <: Any}
     name::T1
     dict::T2
     days::T3

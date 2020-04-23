@@ -1,5 +1,5 @@
 # Programme: nSuns CAP3 + OHP 6 Day LP Hybrid
-sets	reps	weight	type	rpe	intensity
+sets,reps,weight,type,rpe,intensity
 Day,1
 Flat Bench
 4,4,67.5,Default,4.7,73.5
