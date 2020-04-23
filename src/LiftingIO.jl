@@ -85,7 +85,11 @@ function write(
         open(filename, "w") do io
             days = programme.days
             write(io, "# Programme: ", programme.name, "\n")
-            writedlm(io, ["sets" "reps" "weight" "type" "rpe" "intensity"], delim)
+            writedlm(
+                io,
+                ["sets" "reps" "weight" "type" "rpe" "intensity"],
+                delim,
+            )
             for i in idx
                 writedlm(io, ["Day" i], delim)
                 if typeof(days[i]) == String
@@ -142,11 +146,11 @@ function write(
             end
         end
     else
-        open("Log "*filename, "w") do io
-            dict = programme.dict
+        open("Log_" * filename, "w") do io
+            exerProg = programme.exerProg
             writedlm(io, ["# Name" "Date" "Reps" "Weight" "RPE"], delim)
-            for key in keys(dict)
-                writedlm(io, [key "01/01/0000" -1.0 -1.0 -1.0], delim)
+            for key in keys(exerProg)
+                writedlm(io, [key "01/01/0000" -1 -1.0 -1.0], delim)
             end
         end
     end

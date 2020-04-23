@@ -6,6 +6,7 @@ struct LinearProgression <: AbstractProgression end
 struct DoubleProgression <: AbstractProgression end
 struct PeriodProgression <: AbstractProgression end
 struct BlockProgression <: AbstractProgression end
+abstract type AbstractProgramme end
 
 import Base: round, length, getindex, iterate, @_inline_meta
 round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
@@ -16,7 +17,10 @@ function calcIntensity(reps::Integer, rpe::Real = 10)
     b = 0.0333
     c = 0.0025
     d = 0.1
-    return minimum((1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)),1.0))
+    return minimum((
+        1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)),
+        1.0,
+    ))
 end
 
 function calcRPE(reps::Integer, intensity::Real)
@@ -46,7 +50,7 @@ function calcRPE(reps::Integer, intensity::Real)
             c * reps * intensity - c * intensity - reps
         ) / (2 * b * reps * intensity)
 
-    return minimum((rpe, 10.))
+    return minimum((rpe, 10.0))
 end
 
 function calcReps(intensity::Real, rpe::Real)
@@ -54,8 +58,8 @@ function calcReps(intensity::Real, rpe::Real)
     b = 0.0333
     c = 0.0025
     d = 0.1
-    intensity = minimum((intensity, 1.))
-    rpe = minimum((rpe, 10.))
+    intensity = minimum((intensity, 1.0))
+    rpe = minimum((rpe, 10.0))
     reps =
         (
             sqrt(
@@ -80,8 +84,8 @@ function calcIntensityRatio(
     targetReps::Integer,
     targetRPE::Real,
 )
-    actualRPE = minimum((actualRPE, 10.))
-    targetRPE = minimum((targetRPE, 10.))
+    actualRPE = minimum((actualRPE, 10.0))
+    targetRPE = minimum((targetRPE, 10.0))
 
     actualIntensity = calcIntensity(actualReps, actualRPE)
     targetIntensity = calcIntensity(targetReps, targetRPE)
@@ -94,10 +98,10 @@ function calcRepRatio(
     targetIntensity::Real,
     targetRPE::Real,
 )
-    actualIntensity = minimum((actualRPE, 1.))
-    targetIntensity = minimum((targetRPE, 1.))
-    actualRPE = minimum((actualRPE, 10.))
-    targetRPE = minimum((targetRPE, 10.))
+    actualIntensity = minimum((actualRPE, 1.0))
+    targetIntensity = minimum((targetRPE, 1.0))
+    actualRPE = minimum((actualRPE, 10.0))
+    targetRPE = minimum((targetRPE, 10.0))
 
     actualReps = calcReps(actualIntensity, actualRPE)
     targetReps = calcReps(targetIntensity, targetRPE)
@@ -110,8 +114,8 @@ function calcRPERatio(
     targetReps::Integer,
     targetIntensity::Real,
 )
-    actualIntensity = minimum((actualRPE, 1.))
-    targetIntensity = minimum((targetRPE, 1.))
+    actualIntensity = minimum((actualRPE, 1.0))
+    targetIntensity = minimum((targetRPE, 1.0))
 
     actualRPE = calcRPE(actualReps, actualIntensity)
     targetRPE = calcRPE(targetReps, targetIntensity)
@@ -126,13 +130,12 @@ function calcRepMax(
     targetRPE::Real,
 )
 
-    actualRPE = minimum((actualRPE, 10.))
-    targetRPE = minimum((targetRPE, 10.))
+    actualRPE = minimum((actualRPE, 10.0))
+    targetRPE = minimum((targetRPE, 10.0))
 
     intensity = calcIntensityRatio(actualReps, actualRPE, targetReps, targetRPE)
     return weight * intensity
 end
-
 
 function intensityArb(var::Integer)
     return 1 / (0.995 + (0.0333 * var))
@@ -418,19 +421,36 @@ struct Programme{T1 <: AbstractString, T2 <: Any}
 end
 ```
 """
-struct Programme{T1 <: AbstractString, T2 <: Dict{Any, Any}, T3 <: Any}
+struct Programme{
+    T0 <: AbstractProgramme,
+    T1 <: AbstractString,
+    T2 <: Dict{Any, Any},
+    T3 <: Any,
+}
+
+    type::T0
     name::T1
-    dict::T2
+    exerProg::T2
     days::T3
 
-
     function Programme(
+        type::T0,
         name::T1,
-        dict::T2,
+        exerProg::T2,
         days::T3,
-    ) where {T1 <: AbstractString, T2 <: Dict{Any, Any}, T3 <: Any}
+    ) where {
+        T0 <: AbstractProgramme,
+        T1 <: AbstractString,
+        T2 <: Dict{Any, Any},
+        T3 <: Any,
+    }
 
-        new{typeof(name), typeof(dict), typeof(days)}(name, dict, days)
+        new{typeof(type), typeof(name), typeof(exerProg), typeof(days)}(
+            type,
+            name,
+            exerProg,
+            days,
+        )
     end
 end
 
@@ -480,11 +500,7 @@ function push!(
     end
 end
 
-function updateRepMax(
-    name::String,
-    dict::Dict{Any, Any},
-    actualReps::Integer
-)
+function adjustRepMax(name::String, dict::Dict{Any, Any}, actualReps::Integer)
     entry = dict[name]
     exercise = entry[1]
     prog = entry[2]
@@ -493,34 +509,30 @@ function updateRepMax(
 
     idx1 = 0
     idx2 = 0
-    tmp = 0.
-    old = 0.
+    tmp = 0.0
+    old = 0.0
     maxWght = 0
     for i = 1:numSets
         old = tmp
         wght = setScheme[i].wght
         tmp = maximum(wght)
-        maxWght = maximum((tmp, maxWght))
-        if maxWght > old
+        tmp = maximum((tmp, old))
+        if tmp > old || maxWght == 0
+            maxWght = tmp
             idx1 = i
-            idx2 = findfirst(x -> x == maxWght, wght)
+            idx3 = findfirst(x -> x == maxWght, wght)
+            idx3 != nothing ? idx2 = idx3 : idx2 = idx1
         end
     end
-
     targetReps = setScheme[idx1].reps[idx2]
     targetIntensity = setScheme[idx1].intensity[idx2]
     targetRPE = calcRPE(targetReps, targetIntensity)
     actualRPE = calcRPE(actualReps, targetIntensity)
-    flag = targetRPE<=actualRPE
-    actualRPE = 2*targetRPE - actualRPE
+    flag = targetRPE <= actualRPE
+    actualRPE = 2 * targetRPE - actualRPE
 
-    trainingMax = calcRepMax(
-        maxWght,
-        actualReps,
-        actualRPE,
-        targetReps,
-        targetRPE
-    )
+    trainingMax =
+        calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
     roundBase = exercise.roundBase
     if flag
         if trainingMax < exercise.trainingMax
@@ -545,4 +557,20 @@ function updateRepMax(
             calcWeights(exercise, prog)
         end
     end
+end
+
+function updateRepMax(programme::Dict)
+    for key in keys(programme)
+        prog = programme[key]
+        exerProg = prog.exerProg
+        var = readdlm("Log_" * programme[key].name * ".csv", ',')
+        for i = 2:size(var, 1)
+            numReps = Int(var[i, end - 2])
+            numReps < 0 ? continue : nothing
+            name = var[i, end - 3]
+            adjustRepMax(String(var[i, 1]), exerProg, numReps)
+        end
+        prog.days .= makeDays(prog.type, exerProg)
+    end
+    return programme
 end

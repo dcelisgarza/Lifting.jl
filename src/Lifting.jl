@@ -3,7 +3,11 @@ using DelimitedFiles
 
 include("LiftingTypes.jl")
 export AbstractProgression,
-    LinearProgression, DoubleProgression, PeriodProgression, BlockProgression
+    AbstractProgramme,
+    LinearProgression,
+    DoubleProgression,
+    PeriodProgression,
+    BlockProgression
 export calcIntensity,
     calcRPE,
     calcReps,
@@ -11,6 +15,7 @@ export calcIntensity,
     calcRPERatio,
     calcRepsRatio,
     calcRepMax,
+    adjustRepMax,
     updateRepMax,
     intensityArb,
     SetScheme,
