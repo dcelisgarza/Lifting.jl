@@ -16,7 +16,7 @@ function calcIntensity(reps::Integer, rpe::Real = 10)
     b = 0.0333
     c = 0.0025
     d = 0.1
-    return minimum(1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)), 1.0)
+    return minimum((1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)),1.0))
 end
 
 function calcRPE(reps::Integer, intensity::Real)
@@ -46,7 +46,7 @@ function calcRPE(reps::Integer, intensity::Real)
             c * reps * intensity - c * intensity - reps
         ) / (2 * b * reps * intensity)
 
-    return minimum((rpe, 10.0))
+    return minimum((rpe, 10.))
 end
 
 function calcReps(intensity::Real, rpe::Real)
@@ -132,6 +132,7 @@ function calcRepMax(
     intensity = calcIntensityRatio(actualReps, actualRPE, targetReps, targetRPE)
     return weight * intensity
 end
+
 
 function intensityArb(var::Integer)
     return 1 / (0.995 + (0.0333 * var))
@@ -417,16 +418,19 @@ struct Programme{T1 <: AbstractString, T2 <: Any}
 end
 ```
 """
-struct Programme{T1 <: AbstractString, T2 <: Any}
+mutable struct Programme{T1 <: AbstractString, T2 <: Dict{Any, Any}, T3 <: Any}
     name::T1
-    days::T2
+    dict::T2
+    days::T3
+
 
     function Programme(
         name::T1,
-        days::T2,
-    ) where {T1 <: AbstractString, T2 <: Any}
+        dict::T2,
+        days::T3,
+    ) where {T1 <: AbstractString, T2 <: Dict{Any, Any}, T3 <: Any}
 
-        new{typeof(name), typeof(days)}(name, days)
+        new{typeof(name), typeof(dict), typeof(days)}(name, dict, days)
     end
 end
 
@@ -473,5 +477,72 @@ function push!(
                 intensity = Tuple(progression.setScheme[i].intensity),
             ),
         )
+    end
+end
+
+function updateRepMax(
+    name::String,
+    dict::Dict{Any, Any},
+    actualReps::Integer
+)
+    entry = dict[name]
+    exercise = entry[1]
+    prog = entry[2]
+    setScheme = prog.setScheme
+    numSets = length(setScheme)
+
+    idx1 = 0
+    idx2 = 0
+    tmp = 0.
+    old = 0.
+    maxWght = 0
+    for i = 1:numSets
+        old = tmp
+        wght = setScheme[i].wght
+        tmp = maximum(wght)
+        maxWght = maximum((tmp, maxWght))
+        if maxWght > old
+            idx1 = i
+            idx2 = findfirst(x -> x == maxWght, wght)
+        end
+    end
+
+    targetReps = setScheme[idx1].reps[idx2]
+    targetIntensity = setScheme[idx1].intensity[idx2]
+    targetRPE = calcRPE(targetReps, targetIntensity)
+    actualRPE = calcRPE(actualReps, targetIntensity)
+    flag = targetRPE<=actualRPE
+    actualRPE = 2*targetRPE - actualRPE
+
+    trainingMax = calcRepMax(
+        maxWght,
+        actualReps,
+        actualRPE,
+        targetReps,
+        targetRPE
+    )
+    roundBase = exercise.roundBase
+    if flag
+        if trainingMax < exercise.trainingMax
+            exercise.trainingMax += roundBase
+            calcWeights(exercise, prog)
+        else
+            change = div(trainingMax - exercise.trainingMax, roundBase)
+            change = maximum((change, roundBase))
+            exercise.trainingMax += change
+            calcWeights(exercise, prog)
+        end
+    else
+        if trainingMax < exercise.trainingMax
+            change = div(exercise.trainingMax - trainingMax, roundBase)
+            change = maximum((change, roundBase))
+            exercise.trainingMax -= change
+            calcWeights(exercise, prog)
+        else
+            change = div(trainingMax - exercise.trainingMax, roundBase)
+            change = maximum((change, roundBase))
+            exercise.trainingMax += change
+            calcWeights(exercise, prog)
+        end
     end
 end

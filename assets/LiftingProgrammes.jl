@@ -1,8 +1,8 @@
 using Lifting
-using Revise
 include("LiftingDictionaries.jl")
 include("LiftingProgressions.jl")
 
+exerProg = Dict()
 ### Main lifts
 BenchT1 = Exercise(
     name = bench["flat"],
@@ -16,6 +16,9 @@ BenchT2 = Exercise(
     muscles = [muscles["pecs"], muscles["triceps"], muscles["front delts"]],
     trainingMax = 75,
 )
+push!(exerProg, BenchT1.name => (BenchT1, ProgCAP3BenchT1))
+push!(exerProg, BenchT2.name => (BenchT2, ProgCAP3BenchT2))
+
 DeadliftT1 = Exercise(
     name = deadlift["dl"],
     equipment = equipment["bb"],
@@ -44,6 +47,9 @@ DeadliftT2 = Exercise(
     ],
     trainingMax = 140,
 )
+push!(exerProg, DeadliftT1.name => (DeadliftT1, ProgCAP3DeadliftT1))
+push!(exerProg, DeadliftT2.name => (DeadliftT2, ProgCAP3DeadliftT2))
+
 SquatT1 = Exercise(
     name = squat["low"],
     equipment = equipment["bb"],
@@ -61,6 +67,9 @@ SquatT2 = Exercise(
     muscles = [muscles["quads"], muscles["glutes"], muscles["core"]],
     trainingMax = 80,
 )
+push!(exerProg, SquatT1.name => (SquatT1, ProgCAP3SquatT1))
+push!(exerProg, SquatT2.name => (SquatT2, ProgCAP3SquatT2))
+
 RowT1 = Exercise(
     name = row["pendlay"],
     modality = modality["cheat"],
@@ -86,12 +95,16 @@ RowT2 = Exercise(
     ],
     trainingMax = 42.5,
 )
+push!(exerProg, RowT1.name => (RowT1, ProgCAP3RowT1))
+push!(exerProg, RowT2.name => (RowT2, ProgCAP3RowT2))
+
 PressT1 = Exercise(
     name = press["ohp"],
     equipment = equipment["bb"],
     muscles = [muscles["front delts"], muscles["triceps"], muscles["traps"]],
     trainingMax = 60,
 )
+push!(exerProg, PressT1.name => (PressT1, Prog6DayPressT1))
 
 ### Accessories
 # Squat accessories.
@@ -118,7 +131,9 @@ calfRaise = Exercise(;
 ProgLunges = deepcopy(h23_lmh)
 ProgBulg = deepcopy(h23_lmh)
 ProgCalfRaise = deepcopy(l23_lmh)
-calcWeights(lunges, ProgLunges)
+push!(exerProg, lunges.name => (lunges, ProgLunges))
+push!(exerProg, bulgarianSplit.name => (bulgarianSplit, ProgBulg))
+push!(exerProg, calfRaise.name => (calfRaise, ProgCalfRaise))
 
 # Grip
 wristExt = Exercise(;
@@ -151,6 +166,10 @@ ProgWristExt = deepcopy(ProgGrip)
 ProgWristCurl = deepcopy(ProgGrip)
 ProgPlatePinch = deepcopy(ProgGrip)
 ProgFingerCurl = deepcopy(ProgGrip)
+push!(exerProg, wristExt.name => (wristExt, ProgWristExt))
+push!(exerProg, wristCurl.name => (wristCurl, ProgWristCurl))
+push!(exerProg, platePinch.name => (platePinch, ProgPlatePinch))
+push!(exerProg, fingerCurl.name => (fingerCurl, ProgFingerCurl))
 
 # Pulling
 facePull = Exercise(;
@@ -186,6 +205,10 @@ ProgFacePull = deepcopy(l23_lmh)
 ProgPullup = deepcopy(h23_lmh)
 ProgHammerCurl = deepcopy(l23_lmh)
 ProgZottmanCurl = deepcopy(l23_lmh)
+push!(exerProg, facePull.name => (facePull, ProgFacePull))
+push!(exerProg, pullup.name => (pullup, ProgPullup))
+push!(exerProg, hammerCurl.name => (hammerCurl, ProgHammerCurl))
+push!(exerProg, zottmanCurl.name => (zottmanCurl, ProgZottmanCurl))
 
 # Pushing
 inclineDBBench = Exercise(;
@@ -210,6 +233,9 @@ sideRaise = Exercise(;
 ProgInclineDBBench = deepcopy(m23_lmh)
 ProgDips = deepcopy(m23_lmh)
 ProgSideRaise = deepcopy(l23_lmh)
+push!(exerProg, inclineDBBench.name => (inclineDBBench, ProgInclineDBBench))
+push!(exerProg, dips.name => (dips, ProgDips))
+push!(exerProg, sideRaise.name => (sideRaise, ProgSideRaise))
 
 # Core
 dragonFlag = Exercise(;
@@ -262,6 +288,13 @@ ProgToeToBar = deepcopy(ProgCali)
 ProgAbRollout = deepcopy(ProgCali)
 ProgLandMine = deepcopy(m23_lmh)
 ProgParaCrunch = deepcopy(m23_lmh)
+push!(exerProg, dragonFlag.name => (dragonFlag, ProgDragonFlag))
+push!(exerProg, vsit.name => (vsit, ProgVsit))
+push!(exerProg, legRaise.name => (legRaise, ProgLegRaise))
+push!(exerProg, toeToBar.name => (toeToBar, ProgToeToBar))
+push!(exerProg, abRollout.name => (abRollout, ProgAbRollout))
+push!(exerProg, landMine.name => (landMine, ProgLandMine))
+push!(exerProg, paraCrunch.name => (paraCrunch, ProgParaCrunch))
 
 # Calisthenics Isometrics
 frontLever = Exercise(;
@@ -285,12 +318,18 @@ backLever = Exercise(;
 )
 ProgFrontLever = deepcopy(ProgCali)
 ProgBackLever = deepcopy(ProgCali)
+push!(exerProg, frontLever.name => (frontLever, ProgFrontLever))
+push!(exerProg, backLever.name => (backLever, ProgBackLever))
 
 ###
 week1 = [[], [], [], [], [], [], []]
 week2 = [[], [], [], [], [], [], []]
 week3 = [[], [], [], [], [], [], []]
+
 # Week1
+for i in 1:length(week1[1])
+    pop!(week1[1])
+end
 push!(week1[1], BenchT1, ProgCAP3BenchT1, 1)
 push!(week1[1], BenchT2, ProgCAP3BenchT2, 1)
 push!(week1[1], wristCurl, ProgWristCurl)
@@ -300,6 +339,7 @@ push!(week1[1], frontLever, ProgFrontLever)
 push!(week1[1], lunges, ProgLunges, 2)
 push!(week1[1], facePull, ProgFacePull, 2)
 push!(week1[1], legRaise, ProgLegRaise, 2)
+
 
 push!(week1[2], DeadliftT2, ProgCAP3DeadliftT2, 1)
 push!(week1[2], RowT2, ProgCAP3RowT2, 1)
@@ -461,11 +501,11 @@ push!(week3[6], fingerCurl, ProgFingerCurl)
 push!(week3[6], dips, ProgDips, 2)
 push!(week3[6], paraCrunch, ProgParaCrunch, 2)
 
-programmes = Dict{String, Programme}()
 push!(
-    programmes,
-    "current" => Programme(
-        "nSuns CAP3-LP Hybrid",
+    programme,
+    "nSuns CAP3-OHP6day" => Programme(
+        "nSuns CAP3 + OHP 6 Day LP Hybrid",
+        exerProg,
         [
             week1[1],
             week1[2],
@@ -494,5 +534,25 @@ push!(
     ),
 )
 
-display(programmes["current"])
-write(programmes["current"].name*".csv", programmes["current"])
+
+programme["nSuns CAP3-OHP6day"].dict["Pullup"][2].setScheme
+display(programme["nSuns CAP3-OHP6day"],1)
+exerProg["Flat Bench"][2].setScheme[5]
+exerProg["Flat Bench"][1].trainingMax
+exerProg["Pullup"][1].trainingMax
+
+exerProg["Pullup"][2].setScheme
+updateRepMax(
+    "Flat Bench",
+    exerProg,
+    20
+)
+updateRepMax(
+    "Pullup",
+    exerProg,
+    25
+)
+
+
+# cd(@__DIR__)
+# write(programme["nSuns CAP3-OHP6day"].name*".csv", programme["nSuns CAP3-OHP6day"])

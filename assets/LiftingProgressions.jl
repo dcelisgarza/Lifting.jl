@@ -496,3 +496,5 @@ ProgGrip = Progression(
     period = 1,
     setScheme = gripAMRAP,
 )
+
+programme = Dict{String, Programme}()
