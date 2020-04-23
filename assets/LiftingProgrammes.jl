@@ -1,4 +1,5 @@
-using Lifting, Revise
+using Lifting
+using Revise
 include("LiftingDictionaries.jl")
 include("LiftingProgressions.jl")
 
@@ -117,6 +118,7 @@ calfRaise = Exercise(;
 ProgLunges = deepcopy(h23_lmh)
 ProgBulg = deepcopy(h23_lmh)
 ProgCalfRaise = deepcopy(l23_lmh)
+calcWeights(lunges, ProgLunges)
 
 # Grip
 wristExt = Exercise(;
@@ -124,12 +126,14 @@ wristExt = Exercise(;
     equipment = equipment["db"],
     muscles = muscles["wrist extensors"],
     trainingMax = 10,
+    roundBase = 1,
 )
 wristCurl = Exercise(;
     name = grip["wrist curl"],
     equipment = equipment["db"],
     muscles = muscles["wrist extensors"],
     trainingMax = 10,
+    roundBase = 1,
 )
 platePinch = Exercise(;
     name = grip["plate pinch"],
@@ -164,6 +168,7 @@ pullup = Exercise(;
     equipment = equipment["pullup bar"],
     muscles = [muscles["lats"], muscles["biceps"], muscles["brachialis"]],
     trainingMax = 12.5,
+    roundBase = 1.25,
 )
 hammerCurl = Exercise(;
     name = pull["hammer"],
@@ -194,6 +199,7 @@ dips = Exercise(;
     equipment = [equipment["parallette"], equipment["chain belt"]],
     muscles = [muscles["pecs"], muscles["triceps"], muscles["front delts"]],
     trainingMax = 12.5,
+    roundBase = 1.25,
 )
 sideRaise = Exercise(;
     name = press["side raise"],
@@ -489,7 +495,4 @@ push!(
 )
 
 display(programmes["current"])
-display(programmes["current"], [2,5,7])
-display(programmes["current"], 6)
-
-calcRepMax(145, 4, 10, 1, 10)
+write(programmes["current"].name*".csv", programmes["current"])

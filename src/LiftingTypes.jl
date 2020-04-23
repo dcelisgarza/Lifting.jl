@@ -16,7 +16,7 @@ function calcIntensity(reps::Integer, rpe::Real = 10)
     b = 0.0333
     c = 0.0025
     d = 0.1
-    return 1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe))
+    return minimum(1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)), 1.0)
 end
 
 function calcRPE(reps::Integer, intensity::Real)
@@ -24,7 +24,7 @@ function calcRPE(reps::Integer, intensity::Real)
     b = 0.0333
     c = 0.0025
     d = 0.1
-
+    intensity = minimum((intensity, 1.0))
     rpe =
         (
             sqrt(
@@ -46,7 +46,7 @@ function calcRPE(reps::Integer, intensity::Real)
             c * reps * intensity - c * intensity - reps
         ) / (2 * b * reps * intensity)
 
-    return rpe
+    return minimum((rpe, 10.0))
 end
 
 function calcReps(intensity::Real, rpe::Real)
@@ -54,7 +54,8 @@ function calcReps(intensity::Real, rpe::Real)
     b = 0.0333
     c = 0.0025
     d = 0.1
-
+    intensity = minimum((intensity, 1.))
+    rpe = minimum((rpe, 10.))
     reps =
         (
             sqrt(
@@ -79,6 +80,9 @@ function calcIntensityRatio(
     targetReps::Integer,
     targetRPE::Real,
 )
+    actualRPE = minimum((actualRPE, 10.))
+    targetRPE = minimum((targetRPE, 10.))
+
     actualIntensity = calcIntensity(actualReps, actualRPE)
     targetIntensity = calcIntensity(targetReps, targetRPE)
     return targetIntensity / actualIntensity
@@ -90,6 +94,11 @@ function calcRepRatio(
     targetIntensity::Real,
     targetRPE::Real,
 )
+    actualIntensity = minimum((actualRPE, 1.))
+    targetIntensity = minimum((targetRPE, 1.))
+    actualRPE = minimum((actualRPE, 10.))
+    targetRPE = minimum((targetRPE, 10.))
+
     actualReps = calcReps(actualIntensity, actualRPE)
     targetReps = calcReps(targetIntensity, targetRPE)
     return targetReps / actualReps
@@ -101,6 +110,9 @@ function calcRPERatio(
     targetReps::Integer,
     targetIntensity::Real,
 )
+    actualIntensity = minimum((actualRPE, 1.))
+    targetIntensity = minimum((targetRPE, 1.))
+
     actualRPE = calcRPE(actualReps, actualIntensity)
     targetRPE = calcRPE(targetReps, targetIntensity)
     return targetRPE / actualRPE
@@ -113,6 +125,10 @@ function calcRepMax(
     targetReps::Integer,
     targetRPE::Real,
 )
+
+    actualRPE = minimum((actualRPE, 10.))
+    targetRPE = minimum((targetRPE, 10.))
+
     intensity = calcIntensityRatio(actualReps, actualRPE, targetReps, targetRPE)
     return weight * intensity
 end
@@ -305,7 +321,7 @@ struct Exercise{
 end
 ```
 """
-struct Exercise{
+mutable struct Exercise{
     T1 <: AbstractString,
     T2 <: Union{AbstractString, Vector{<:AbstractString}},
     T3 <: Union{AbstractString, Vector{<:AbstractString}},
@@ -386,7 +402,7 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
     # Calculate target minimum RPE for a set.
     intense = setScheme.wght / trainingMax
     setScheme.rpe = round.(calcRPE.(reps, intense), digits = 2)
-    setScheme.intensity = setScheme.wght / trainingMax
+
     return setScheme
 end
 function calcWeights(exercise::Exercise, prog::Progression)

@@ -377,24 +377,24 @@ H1 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [4, 6, 3],
-    intensity = [9, 8, 7],
-    roundMode = [ceil, ceil, floor],
+    intensity = [8, 8, 7],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 H2 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [6, 8, 4],
-    intensity = [9, 8, 7],
-    roundMode = [ceil, ceil, floor],
+    intensity = [8, 8, 7],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 H3 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [8, 10, 6],
-    intensity = [9, 8, 7],
-    roundMode = [ceil, ceil, floor],
+    intensity = [8, 8, 7],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 # Mid intensity burnout.
@@ -402,24 +402,24 @@ M1 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [6, 8, 4],
-    intensity = [8, 7, 6],
-    roundMode = [ceil, ceil, floor],
+    intensity = [7, 7, 6],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 M2 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [8, 10, 6],
-    intensity = [8, 7, 6],
-    roundMode = [ceil, ceil, floor],
+    intensity = [7, 7, 6],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 M3 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [10, 12, 8],
-    intensity = [8, 7, 6],
-    roundMode = [ceil, ceil, floor],
+    intensity = [7, 7, 6],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 # Low intensity burnout.
@@ -427,24 +427,24 @@ L1 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [8, 10, 6],
-    intensity = [7, 6, 5],
-    roundMode = [ceil, ceil, floor],
+    intensity = [6, 6, 5],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 L2 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [10, 12, 8],
-    intensity = [7, 6, 5],
-    roundMode = [ceil, ceil, floor],
+    intensity = [6, 6, 5],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 L3 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
     sets = [1, 3, 1],
     reps = [12, 14, 10],
-    intensity = [7, 6, 5],
-    roundMode = [ceil, ceil, floor],
+    intensity = [6, 6, 5],
+    roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 h23_lmh = Progression(

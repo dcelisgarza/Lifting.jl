@@ -1,4 +1,5 @@
 module Lifting
+using DelimitedFiles
 
 include("LiftingTypes.jl")
 export AbstractProgression,
@@ -10,6 +11,7 @@ export calcIntensity,
     calcRPERatio,
     calcRepsRatio,
     calcRepMax,
+    updateRepMax,
     intensityArb,
     SetScheme,
     Progression,
