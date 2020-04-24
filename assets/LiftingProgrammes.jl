@@ -40,10 +40,29 @@ wght = getContinuousData(data, 4)
 rpe = getContinuousData(data, 5)
 
 prog = programme["nSunsCAP3_OHP_6Day_LP"]
-reps[1][1] = 1
+
+
+simReps = rand(1:16,32)
+simWght = rand(20:150,32)
+for i in 1:32
+    reps[i][1] = simReps[i]
+    wght[i][1] = simWght[i]
+end
+
 updateRepMax(prog, name, reps)
-prog.exerProg[name[1]]
-adjustRepMax(name[1], prog.exerProg, reps[1][1]; weight = wght[1][1])
+function calcTrainingMaxLogs(prog::Programme, name, reps, weight)
+    tm = weight
+    for i in 1:length(name)
+        for j in 1:length(reps[i])
+            tm[i][j] = adjustRepMax(name[i], prog.exerProg, reps[i][j]; weight = wght[i][j])
+        end
+    end
+    return tm
+end
+tm = calcTrainingMaxLogs(prog, name, reps, wght)
+
+tm
+wght
 
 prog
 

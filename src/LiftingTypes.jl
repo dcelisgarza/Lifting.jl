@@ -538,7 +538,7 @@ function adjustRepMax(name::AbstractString, dict::Dict{Any, Any}, actualReps::In
         trainingMax =
             calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
     end
-    !update && return trainingMax
+    update == false && return trainingMax
 
     roundBase = exercise.roundBase
     change = 0
@@ -563,10 +563,10 @@ function adjustRepMax(name::AbstractString, dict::Dict{Any, Any}, actualReps::In
 end
 
 function makeDays end
-function updateRepMax(prog::Programme, names, reps)
+function updateRepMax(prog::Programme, names, reps; idx = missing)
     exerProg = prog.exerProg
     for i = 1:length(reps)
-        numReps = reps[i][end]
+        ismissing(idx) ? numReps = reps[i][end] : numReps = reps[i][idx]
         numReps < 0 ? continue : nothing
         name = names[i]
         adjustRepMax(name, exerProg, numReps; update = true)
