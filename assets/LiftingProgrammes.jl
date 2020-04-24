@@ -1,4 +1,4 @@
-using Lifting
+using Lifting, DelimitedFiles, Dates, Plots
 cd(@__DIR__)
 include("LiftingDictionaries.jl")
 include("LiftingProgressions.jl")
@@ -11,6 +11,61 @@ if save
     end
 end
 
+
+
+data = readdlm("Log_" * programme["nSunsCAP3_OHP_6Day_LP"].name * ".csv", ',')
+function numDays(dates; format = "dd/mm/yyyy")
+    # Range for the date map.
+    lrange = range(1, stop = length(dates))
+    # Turns date string into date format.
+    tdates = map(x -> Date(dates[x], format), lrange)
+    # Calculate the number of days from the beginning.
+    days = map(x -> (tdates[x] - minimum(tdates)).value, lrange)
+
+    return days
+end
+function getContinuousData(data, start, step=4, last=0)
+    T = typeof(data[2,start])
+    T == SubString{String} ? T = String : nothing
+    arr :: Vector{Vector{T}} = []
+    for i in 2:size(data,1)
+        push!(arr, data[i,start:step:end])
+    end
+    return arr
+end
+name = data[2:end,1]
+days = numDays.(getContinuousData(data, 2))
+reps = getContinuousData(data, 3)
+wght = getContinuousData(data, 4)
+rpe = getContinuousData(data, 5)
+
+prog = programme["nSunsCAP3_OHP_6Day_LP"]
+reps[1][1] = 1
+updateRepMax(prog, name, reps)
+prog.exerProg[name[1]]
+adjustRepMax(name[1], prog.exerProg, reps[1][1]; weight = wght[1][1])
+
+prog
+
+# push!(days[1], 1)
+# push!(days[1], 2)
+# push!(days[1], 3)
+#
+# plot(days[1], [0,1,2,3])
+
+
+# function calcRepMax(
+#     weight::Real,
+#     actualReps::Integer,
+#     actualRPE::Real,
+#     targetReps::Integer,
+#     targetRPE::Real,
+# )
+
+# push!(days[1], 5)
+# days
+# plot(days[1][1], data[1,3])
+# data
 # prog = programme["nSunsCAP3_OHP_6Day_LP"]
 # updateRepMax(prog)
 # adjustRepMax("DeadliftT1", exerProg, 15)

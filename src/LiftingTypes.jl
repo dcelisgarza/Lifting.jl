@@ -500,7 +500,7 @@ function push!(
     end
 end
 
-function adjustRepMax(name::String, dict::Dict{Any, Any}, actualReps::Integer)
+function adjustRepMax(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing, update = false)
     entry = dict[name]
     exercise = entry[1]
     prog = entry[2]
@@ -528,49 +528,49 @@ function adjustRepMax(name::String, dict::Dict{Any, Any}, actualReps::Integer)
     targetIntensity = setScheme[idx1].intensity[idx2]
     targetRPE = calcRPE(targetReps, targetIntensity)
     actualRPE = calcRPE(actualReps, targetIntensity)
-    flag = targetRPE <= actualRPE
+    metTarget = targetRPE <= actualRPE
     actualRPE = 2 * targetRPE - actualRPE
 
-    trainingMax =
-        calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
+    if ismissing(weight)
+        trainingMax =
+            calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
+    else
+        trainingMax =
+            calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
+    end
+    !update && return trainingMax
+
     roundBase = exercise.roundBase
-    if flag
+    change = 0
+    if metTarget
         if trainingMax < exercise.trainingMax
-            exercise.trainingMax += roundBase
-            calcWeights(exercise, prog)
+            change = roundBase
         else
             change = div(trainingMax - exercise.trainingMax, roundBase)
             change = maximum((change, roundBase))
-            exercise.trainingMax += change
-            calcWeights(exercise, prog)
         end
     else
         if trainingMax < exercise.trainingMax
             change = div(exercise.trainingMax - trainingMax, roundBase)
-            change = maximum((change, roundBase))
-            exercise.trainingMax -= change
-            calcWeights(exercise, prog)
+            change = -maximum((change, roundBase))
         else
             change = div(trainingMax - exercise.trainingMax, roundBase)
             change = maximum((change, roundBase))
-            exercise.trainingMax += change
-            calcWeights(exercise, prog)
         end
     end
+    exercise.trainingMax += change
+    calcWeights(exercise, prog)
 end
 
-function updateRepMax(programme::Dict)
-    for key in keys(programme)
-        prog = programme[key]
-        exerProg = prog.exerProg
-        var = readdlm("Log_" * programme[key].name * ".csv", ',')
-        for i = 2:size(var, 1)
-            numReps = Int(var[i, end - 2])
-            numReps < 0 ? continue : nothing
-            name = var[i, end - 3]
-            adjustRepMax(String(var[i, 1]), exerProg, numReps)
-        end
-        prog.days .= makeDays(prog.type, exerProg)
+function makeDays end
+function updateRepMax(prog::Programme, names, reps)
+    exerProg = prog.exerProg
+    for i = 1:length(reps)
+        numReps = reps[i][end]
+        numReps < 0 ? continue : nothing
+        name = names[i]
+        adjustRepMax(name, exerProg, numReps; update = true)
     end
-    return programme
+    prog.days .= makeDays(prog.type, exerProg)
+    return prog
 end

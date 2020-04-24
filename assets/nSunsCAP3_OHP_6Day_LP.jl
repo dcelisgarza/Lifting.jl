@@ -321,6 +321,7 @@ push!(exerProg, "frontLever" => (frontLever, ProgFrontLever))
 push!(exerProg, "backLever" => (backLever, ProgBackLever))
 
 ###
+import Lifting: makeDays
 function makeDays(::nSunsCAP3_OHP_6Day_LP, dict::Dict)
     week1 = [[], [], [], [], [], [], []]
     week2 = [[], [], [], [], [], [], []]
