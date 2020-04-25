@@ -1,8 +1,7 @@
-### Main lifts
 struct nSunsCAP3_OHP_6Day_LP <: AbstractProgramme end
-
 typeProg = nSunsCAP3_OHP_6Day_LP()
 nameProg = "nSunsCAP3_OHP_6Day_LP"
+### Main lifts
 BenchT1 = Exercise(
     name = bench["flat"],
     equipment = equipment["bb"],

@@ -500,7 +500,7 @@ function push!(
     end
 end
 
-function adjustRepMax(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing, update = false)
+function adjustMaxes(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing, update = false)
     entry = dict[name]
     exercise = entry[1]
     prog = entry[2]
@@ -531,6 +531,7 @@ function adjustRepMax(name::AbstractString, dict::Dict{Any, Any}, actualReps::In
     metTarget = targetRPE <= actualRPE
     actualRPE = 2 * targetRPE - actualRPE
 
+    # If we gave a specific weight we want to use it instead of using the maximum weight.
     if ismissing(weight)
         trainingMax =
             calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
@@ -563,13 +564,14 @@ function adjustRepMax(name::AbstractString, dict::Dict{Any, Any}, actualReps::In
 end
 
 function makeDays end
-function updateRepMax(prog::Programme, names, reps; idx = missing)
+
+function updateMaxes(prog::Programme, names, reps; idx = missing)
     exerProg = prog.exerProg
-    for i = 1:length(reps)
+    for (i, name) in enumerate(names)
+        isempty(reps[i]) ? continue : nothing
         ismissing(idx) ? numReps = reps[i][end] : numReps = reps[i][idx]
         numReps < 0 ? continue : nothing
-        name = names[i]
-        adjustRepMax(name, exerProg, numReps; update = true)
+        adjustMaxes(name, exerProg, numReps; update = true)
     end
     prog.days .= makeDays(prog.type, exerProg)
     return prog

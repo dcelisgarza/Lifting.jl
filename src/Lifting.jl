@@ -1,5 +1,8 @@
 module Lifting
 using DelimitedFiles
+using DataFrames
+using Plots
+using Dates
 
 include("LiftingTypes.jl")
 export AbstractProgression,
@@ -15,8 +18,8 @@ export calcIntensity,
     calcRPERatio,
     calcRepsRatio,
     calcRepMax,
-    adjustRepMax,
-    updateRepMax,
+    adjustMaxes,
+    updateMaxes,
     intensityArb,
     SetScheme,
     Progression,
@@ -24,4 +27,5 @@ export calcIntensity,
     calcWeights,
     Programme
 include("LiftingIO.jl")
+export numDays, loadLogFile, calcTrainingMaxLogs, loadLogFile
 end # module

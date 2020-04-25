@@ -1,10 +1,10 @@
-import Base: display, write
+import Base: println, write
 import DelimitedFiles: writedlm
 
-function display(programme::Programme, idx = 1:length(programme.days))
+function println(programme::Programme, idx = 1:length(programme.days))
     days = programme.days
 
-    println("="^80)
+    println("\n","="^80)
     println("Programme: ", programme.name)
     for i in idx
         println("\nDay ", i)
@@ -148,11 +148,90 @@ function write(
     else
         open("Log_" * filename, "w") do io
             exerProg = programme.exerProg
-            writedlm(io, ["# Name" "Date" "Reps" "Weight" "RPE"], delim)
-            for key in keys(exerProg)
-                writedlm(io, [key "01/01/0000" -1 -1.0 -1.0], delim)
-            end
+            keyArr = [key for key in keys(exerProg)]
+            writedlm(io, [vcat([length(keyArr)], keyArr)], delim)
+            arr = repeat(["reps";"wght";"rpe"], outer=length(keyArr))
+
+            writedlm(io, [vcat(["Date"], arr)], delim)
+            # arr = vcat(["Date", "Reps", "Weight", "RPE"], keyArr)
+            # writedlm(io, [arr] , delim)
+            # for key in keys(exerProg)
+            #     writedlm(io, [key "01/01/0000" -1 -1.0 -1.0], delim)
+            # end
         end
     end
 
+end
+
+function numDays(dates; format = "dd/mm/yyyy")
+    # Turns date string into date format.
+    tdates = Date.(dates, format)
+    # Calculate the number of days from the beginning.
+    days = getfield.(tdates - minimum(tdates), :value)
+
+    return days
+end
+
+function loadLogFile(programme::Dict, key)
+    data = readdlm("Log_" * programme[key].name * ".csv", ',')
+
+    numExercises = data[1,1]
+    keyArr = data[1, 2:(numExercises + 1)]
+    data[data .== ""] .= missing
+    dates = data[3:end, 1]
+
+    df = DataFrame(data[3:end, :])
+
+    # Vector of vectors. date[i][:] are the dates when the exercise i was performed.
+    date = []
+    # Vector. day1[i] is the first day exercise i was performed. Useful for plotting with a global timeframe.
+    day1 = []
+    # Vector of vectors. Δdays[i][j] number of days between day1[i] and date[i][j]. Useful for plotting progression over time.
+    Δdays = []
+    # Vector of vectors. Reps, weight and rpe. For example reps[i][j] corresponds to date[i][j].
+    reps = []
+    wght = []
+    rpe = []
+
+    # We make data frames because we want to drop missing values from log file while keeping the dates they were performed at.
+    repsDf = DataFrame([dates data[3:end, 2:3:end]])
+    wghtDf = DataFrame([dates data[3:end, 3:3:end]])
+    rpeDf = DataFrame([dates data[3:end, 4:3:end]])
+
+    for i = 1:length(keyArr)
+        # Date is the first value in the dataframe, we add 1 to get the relevant data.
+        idx = i + 1
+        # Drop missing values from dataframe without modifying them.
+        tmpReps = dropmissing(repsDf, idx)
+        tmpWght = dropmissing(wghtDf, idx)
+        tmpRpe = dropmissing(rpeDf, idx)
+        # Dates for entry i. We could use any of the other tmp dataframes.
+        push!(date, tmpReps[:, 1])
+        # Reps, weight and rpe.
+        push!(reps, tmpReps[:, idx])
+        push!(wght, tmpWght[:, idx])
+        push!(rpe, tmpRpe[:, idx])
+        # Calculate days between entries.
+        if isempty(tmpReps[:, 1])
+            push!(Δdays,[])
+            push!(day1, missing)
+        else
+            push!(Δdays,numDays(date[i]))
+            push!(day1, minimum(date[i]))
+        end
+    end
+
+    return keyArr, date, day1, Δdays, reps, wght, rpe
+end
+
+function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
+    trainingMax = deepcopy(weight)
+    for i in 1:length(names)
+        isempty(reps[i]) ? continue : nothing
+        for j in 1:length(reps[i])
+            trainingMax[i][j] = 0.0
+            trainingMax[i][j] = adjustMaxes(names[i], prog.exerProg, reps[i][j]; weight = weight[i][j])
+        end
+    end
+    return trainingMax
 end

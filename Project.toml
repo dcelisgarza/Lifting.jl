@@ -3,9 +3,6 @@ uuid = "57366915-38c9-47a2-a2f1-fc1efaef5465"
 authors = ["Daniel Celis Garza"]
 version = "0.1.0"
 
-[deps]
-DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-
 [compat]
 julia = "1"
 
