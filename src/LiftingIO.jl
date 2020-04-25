@@ -152,11 +152,6 @@ function write(
             arr = repeat(["reps";"wght";"rpe"], outer=length(keyArr))
 
             writedlm(io, [vcat(["Date"], arr)], delim)
-            # arr = vcat(["Date", "Reps", "Weight", "RPE"], keyArr)
-            # writedlm(io, [arr] , delim)
-            # for key in keys(exerProg)
-            #     writedlm(io, [key "01/01/0000" -1 -1.0 -1.0], delim)
-            # end
         end
     end
 
@@ -223,14 +218,37 @@ function loadLogFile(programme::Dict, key)
     return keyArr, date, day1, Δdays, reps, wght, rpe
 end
 
-function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
-    trainingMax = deepcopy(weight)
+function plotData(prog::Programme, names, x, y, args...; kwargs...)
+    figArr = []
     for name in names
-        isempty(reps[name]) ? continue : nothing
-        for j in 1:length(reps[name])
-            trainingMax[name][j] = 0.0
-            trainingMax[name][j] = adjustMaxes(name, prog.exerProg, reps[name][j]; weight = weight[name][j])
+        if ismissing(x[name]) || ismissing(y[name])
+            continue
+        end
+        length(x[name]) < 3 ? continue : nothing
+        spl = Spline1D(x[name], y[name], k=3)
+        xrange = range(x[name][1]; stop = x[name][end], step=0.25)
+        if haskey(kwargs, :label) == true
+            fig = plot(xrange, spl(xrange); kwargs...)
+        else
+            fig = plot(xrange, spl(xrange); label = prog.exerProg[name][1].name, kwargs...)
+        end
+        push!(figArr, fig)
+    end
+    return figArr
+end
+
+function plotData!(fig, prog::Programme, names, x, y, args...; kwargs...)
+    for name in names
+        if ismissing(x[name]) || ismissing(y[name])
+            continue
+        end
+        length(x[name]) < 3 ? continue : nothing
+        spl = Spline1D(x[name], y[name], k=3)
+        xrange = range(x[name][1]; stop = x[name][end], step=0.25)
+        if haskey(kwargs, :label) == true
+            plot!(fig, xrange, spl(xrange); kwargs...)
+        else
+            plot!(fig, xrange, spl(xrange); label = prog.exerProg[name][1].name, kwargs...)
         end
     end
-    return trainingMax
 end

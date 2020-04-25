@@ -500,7 +500,7 @@ function push!(
     end
 end
 
-function adjustMaxes(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing, update = false)
+function adjustMaxes!(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing)
     entry = dict[name]
     exercise = entry[1]
     prog = entry[2]
@@ -539,7 +539,6 @@ function adjustMaxes(name::AbstractString, dict::Dict{Any, Any}, actualReps::Int
         trainingMax =
             calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
     end
-    update == false && return trainingMax
 
     roundBase = exercise.roundBase
     change = 0
@@ -563,16 +562,86 @@ function adjustMaxes(name::AbstractString, dict::Dict{Any, Any}, actualReps::Int
     calcWeights(exercise, prog)
 end
 
+function adjustMaxes(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing)
+    entry = dict[name]
+    exercise = entry[1]
+    prog = entry[2]
+    setScheme = prog.setScheme
+    numSets = length(setScheme)
+
+    idx1 = 0
+    idx2 = 0
+    tmp = 0.0
+    old = 0.0
+    maxWght = 0
+    for i = 1:numSets
+        old = tmp
+        wght = setScheme[i].wght
+        tmp = maximum(wght)
+        tmp = maximum((tmp, old))
+        if tmp > old || maxWght == 0
+            maxWght = tmp
+            idx1 = i
+            idx3 = findfirst(x -> x == maxWght, wght)
+            idx3 != nothing ? idx2 = idx3 : idx2 = idx1
+        end
+    end
+    targetReps = setScheme[idx1].reps[idx2]
+    targetIntensity = setScheme[idx1].intensity[idx2]
+    targetRPE = calcRPE(targetReps, targetIntensity)
+    actualRPE = calcRPE(actualReps, targetIntensity)
+    metTarget = targetRPE <= actualRPE
+    actualRPE = 2 * targetRPE - actualRPE
+
+    # If we gave a specific weight we want to use it instead of using the maximum weight.
+    if ismissing(weight)
+        trainingMax =
+            calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
+    else
+        trainingMax =
+            calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
+    end
+    return trainingMax
+end
+
 function makeDays end
 
-function updateMaxes(prog::Programme, names, reps; idx = missing)
+function updateMaxes!(prog::Programme, names, reps; idx = missing)
+
     exerProg = prog.exerProg
-    for name in names
+    for (i, name) in enumerate(names)
         isempty(reps[name]) ? continue : nothing
         ismissing(idx) ? numReps = reps[name][end] : numReps = reps[name][idx]
         numReps < 0 ? continue : nothing
-        adjustMaxes(name, exerProg, numReps; update = true)
+        adjustMaxes!(name, exerProg, numReps)
     end
+
     prog.days .= makeDays(prog.type, exerProg)
     return prog
+end
+
+function updateMaxes(prog::Programme, names, reps; idx = missing)
+
+    trainingMaxes = zeros(length(names))
+    exerProg = prog.exerProg
+    for (i, name) in enumerate(names)
+        isempty(reps[name]) ? continue : nothing
+        ismissing(idx) ? numReps = reps[name][end] : numReps = reps[name][idx]
+        numReps < 0 ? continue : nothing
+        trainingMaxes[i] = adjustMaxes(name, exerProg, numReps)
+    end
+    return trainingMaxes
+
+end
+
+function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
+    trainingMax = deepcopy(weight)
+    for name in names
+        isempty(reps[name]) ? continue : nothing
+        for j in 1:length(reps[name])
+            trainingMax[name][j] = 0.0
+            trainingMax[name][j] = adjustMaxes(name, prog.exerProg, reps[name][j]; weight = weight[name][j])
+        end
+    end
+    return trainingMax
 end

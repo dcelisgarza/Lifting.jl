@@ -498,4 +498,3 @@ ProgGrip = Progression(
 )
 
 programme = Dict{String, Programme}()
-exerProg = Dict()

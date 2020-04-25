@@ -3,6 +3,7 @@ using DelimitedFiles
 using DataFrames
 using Dates
 using Dierckx
+using Plots
 include("LiftingTypes.jl")
 export AbstractProgression,
     AbstractProgramme,
@@ -19,6 +20,9 @@ export calcIntensity,
     calcRepMax,
     adjustMaxes,
     updateMaxes,
+    adjustMaxes!,
+    updateMaxes!,
+    calcTrainingMaxLogs,
     intensityArb,
     SetScheme,
     Progression,
@@ -26,5 +30,5 @@ export calcIntensity,
     calcWeights,
     Programme
 include("LiftingIO.jl")
-export numDays, loadLogFile, calcTrainingMaxLogs, loadLogFile
+export numDays, loadLogFile, loadLogFile, plotData, plotData!
 end # module
