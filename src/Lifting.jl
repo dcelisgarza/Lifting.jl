@@ -4,6 +4,7 @@ using DataFrames
 using Dates
 using Dierckx
 using Plots
+
 include("LiftingTypes.jl")
 export AbstractProgression,
     AbstractProgramme,
@@ -31,4 +32,11 @@ export calcIntensity,
     Programme
 include("LiftingIO.jl")
 export numDays, loadLogFile, loadLogFile, plotData, plotData!
+
+include("./assets/LiftingAssets.jl")
+# export Lifting_Aux
+# export Lifting_Exercise_Names
+# export Lifting_Progressions
+# export Lifting_Programmes
+
 end # module

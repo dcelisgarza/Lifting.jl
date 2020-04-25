@@ -17,11 +17,11 @@ BenchT2 = Exercise(
 )
 push!(
     exerProg,
-    "BenchT1" => (exercise = BenchT1, progression = ProgCAP3BenchT1),
+    "BenchT1" => (exercise = BenchT1, progression = CAP3_Bench_T1),
 )
 push!(
     exerProg,
-    "BenchT2" => (exercise = BenchT2, progression = ProgCAP3BenchT2),
+    "BenchT2" => (exercise = BenchT2, progression = CAP3_Bench_T2),
 )
 
 DeadliftT1 = Exercise(
@@ -54,11 +54,11 @@ DeadliftT2 = Exercise(
 )
 push!(
     exerProg,
-    "DeadliftT1" => (exercise = DeadliftT1, progression = ProgCAP3DeadliftT1),
+    "DeadliftT1" => (exercise = DeadliftT1, progression = CAP3_Deadlift_T1),
 )
 push!(
     exerProg,
-    "DeadliftT2" => (exercise = DeadliftT2, progression = ProgCAP3DeadliftT2),
+    "DeadliftT2" => (exercise = DeadliftT2, progression = CAP3_Deadlift_T2),
 )
 
 SquatT1 = Exercise(
@@ -80,11 +80,11 @@ SquatT2 = Exercise(
 )
 push!(
     exerProg,
-    "SquatT1" => (exercise = SquatT1, progression = ProgCAP3SquatT1),
+    "SquatT1" => (exercise = SquatT1, progression = CAP3_Squat_T1),
 )
 push!(
     exerProg,
-    "SquatT2" => (exercise = SquatT2, progression = ProgCAP3SquatT2),
+    "SquatT2" => (exercise = SquatT2, progression = CAP3_Squat_T2),
 )
 
 RowT1 = Exercise(
@@ -112,8 +112,8 @@ RowT2 = Exercise(
     ],
     trainingMax = 42.5,
 )
-push!(exerProg, "RowT1" => (exercise = RowT1, progression = ProgCAP3RowT1))
-push!(exerProg, "RowT2" => (exercise = RowT2, progression = ProgCAP3RowT2))
+push!(exerProg, "RowT1" => (exercise = RowT1, progression = CAP3_Row_T1))
+push!(exerProg, "RowT2" => (exercise = RowT2, progression = CAP3_Row_T2))
 
 PressT1 = Exercise(
     name = press["ohp"],
@@ -123,7 +123,7 @@ PressT1 = Exercise(
 )
 push!(
     exerProg,
-    "PressT1" => (exercise = PressT1, progression = Prog6DayPressT1),
+    "PressT1" => (exercise = PressT1, progression = nSuns_6Day_OHP),
 )
 
 ### Accessories
@@ -188,10 +188,10 @@ fingerCurl = Exercise(;
     muscles = muscles["finger flexors"],
     trainingMax = 20,
 )
-ProgWristExt = deepcopy(ProgGrip)
-ProgWristCurl = deepcopy(ProgGrip)
-ProgPlatePinch = deepcopy(ProgGrip)
-ProgFingerCurl = deepcopy(ProgGrip)
+ProgWristExt = deepcopy(AMRAP_Grip)
+ProgWristCurl = deepcopy(AMRAP_Grip)
+ProgPlatePinch = deepcopy(AMRAP_Grip)
+ProgFingerCurl = deepcopy(AMRAP_Grip)
 push!(exerProg, "wristExt" => (exercise = wristExt, progression = ProgWristExt))
 push!(
     exerProg,
@@ -329,11 +329,11 @@ paraCrunch = Exercise(;
     muscles = muscles["core"],
     trainingMax = 15,
 )
-ProgDragonFlag = deepcopy(ProgCali)
-ProgVsit = deepcopy(ProgCali)
+ProgDragonFlag = deepcopy(AMRAP_Cali)
+ProgVsit = deepcopy(AMRAP_Cali)
 ProgLegRaise = deepcopy(m23_lmh)
-ProgToeToBar = deepcopy(ProgCali)
-ProgAbRollout = deepcopy(ProgCali)
+ProgToeToBar = deepcopy(AMRAP_Cali)
+ProgAbRollout = deepcopy(AMRAP_Cali)
 ProgLandMine = deepcopy(m23_lmh)
 ProgParaCrunch = deepcopy(m23_lmh)
 push!(
@@ -373,8 +373,8 @@ backLever = Exercise(;
     ],
     trainingMax = 15,
 )
-ProgFrontLever = deepcopy(ProgCali)
-ProgBackLever = deepcopy(ProgCali)
+ProgFrontLever = deepcopy(AMRAP_Cali)
+ProgBackLever = deepcopy(AMRAP_Cali)
 push!(
     exerProg,
     "frontLever" => (exercise = frontLever, progression = ProgFrontLever),
@@ -589,5 +589,4 @@ function makeDays(::nSunsCAP3_OHP_6Day_LP, dict::Dict)
 end
 
 days = makeDays(nSunsCAP3_OHP_6Day_LP(), exerProg)
-
-push!(programme, nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days))
+push!(Lifting_Programmes, nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days))

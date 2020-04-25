@@ -1,3 +1,6 @@
+Lifting_Aux = Dict{String, Dict{String, String}}()
+Lifting_Exercise_Names = Dict{String, Dict{String, String}}()
+
 modality = Dict(
     "default" => "Default",
     "belt" => "Belt",
@@ -28,7 +31,6 @@ modality = Dict(
     "tuck" => "Tuck",
     "adv tuck" => "Advanced Tuck",
 )
-
 setType = Dict(
     "default" => "Default",
     "amrap" => "AMRAP",
@@ -38,7 +40,6 @@ setType = Dict(
     "optional" => "Optional",
     "opt amrap emom" => "Opt AMRAP EMOM",
 )
-
 equipmentSize = Dict(
     "na" => "NA",
     "tiny" => "Tiny",
@@ -47,7 +48,6 @@ equipmentSize = Dict(
     "m" => "Large",
     "xl" => "Extra Large",
 )
-
 equipment = Dict(
     "bb" => "Barbell",
     "db" => "Dumbell",
@@ -73,7 +73,6 @@ equipment = Dict(
     "parallette" => "Parallette",
     "ab wheel" => "Ab Wheel",
 )
-
 muscles = Dict(
     "pecs" => "Pecs",
     "triceps" => "Triceps",
@@ -103,6 +102,11 @@ muscles = Dict(
     "brachialis" => "Brachialis",
     "rot cuff" => "Rotator Cuff",
 )
+push!(Lifting_Aux, "modality"=>modality)
+push!(Lifting_Aux, "setType"=>setType)
+push!(Lifting_Aux, "equipmentSize"=>equipmentSize)
+push!(Lifting_Aux, "equipment"=>equipment)
+push!(Lifting_Aux, "muscles"=>muscles)
 
 grip = Dict(
     # Wrist
@@ -127,7 +131,6 @@ grip = Dict(
     # Rolling
     "rolling thunder" => "Rolling Thunder",
 )
-
 squat = Dict(
     # Main variations
     "high" => "High Bar Squat",
@@ -147,7 +150,6 @@ squat = Dict(
     # Calf raises.
     "calf raise" => "Calf Raise",
 )
-
 bench = Dict(
     # Main variations.
     "flat" => "Flat Bench",
@@ -165,7 +167,6 @@ bench = Dict(
     "diamond" => "Diamond Pushup",
     "archer" => "Archer Pushup",
 )
-
 deadlift = Dict(
     # Main variations.
     "dl" => "Deadlift",
@@ -176,7 +177,6 @@ deadlift = Dict(
     "jefferson" => "Jefferson",
     "zercher" => "Zercher",
 )
-
 press = Dict(
     "ohp" => "Overhead Press",
     "push" => "Push Press",
@@ -184,14 +184,12 @@ press = Dict(
     "hspu" => "Handstand Push Up",
     "side raise" => "Side Raise",
 )
-
 row = Dict(
     "strict" => "Strict Row",
     "pendlay" => "Pendlay Row",
     "kroc" => "Kroc Row",
     "other" => "Other Row",
 )
-
 pull = Dict(
     "face" => "Face Pull",
     "pullup" => "Pullup",
@@ -201,13 +199,11 @@ pull = Dict(
     "curl" => "Curl",
     "zottman" => "Zottman Curl",
 )
-
 lowBack = Dict(
     "nordic" => "Nordic Curl",
     "ghr" => "Glute-Ham Raise",
     "hyper extension" => "Hyper Extension",
 )
-
 core = Dict(
     "dragon flag" => "Dragon Flag",
     "hanging leg raise" => "Hanging Leg Raise",
@@ -222,10 +218,19 @@ core = Dict(
     "leg raise" => "Leg Raise",
     "other" => "Other",
 )
-
 isometric = Dict(
     "back" => "Back Lever",
     "front" => "Front Lever",
     "planche" => "Planche",
     "other" => "Other",
 )
+push!(Lifting_Exercise_Names, "grip"=>grip)
+push!(Lifting_Exercise_Names, "squat"=>squat)
+push!(Lifting_Exercise_Names, "bench"=>bench)
+push!(Lifting_Exercise_Names, "deadlift"=>deadlift)
+push!(Lifting_Exercise_Names, "press"=>press)
+push!(Lifting_Exercise_Names, "row"=>row)
+push!(Lifting_Exercise_Names, "pull"=>pull)
+push!(Lifting_Exercise_Names, "lowBack"=>lowBack)
+push!(Lifting_Exercise_Names, "core"=>core)
+push!(Lifting_Exercise_Names, "isometric"=>isometric)

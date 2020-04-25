@@ -1,3 +1,5 @@
+Lifting_Progressions = Dict{String, Progression}()
+
 SetsCAP3BenchT1 = [
     # Week 1
     SetScheme(
@@ -51,13 +53,14 @@ SetsCAP3BenchT1 = [
         roundMode = [floor, ceil, ceil],
     ),
 ]
-ProgCAP3BenchT1 = Progression(
+CAP3_Bench_T1 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Bench T1",
     sessions = 2,
     period = 3,
     setScheme = SetsCAP3BenchT1,
 )
+
 SetsCAP3BenchT2 = [
     # Week 1
     SetScheme(
@@ -105,7 +108,7 @@ SetsCAP3BenchT2 = [
         roundMode = [ceil, floor, floor],
     ),
 ]
-ProgCAP3BenchT2 = Progression(
+CAP3_Bench_T2 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Bench T2",
     sessions = 2,
@@ -140,7 +143,7 @@ SetsCAP3DeadliftT1 = [
         roundMode = [floor, ceil, ceil],
     ),
 ]
-ProgCAP3DeadliftT1 = Progression(
+CAP3_Deadlift_T1 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Deadlift T1",
     sessions = 1,
@@ -176,7 +179,7 @@ SetsCAP3DeadliftT2 = [
         roundMode = [floor, ceil, ceil],
     ),
 ]
-ProgCAP3DeadliftT2 = Progression(
+CAP3_Deadlift_T2 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Deadlift T2",
     sessions = 1,
@@ -216,7 +219,7 @@ SetsCAP3SquatT1 = [
         roundMode = [floor, ceil, ceil],
     ),
 ]
-ProgCAP3SquatT1 = Progression(
+CAP3_Squat_T1 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Squat T1",
     sessions = 1,
@@ -252,7 +255,7 @@ SetsCAP3SquatT2 = [
         roundMode = [floor, ceil, ceil],
     ),
 ]
-ProgCAP3SquatT2 = Progression(
+CAP3_Squat_T2 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Squat T2",
     sessions = 1,
@@ -285,7 +288,7 @@ SetsCAP3RowT1 = [
         roundMode = [ceil, floor, floor],
     ),
 ]
-ProgCAP3RowT1 = Progression(
+CAP3_Row_T1 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Row T1",
     sessions = 1,
@@ -318,7 +321,7 @@ SetsCAP3RowT2 = [
         roundMode = [ceil, floor, floor],
     ),
 ]
-ProgCAP3RowT2 = Progression(
+CAP3_Row_T2 = Progression(
     type = PeriodProgression(),
     name = "nSuns CAP 3 Row T2",
     sessions = 1,
@@ -362,14 +365,13 @@ Sets6DayPressT1 = [
         roundMode = [ceil, ceil, ceil, ceil, ceil, ceil, ceil, ceil, ceil],
     ),
 ]
-Prog6DayPressT1 = Progression(
+nSuns_6Day_OHP = Progression(
     type = PeriodProgression(),
     name = "nSuns 6-Day Press T1",
     sessions = 2,
     period = 1,
     setScheme = Sets6DayPressT1,
 )
-
 ### Accessories
 # Low, mid, high reps.
 # High intensity burnout.
@@ -468,18 +470,16 @@ l23_lmh = Progression(
     period = 3,
     setScheme = [L3, M3, H3],
 )
-
 # Calisthenics.
 calisthenics =
     SetScheme(; type = setType["amrap"], sets = 5, reps = 12, intensity = 0.8)
-ProgCali = Progression(
+AMRAP_Cali = Progression(
     type = LinearProgression(),
     name = "Calisthenics AMRAP",
     sessions = 1,
     period = 1,
     setScheme = calisthenics,
 )
-
 # Grip amrap
 gripAMRAP = SetScheme(;
     type = setType["amrap"],
@@ -489,7 +489,7 @@ gripAMRAP = SetScheme(;
     rpeMode = true,
     roundMode = ceil,
 )
-ProgGrip = Progression(
+AMRAP_Grip = Progression(
     type = LinearProgression(),
     name = "Grip AMRAP",
     sessions = 1,
@@ -497,4 +497,17 @@ ProgGrip = Progression(
     setScheme = gripAMRAP,
 )
 
-programme = Dict{String, Programme}()
+push!(Lifting_Progressions, "CAP3_Bench_T1" => CAP3_Bench_T1)
+push!(Lifting_Progressions, "CAP3_Bench_T2" => CAP3_Bench_T2)
+push!(Lifting_Progressions, "CAP3_Deadlift_T1" => CAP3_Deadlift_T1)
+push!(Lifting_Progressions, "CAP3_Deadlift_T2" => CAP3_Deadlift_T2)
+push!(Lifting_Progressions, "CAP3_Squat_T1" => CAP3_Squat_T1)
+push!(Lifting_Progressions, "CAP3_Squat_T2" => CAP3_Squat_T2)
+push!(Lifting_Progressions, "CAP3_Row_T1" => CAP3_Row_T1)
+push!(Lifting_Progressions, "CAP3_Row_T2" => CAP3_Row_T2)
+push!(Lifting_Progressions, "nSuns_6Day_OHP" => nSuns_6Day_OHP)
+push!(Lifting_Progressions, "h23_lmh" => h23_lmh)
+push!(Lifting_Progressions, "m23_lmh" => m23_lmh)
+push!(Lifting_Progressions, "l23_lmh" => l23_lmh)
+push!(Lifting_Progressions, "AMRAP_Cali" => AMRAP_Cali)
+push!(Lifting_Progressions, "AMRAP_Grip" => AMRAP_Grip)
