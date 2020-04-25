@@ -39,7 +39,7 @@ setType = Dict(
     "opt amrap emom" => "Opt AMRAP EMOM",
 )
 
-scale = Dict(
+equipmentSize = Dict(
     "na" => "NA",
     "tiny" => "Tiny",
     "s" => "Small",

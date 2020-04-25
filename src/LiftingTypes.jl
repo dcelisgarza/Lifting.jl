@@ -567,9 +567,9 @@ function makeDays end
 
 function updateMaxes(prog::Programme, names, reps; idx = missing)
     exerProg = prog.exerProg
-    for (i, name) in enumerate(names)
-        isempty(reps[i]) ? continue : nothing
-        ismissing(idx) ? numReps = reps[i][end] : numReps = reps[i][idx]
+    for name in names
+        isempty(reps[name]) ? continue : nothing
+        ismissing(idx) ? numReps = reps[name][end] : numReps = reps[name][idx]
         numReps < 0 ? continue : nothing
         adjustMaxes(name, exerProg, numReps; update = true)
     end

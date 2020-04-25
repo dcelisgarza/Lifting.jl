@@ -1,5 +1,4 @@
 import Base: println, write
-import DelimitedFiles: writedlm
 
 function println(programme::Programme, idx = 1:length(programme.days))
     days = programme.days
@@ -176,29 +175,29 @@ function loadLogFile(programme::Dict, key)
     data = readdlm("Log_" * programme[key].name * ".csv", ',')
 
     numExercises = data[1,1]
-    keyArr = data[1, 2:(numExercises + 1)]
+    keyArr = String.(data[1, 2:(numExercises + 1)])
     data[data .== ""] .= missing
     dates = data[3:end, 1]
 
     df = DataFrame(data[3:end, :])
 
     # Vector of vectors. date[i][:] are the dates when the exercise i was performed.
-    date = []
+    date = Dict()
     # Vector. day1[i] is the first day exercise i was performed. Useful for plotting with a global timeframe.
-    day1 = []
+    day1 = Dict()
     # Vector of vectors. Δdays[i][j] number of days between day1[i] and date[i][j]. Useful for plotting progression over time.
-    Δdays = []
+    Δdays = Dict()
     # Vector of vectors. Reps, weight and rpe. For example reps[i][j] corresponds to date[i][j].
-    reps = []
-    wght = []
-    rpe = []
+    reps = Dict()
+    wght = Dict()
+    rpe = Dict()
 
     # We make data frames because we want to drop missing values from log file while keeping the dates they were performed at.
     repsDf = DataFrame([dates data[3:end, 2:3:end]])
     wghtDf = DataFrame([dates data[3:end, 3:3:end]])
     rpeDf = DataFrame([dates data[3:end, 4:3:end]])
 
-    for i = 1:length(keyArr)
+    for (i, key) in enumerate(keyArr)
         # Date is the first value in the dataframe, we add 1 to get the relevant data.
         idx = i + 1
         # Drop missing values from dataframe without modifying them.
@@ -206,18 +205,18 @@ function loadLogFile(programme::Dict, key)
         tmpWght = dropmissing(wghtDf, idx)
         tmpRpe = dropmissing(rpeDf, idx)
         # Dates for entry i. We could use any of the other tmp dataframes.
-        push!(date, tmpReps[:, 1])
+        push!(date, key => tmpReps[:, 1])
         # Reps, weight and rpe.
-        push!(reps, tmpReps[:, idx])
-        push!(wght, tmpWght[:, idx])
-        push!(rpe, tmpRpe[:, idx])
+        push!(reps, key => tmpReps[:, idx])
+        push!(wght, key => tmpWght[:, idx])
+        push!(rpe, key => tmpRpe[:, idx])
         # Calculate days between entries.
         if isempty(tmpReps[:, 1])
-            push!(Δdays,[])
-            push!(day1, missing)
+            push!(Δdays, key => missing)
+            push!(day1, key => missing)
         else
-            push!(Δdays,numDays(date[i]))
-            push!(day1, minimum(date[i]))
+            push!(Δdays, key => numDays(date[key]))
+            push!(day1, key => minimum(date[key]))
         end
     end
 
@@ -226,11 +225,11 @@ end
 
 function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
     trainingMax = deepcopy(weight)
-    for i in 1:length(names)
-        isempty(reps[i]) ? continue : nothing
-        for j in 1:length(reps[i])
-            trainingMax[i][j] = 0.0
-            trainingMax[i][j] = adjustMaxes(names[i], prog.exerProg, reps[i][j]; weight = weight[i][j])
+    for name in names
+        isempty(reps[name]) ? continue : nothing
+        for j in 1:length(reps[name])
+            trainingMax[name][j] = 0.0
+            trainingMax[name][j] = adjustMaxes(name, prog.exerProg, reps[name][j]; weight = weight[name][j])
         end
     end
     return trainingMax

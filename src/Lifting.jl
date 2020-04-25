@@ -1,9 +1,8 @@
 module Lifting
 using DelimitedFiles
 using DataFrames
-using Plots
 using Dates
-
+using Dierckx
 include("LiftingTypes.jl")
 export AbstractProgression,
     AbstractProgramme,
