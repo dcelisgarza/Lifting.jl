@@ -22,7 +22,7 @@ write("test.csv", Lifting_Programmes[name]; log = true)
 prog = deepcopy(Lifting_Programmes[name])
 
 # Loads log file data. Returns dictionaries whose keys are the exercise names.
-keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(Lifting_Programmes, name)
+keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(prog)
 
 # Calculates training maxes depending on the weight and reps provided but accounting for intensity defined in the progression.
 tm = calcTrainingMaxLogs(prog, keyArr, reps, wght)
