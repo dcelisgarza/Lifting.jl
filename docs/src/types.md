@@ -27,6 +27,7 @@ We also need to create an exercise.
 Exercise
 ```
 
+Finally, we create a programme using the following structure.
 ```@docs
 Programme
 ```

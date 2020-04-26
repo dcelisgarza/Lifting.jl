@@ -209,7 +209,7 @@ Every parameter has defaults, so users have the ability to provide only the ones
 If `rpeMode == true`, intensity is based on RPE, which lies in the interval ``x ∈ (0, 10]``. If `rpeMode == false`, then intensity is relative to training max and therefore lies in the interval ``x ∈ [0, 1]``. The lenghts of all input vectors must be equal.
 
 ## Example
-Here we define a smple set scheme and we are not asking for any added weight via `addWeight`, it becomes a zero vector.
+Here we define a simple set scheme. As we are not providing any added weight via `addWeight`, that parameter becomes a zero vector.
 ```
 julia> SampleScheme = SetScheme(;
            type = ["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"],
@@ -355,7 +355,7 @@ julia> SampleProgression = Progression(;
            name = "Progression Name",
            setScheme = SampleScheme,
        )
-Progression{LinearProgression,String,Int64,SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}}(LinearProgression(), "We Be Grindin'", 1, 1, SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}(["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"], [1, 2, 1, 1], [12, 14, 10, 5], [0.6538806237677003, 0.6275409806672554, 0.7041013906002465, 0.8309098462816784], [9.5, 10.0, 10.0, 10.0], [0.0, 0.0, 0.0, 0.0], Function[floor, floor, ceil, ceil], [0.0, 0.0, 0.0, 0.0], true))
+Progression{LinearProgression,String,Int64,SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}}(LinearProgression(), "Progression Name", 1, 1, SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}(["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"], [1, 2, 1, 1], [12, 14, 10, 5], [0.6538806237677003, 0.6275409806672554, 0.7041013906002465, 0.8309098462816784], [9.5, 10.0, 10.0, 10.0], [0.0, 0.0, 0.0, 0.0], Function[floor, floor, ceil, ceil], [0.0, 0.0, 0.0, 0.0], true))
 ```
 """
 mutable struct Progression{
@@ -570,7 +570,7 @@ struct Programme{
     T1 <: AbstractProgramme,
     T2 <: AbstractString,
     T3 <: Dict{Any, Any},
-    T4 <: Any,
+    T4 <: Vector{Any},
 }
     type::T1
     name::T2
@@ -582,13 +582,81 @@ User created programmes are made with this structure. The parameters are as foll
 - `type` is the exercise type and is a subtype of [`AbstractProgramme`](@ref) (we recommend users define custom concrete types for their programmes),
 - `name` is the programme name (we recommend the name is the same as the programme type),
 - `exerProg` is a dictionary which pairs exercises and progressions with the key-value pair `name => (exercise, progression)`.
-- `days` is the programme schedule where each entry has all the exercise for the day so arrays of arrays are recommended.
+- `days` is the programme schedule where each entry in the vector has all the exercises for the day.
+
+Each programme is different so the recommendation is to create a typed [`makeDays`](@ref) function for the programme type.
+
+## Examples
+
+Assuming we are using the previously defined exercise and progression we can create a programme. There are a few ways to do so but this is recommended.
+```julia
+# Define the programme's concrete type. Can be used to extend `makeDays`.
+struct SampleProgramme <: AbstractProgramme end
+
+# Define a dictionary that will contain an Exercise and its corresponding
+# progression as a tuple or vector.
+exerProg = Dict()
+
+# Push exercises and progressions to dictionary. Using named tuples is
+# recommended because it enables dot syntax as well as regular indexing.
+# Each exercise is paired with its progression.
+push!(
+    exerProg,
+    "BenchAccessory" => (exercise = BenchAccessory, progression = SampleProgression),
+)
+
+# Define the a function that creates the schedule. This lets you automatically
+# update training maxes and makes changing the programme easier. Here we also
+# define rest days but you can leave them out if need be. `makeDays` will be
+# called for whatever type is given as its first argument. Different programme
+# types will necessarily have and call different `makeDays` functions.
+function makeDays(::SampleProgramme, exerProg)
+
+    # One sub array per day you want to track.
+    week = [[], [], [], [], [], [], []]
+
+    # You can do this for all your exercises or push them directly from the
+    # dictionary. Alternatively use index syntax like so,
+    # BenchAccessory = exerProg["BenchAccessory"][1]
+    # BenchAccessoryProg = exerProg["BenchAccessory"][2]
+    BenchAccessory = exerProg["BenchAccessory"].exercise
+    BenchAccessoryProg = exerProg["BenchAccessory"].progression
+
+    # Push the exercise and progression to the day of the week.
+    # If the progression has multiple set schemes, the corresponding scheme can
+    # be accessed by adding the index as the last argument.
+    # push! is overloaded so it also automatically calculates the required
+    # weights. You can do this manually but this is easier and more reliable.
+    push!(week[1], BenchAccessory, BenchAccessoryProg)   # Day 1
+    push!(week[2], "Rest")  # Day 2
+    push!(week[3], BenchAccessory, BenchAccessoryProg)   # Day 3
+    push!(week[4], "Rest")  # Day 4
+    push!(week[5], BenchAccessory, BenchAccessoryProg)   # Day 5
+    push!(week[5], "Rest")  # Day 6
+    push!(week[7], "Rest")  # Day 7
+
+    return week
+end
+
+# Create weekly schedule.
+week = makeDays(SampleProgramme(), exerProg)
+
+# Create programme.
+sampleProgramme = Programme(
+                            SampleProgramme(),
+                            "SampleProgramme",
+                            exerProg,
+                            week
+                        )
+```
+
+It's recommended users either import the default dictionary [`Lifting_Programmes`](@ref) and store their programmes there with key equal to the programme name and type. They can also create their own dictionary for their own creations.
 """
 struct Programme{
     T1 <: AbstractProgramme,
     T2 <: AbstractString,
     T3 <: Dict{Any, Any},
-    T4 <: Any,
+    T4 <: Vector{Any},
 }
 
     type::T1
@@ -605,7 +673,7 @@ struct Programme{
         T1 <: AbstractProgramme,
         T2 <: AbstractString,
         T3 <: Dict{Any, Any},
-        T4 <: Any,
+        T4 <: Vector{Any},
     }
 
         new{typeof(type), typeof(name), typeof(exerProg), typeof(days)}(
@@ -622,6 +690,17 @@ getindex(p::Programme, i) = p.days[i]
 length(p::Programme) = length(p.days)
 
 import Base: push!
+"""
+```
+push!(
+    A::AbstractArray{T, 1} where {T},
+    exercise::Exercise,
+    progression::Progression,
+    i::Integer = 1,
+)
+```
+Calculates set weights using the exercise.trainingMax and progression.setScheme. It also unrolls the relevant data into a named tuple for each day.
+"""
 function push!(
     A::AbstractArray{T, 1} where {T},
     exercise::Exercise,
@@ -664,7 +743,12 @@ function push!(
     end
 end
 
-function adjustMaxes!(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing)
+function adjustMaxes!(
+    name::AbstractString,
+    dict::Dict{Any, Any},
+    actualReps::Integer;
+    weight = missing,
+)
     entry = dict[name]
     exercise = entry[1]
     prog = entry[2]
@@ -726,7 +810,12 @@ function adjustMaxes!(name::AbstractString, dict::Dict{Any, Any}, actualReps::In
     calcWeights(exercise, prog)
 end
 
-function adjustMaxes(name::AbstractString, dict::Dict{Any, Any}, actualReps::Integer; weight = missing)
+function adjustMaxes(
+    name::AbstractString,
+    dict::Dict{Any, Any},
+    actualReps::Integer;
+    weight = missing,
+)
     entry = dict[name]
     exercise = entry[1]
     prog = entry[2]
@@ -805,9 +894,14 @@ function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
     trainingMax = deepcopy(weight)
     for name in names
         isempty(reps[name]) ? continue : nothing
-        for j in 1:length(reps[name])
+        for j = 1:length(reps[name])
             trainingMax[name][j] = 0.0
-            trainingMax[name][j] = adjustMaxes(name, prog.exerProg, reps[name][j]; weight = weight[name][j])
+            trainingMax[name][j] = adjustMaxes(
+                name,
+                prog.exerProg,
+                reps[name][j];
+                weight = weight[name][j],
+            )
         end
     end
     return trainingMax

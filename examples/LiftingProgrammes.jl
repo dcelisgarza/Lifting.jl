@@ -69,16 +69,13 @@ TheGrind = Progression(;
 
 
 
-BenchPress = Exercise(;
-    name = "Bench Press",
-    modality = "Block",
-    equipment = "Swiss Bar",  # Also accepts vectors. Defaults to "NA".
-    size = "1 inch", # Also accepts vectors. Defaults to "NA".
-    muscles = [
-                muscles["triceps"],
-                muscles["front delts"]
-              ],        # Also accepts scalars. Defaults to "NA".
-    trainingMax = 100,  # Defaults to 0.
-    roundBase = 2.5,    # Round to nearest multiple. Defaults to 2.5.
-    roundMode = floor,  # Rounding function. Defaults to floor.
-)
+BenchAccessory = Exercise(;
+           name = "Swiss Bar Bench",
+           modality = ["Block" , "Semi-Supinated"],
+           equipment = "Swiss Bar",
+           size = "1 inch",
+           muscles = ["Pecs", "Triceps", "Front Delts"],
+           trainingMax = 100,
+           roundBase = 2.5,
+           roundMode = floor,
+       )
