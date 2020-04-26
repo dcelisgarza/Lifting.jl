@@ -346,7 +346,7 @@ mutable struct Exercise{
 
     function Exercise(;
         name::T1,
-        equipment::T2 = "Barbell",
+        equipment::T2 = "NA",
         modality::T3 = "Default",
         muscles::T4 = "NA",
         trainingMax::T6 = 0,

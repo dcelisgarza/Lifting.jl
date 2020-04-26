@@ -60,7 +60,6 @@ push!(
     exerProg,
     "DeadliftT2" => (exercise = DeadliftT2, progression = CAP3_Deadlift_T2),
 )
-
 SquatT1 = Exercise(
     name = squat["low"],
     equipment = equipment["bb"],

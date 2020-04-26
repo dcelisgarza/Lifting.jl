@@ -1,3 +1,6 @@
+"""
+wakao
+"""
 Lifting_Aux = Dict{String, Dict{String, String}}()
 Lifting_Exercise_Names = Dict{String, Dict{String, String}}()
 

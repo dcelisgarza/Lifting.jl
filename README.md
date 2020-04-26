@@ -5,70 +5,202 @@
 [![Codecov](https://codecov.io/gh/dcelisgarza/Lifting.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/dcelisgarza/Lifting.jl)
 [![Coveralls](https://coveralls.io/repos/github/dcelisgarza/Lifting.jl/badge.svg?branch=master)](https://coveralls.io/github/dcelisgarza/Lifting.jl?branch=master)
 
-## What is this?
+```julia
+if lift == true
+    println("Yeaah buddy! Lightweight baby! Oooooooooooh")
+else
+    println("Weak!")
+    return
+end
+```
+
+## Ain't nuthin' but a peanut!
 
 > There is no reason to be alive if you can't do deadlifts!"  
-    - Jon Pall Sigmarsson
+> - Jon Pall Sigmarsson
 
-It's a tool for creating and analysing lifting programmes.
+This is a tool for creating and analysing lifting programmes. It comes with a few premade dictionaries that users can import and modify to make things easier on them. These defaults as well as the programme I'm currently following are found in `/src/assets`. More details in [Defaults](#Defaults-1).
 
-To create a minimal programme you must first create an exercise, set scheme, progression, calculate set weights, training days and then construct the programme.
+## Lightweight, Baby!
 
-We start by creating an exercise. This is a bench press with chains, whose unrounded training max is 101.3 units, `trainingMax` will be rounded down to the nearest multiple of 2.5 that is less than 101.3.
-```
-Bench = Exercise(;
+> Just remember, somewhere, a little Chinese girl is warming up with your max.     
+> - Jim Conroy
+
+In order to make a programme you need 3 things:
+1. an exercise,
+2. a progression,
+3. a schedule.
+
+We shall pretend to be Brosef, that annoying guy at the gym whose 'programme' consists of bench pressing every day, staring at girls all sesh---incidentally, said girls definitely squat more than him---and is a neverending font of unsolicited life, lifting, relationship and medical advice that is verifiably false.
+
+We must first create the b e n c h p r e s s, emissary of the bro'onites.
+
+```julia
+BenchPress = Exercise(;
     name = "Bench Press",
-    trainingMax = 101.3,
-    equipment = "Barbell",  # Defaults to "Barbell", accepts Vectors.
-    modality = "Chains",    # Exercise modifier, accepts vectors. Defaults to "NA".
-    size = "NA",            # Indicates the size of modality (i.e. Box, Bands, etc), accepts vectors. Defaults to "NA".
-    muscles = ["Chest", "Triceps", "Shoulders"], # Defaults to "NA".
-    roundBase = 2.5,    # Round `trainingMax` to the nearest multiple of this number. Defaults to 2.5 (because kg >> lbs).
-    roundMode = floor,  # Round `trainingMax` to the ceil or floor of the nearest multiple of `roundBase`. Defaults to `floor`.
+    modality = "Half Rep"   # Also accepts vectors. Defaults to "Default".
+    equipment = "Barbell",  # Also accepts vectors. Defaults to "NA".
+    size = "YUGE", # Also accepts vectors. Defaults to "NA".
+    muscles = [
+                muscles["triceps"],
+                muscles["front delts"]
+              ],        # Also accepts scalars. Defaults to "NA".
+    trainingMax = 100,  # Defaults to 0.
+    roundBase = 2.5,    # Round to nearest multiple. Defaults to 2.5.
+    roundMode = floor,  # Rounding function. Defaults to floor.
 )
 ```
 
-We then create a set scheme. This is 5x5 @ 75% with +10 units of added weight, rounding down. All the values must have the same length. They can be scalars or vectors.
+Of course, Brosef is a 'bodybuilder' and is all *about dat TUT 'bout dat TUT* (time under tension), so he exclusively works at high reps and low intensities despite completing maybe 25% of the rep on a good day. He also takes at least 5 minutes between sets because he needs to replenish his "ATT".
+```julia
+# The arrays must all be of equal length. Entry indices correspond to each other.
+TUT = SetScheme(
+    type = ["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"]],
+    sets = [1, 2, 1, 1],
+    reps = [12, 14, 10, 5],
+    intensity = [
+                  9.5, # Intensity, can be percentage based (decimal form) or RPE
+                  10,  # based. Percentages are capped at 1, RPE at 10.
+                  10,
+                  10
+                ],  
+    roundMode = [
+                  floor,  # Rounding mode. Defaults to an array of floors of the
+                  floor,  # same length as the others (or a scalar if so are the
+                  ceil,   # others).
+                  ceil
+                ],  
+    rpeMode = true, # If true the progression is RPE based, else it is
+                    # percentage based. Defaults to false.
+)
 ```
-FiveByFive = SetScheme(
-    type = "Default", # Set type. Defaults to "Default".
-    sets = 5, # Number of sets. Defaults to 5.
-    reps = 5, # Number of reps per set. Defaults to 5.
-    intensity = 0.75, # Intensity for calculating weights in the set. Defaults to 0.75.
-    addWeight = 10,   # Extra weight to add on top of the calculated weight. Can be used to accommodate chains or if your programme prescribes it.
-    roundMode = floor,  # Rounding mode for the weight calculated for the set. Defaults to `floor`.
-    rpeMode = false,    # If false, `intensity` is percentage based and the set weights will be calculated directly by multiplying the training max by this value. If true `intensity` will be taken as RPE and the weights will be calculated using RPE. Defaults to `false`.
+However his work ethic is without equal so he will always go to failure and sometimes past it and of course his warmup is like 5 kgs below his top sets. Since Brosef only has passing knowledge of percentages, he follows his gut. Interestingly, this means he uses RPE, who'd have thought?
+
+Brosef is a straight shooter, so he only uses one set scheme, but there is flexibility to create more complex set schemes and arrays of set schemes (see `/assets/LiftingProgressions.jl`) do create more complex progressions. However, our boi "be grindin'"---evidenced by that one time he tried to sell you questionably-sourced protein powder---he therefore has a straight forward progression that is still giving him linear gains in the same manner Jeffrey Epstein didn't kill himself. Of course, you've slowly been creeping up on him while being half his size but what do you know, you're reading the documentation for a super niche product instead of benching your ass off.
+
+```julia
+TheGrind = Progression(
+    type = LinearProgression(),
+    name = "We Be Grindin'",
+    sessions = 1,     # Number of different sessions in a week.
+    period = 1,       # Number of weeks in the period.
+    setScheme = TUT,  # Set scheme. The number of items here
+                      # must be equal to sessions * period.
 )
 ```
 
-We then create a progression scheme, using the vector or scalar of type `SetScheme` created by the user. In this case we have a simple 5x5 linear progression.
-```
-ProgBench = Progression(
-    type = LinearProgression(), # There are different progression types.
-    name = "Linear 5x5",        # Name of the progression.
-    sessions = 1,               # Number of different sessions in this progression per week.
-    period = 1,                 # Number of weeks before progression cycles again.
-    setScheme = FiveByFive,     # Set scheme defined by the user. Its length must be equal to `sessions*period`.
+Brosef now has everything he needs to create his dream programme... aside from half repping bicep curls, quarter repping the leg press and training calves once a month after which he will be missing for a few days because "he went too hard and crushed legs four days ago", but this is enough for our purpose. He trains three days a week because he takes his recovery seriously and likes to party, so he can't no-life it like that jacked dude Brosef can totally out-bench.
+
+```julia
+# Define the programme's concrete type. Can be used to extend `makeDays`.
+struct BrosefDreamProgramme <: AbstractProgramme end
+
+# Define a dictionary that will contain an Exercise and its corresponding
+# progression as a tuple or vector.
+exerProg = Dict()
+
+# Push to the dictionary. Using named tuples is recommended and making the
+# key a string of the variable name makes things easier to follow.
+push!(
+    exerProg,
+    "BenchPress" => (exercise = BenchPress, progression = TheGrind),
 )
+
+# Define the training week. Extending this to multiple weeks and different days
+# can be done with arrays of arrays.
+week = []
+# Push the days to the week.
+push!(week, BenchPress, TheGrind)
+push!(week, "Rest")
+push!(week, BenchPress, TheGrind)
+push!(week, "Rest")
+push!(week, BenchPress, TheGrind)
+
+Programme(BrosefDreamProgramme(), "BrosefDreamProgramme", exerProg, week)
+```
+We need to create some dictionaries and arrays to hold the data as well as the type of the programme. This lets Julia work its multiple dispatch magic. There is also a function `makeDays` that can be extended to work with concrete subtypes of `AbstractProgramme`, allowing it to specialise for user defined programmes.
+
+To see a more advanced example that showcases the functionality of the package see function `/assets/nSunsCAP3_OHP_6Day_LP.jl`, in particular function `makeDays` in line 386.
+
+## Aditional Features
+
+These sections haven't been written yet but can be explored by playing around with `/examples/LiftingProgrammes.jl`, they include:
+
+- Updating rep maxes
+- Various calculations
+- IO
+- Plotting
+
+## FAQ
+
+> What makes a weightlifting program successful? Your hard work and dedication.     
+> - Greg Everett
+
+- Is it overkill? Most definitely.
+- What does it do? Lets you create and analyse lifting programmes.
+- Why not use a spreadsheet? This is more general and powerful than a spreadsheet but admittedly less approachable for less techy people.
+- Why not use an app instead? I use an app, [Zero to Hero](https://play.google.com/store/apps/details?id=com.mappz.zerotohero&hl=en_GB) highly recommended. The premium version is cheap and lets you create and modify progressions, it is very, very good. I've also used [TM Training](https://download.cnet.com/TM-Training/3000-2129_4-78297497.html) in the past and it is also very good but can be annoyingly buggy. I can recommend them both. This serves a different purpose, it serves a more analytic and design-oriented purpose. The apps are great for logging.
+
+
+## Defaults
+
+These are the default dictionaries defined in the programme. They are not explicitly exported so must be explicitly imported or accessed with the dot syntax:
+
+```julia
+import Lifting: Lifting_Aux
+
+Lifting.Lifting_Exercise_Names
 ```
 
-After this we calculate the set weights and RPEs before we make our training day.
-```
-calcWeights.(Bench, ProgBench.setScheme)
+They dictionaries define the following keys. Explore them to see what they contain, add what you need... or not use them at all!
+
+```julia
+julia> keys(Lifting_Aux)
+Base.KeySet for a Dict{String,Dict{String,String}} with 5 entries. Keys:
+  "modality"
+  "setType"
+  "muscles"
+  "equipmentSize"
+  "equipment"
+
+julia> keys(Lifting_Exercise_Names)
+Base.KeySet for a Dict{String,Dict{String,String}} with 10 entries. Keys:
+  "grip"
+  "bench"
+  "squat"
+  "press"
+  "isometric"
+  "core"
+  "pull"
+  "row"
+  "deadlift"
+  "lowBack"
+
+julia> keys(Lifting_Progressions)
+Base.KeySet for a Dict{String,Progression} with 14 entries. Keys:
+  "AMRAP_Cali"
+  "nSuns_6Day_OHP"
+  "AMRAP_Grip"
+  "l23_lmh"
+  "m23_lmh"
+  "h23_lmh"
+  "CAP3_Bench_T1"
+  "CAP3_Row_T1"
+  "CAP3_Squat_T2"
+  "CAP3_Deadlift_T1"
+  "CAP3_Squat_T1"
+  "CAP3_Bench_T2"
+  "CAP3_Deadlift_T2"
+  "CAP3_Row_T2"
+
+julia> keys(Lifting_Programmes)
+Base.KeySet for a Dict{String,Programme} with 1 entry. Keys:
+  "nSunsCAP3_OHP_6Day_LP"
 ```
 
-The exercise and its progression are then pushed into an empty array representing a training day. Push other exercises or accessories you want to do this day the array. You can do this for multiple days or keep a single array and slice it appropriately later.
-```
-ChestDay = []
-push!(ChestDay, Bench, ProgBench[, i = 1]) # Pushes the exercise and progression to ChestDay.
-RestDay = []
-push!(RestDay, "Rest")
-```
+### Adding to the Package
 
-Finally create your programme. This will calculate all the weights you need to use and contain all the days you've pushed. The second and third arguments must be the same length. The fourth argument contains the days in the programme, here we made two different days but slicing a single array and separating the slices by commas also works. `MyTraining.days` will contain all the days in the programme. Here we create a programme that prescribes alternate days of 5x5 @ 75% bench press as the first day and a rest day as the second.
-```
-MyTraining = Programme("Only Bench", Bench, ProgBench, [ChestDay, RestDay])
-```
+The recommended way for users to add their own creations to the package is to do so in the relevant `/src/assets` files and push them to their corresponding dictionaries. These can then be imported as normal. Users may also define their own modules that expand `Lifting.jl`'s functionality. These user-made modules can then be imported instead. Alternatively, additions may be made in their local environments, it will simply crowd your workspace.
 
 ## Gotta lift them all!
 I wanna be the most whammed,  
