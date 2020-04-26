@@ -39,9 +39,9 @@ We must first create the b e n c h p r e s s, emissary of the bro'onites.
 ```julia
 BenchPress = Exercise(;
     name = "Bench Press",
-    modality = "Half Rep",   # Also accepts vectors. Defaults to "Default".
+    modality = "Half Rep",  # Also accepts vectors. Defaults to "Default".
     equipment = "Barbell",  # Also accepts vectors. Defaults to "NA".
-    size = "YUGE", # Also accepts vectors. Defaults to "NA".
+    size = "YUGE",          # Also accepts vectors. Defaults to "NA".
     muscles = [
                 muscles["triceps"],
                 muscles["front delts"]

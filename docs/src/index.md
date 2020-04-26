@@ -33,7 +33,7 @@ We must first create the b e n c h p r e s s, emissary of the bro'onites.
 ```julia
 BenchPress = Exercise(;
     name = "Bench Press",
-    modality = "Half Rep",   # Also accepts vectors. Defaults to "Default".
+    modality = "Half Rep",  # Also accepts vectors. Defaults to "Default".
     equipment = "Barbell",  # Also accepts vectors. Defaults to "NA".
     size = "YUGE", # Also accepts vectors. Defaults to "NA".
     muscles = [
@@ -129,6 +129,9 @@ To see a more advanced example that showcases the functionality of the package s
 
 
 ## Defaults
+
+> This is for sex <*violent hip thrusts*>. This is for snatch <*brings barbell to hip crease*>.
+> - Dmitry Klokov
 
 These are the default dictionaries defined in the programme. They are not explicitly exported so must be explicitly imported or accessed with the dot syntax:
 
