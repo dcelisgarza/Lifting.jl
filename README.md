@@ -38,7 +38,7 @@ We must first create the b e n c h p r e s s, emissary of the bro'onites.
 ```julia
 BenchPress = Exercise(;
     name = "Bench Press",
-    modality = "Half Rep"   # Also accepts vectors. Defaults to "Default".
+    modality = "Half Rep",   # Also accepts vectors. Defaults to "Default".
     equipment = "Barbell",  # Also accepts vectors. Defaults to "NA".
     size = "YUGE", # Also accepts vectors. Defaults to "NA".
     muscles = [
@@ -54,8 +54,8 @@ BenchPress = Exercise(;
 Of course, Brosef is a 'bodybuilder' and is all *about dat TUT 'bout dat TUT* (time under tension), so he exclusively works at high reps and low intensities despite completing maybe 25% of the rep on a good day. He also takes at least 5 minutes between sets because he needs to replenish his "ATT".
 ```julia
 # The arrays must all be of equal length. Entry indices correspond to each other.
-TUT = SetScheme(
-    type = ["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"]],
+TUT = SetScheme(;
+    type = ["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"],
     sets = [1, 2, 1, 1],
     reps = [12, 14, 10, 5],
     intensity = [
@@ -79,7 +79,7 @@ However his work ethic is without equal so he will always go to failure and some
 Brosef is a straight shooter, so he only uses one set scheme, but there is flexibility to create more complex set schemes and arrays of set schemes (see `/assets/LiftingProgressions.jl`) do create more complex progressions. However, our boi "be grindin'"---evidenced by that one time he tried to sell you questionably-sourced protein powder---he therefore has a straight forward progression that is still giving him linear gains in the same manner Jeffrey Epstein didn't kill himself. Of course, you've slowly been creeping up on him while being half his size but what do you know, you're reading the documentation for a super niche product instead of benching your ass off.
 
 ```julia
-TheGrind = Progression(
+TheGrind = Progression(;
     type = LinearProgression(),
     name = "We Be Grindin'",
     sessions = 1,     # Number of different sessions in a week.

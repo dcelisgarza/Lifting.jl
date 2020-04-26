@@ -29,11 +29,14 @@ export calcIntensity,
     Progression,
     Exercise,
     calcWeights,
-    Programme
+    Programme,
+    makeDays,
+    numDays
 include("LiftingIO.jl")
 export numDays, loadLogFile, loadLogFile, plotData, plotData!
 
 include("./assets/LiftingAssets.jl")
+# Default dictionaries, uncomment to auto export.
 # export Lifting_Aux
 # export Lifting_Exercise_Names
 # export Lifting_Progressions

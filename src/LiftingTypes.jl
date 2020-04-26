@@ -1,11 +1,25 @@
 """
-Lifting Types.
+```
+abstract type AbstractProgression end
+struct LinearProgression <: AbstractProgression end
+struct DoubleProgression <: AbstractProgression end
+struct PeriodProgression <: AbstractProgression end
+struct BlockProgression <: AbstractProgression end
+```
+Progression types. Use these to make specialised functions and add new functionality.
 """
 abstract type AbstractProgression end
 struct LinearProgression <: AbstractProgression end
 struct DoubleProgression <: AbstractProgression end
 struct PeriodProgression <: AbstractProgression end
 struct BlockProgression <: AbstractProgression end
+
+"""
+```
+AbstractProgramme
+```
+Programme types.
+"""
 abstract type AbstractProgramme end
 
 import Base: round, length, getindex, iterate, @_inline_meta
@@ -161,6 +175,52 @@ mutable struct SetScheme{
     rpeMode::T5
 end
 ```
+This structure contains user-created set schemes. Its parameters are as follows:
+
+- `type` defines the set type,
+- `sets` the number of sets of the corresponding type,
+- `reps` is the number of reps in the set,
+- `intensity` is the set intensity,
+- `rpe` is the set's target RPE,
+- `addWeight` is extra weight on top of the normally calculated weight (useful for chains, bands or microplates),
+- `wght` is the set weight, which is calculated later when pairing progression schemes to exercises,
+- `rpeMode` whether the set scheme is defined via RPE or percentage intensity, if true, the values in `intensity` will be assumed to be RPE and the percentage intensity will be calculated using RPE and the number of reps in the set, else the values in `intensity` will be used as provided.
+
+It uses the following constructor, which takes care of any required computations.
+```
+SetScheme(;
+    type::T1 = "Default",
+    sets::T2 = 5,
+    reps::T2 = 5,
+    intensity::T3 = 0.75,
+    addWeight::T4 = 0,
+    roundMode::T5 = floor,
+    rpeMode::Bool = false,
+) where {
+    T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
+    T2 <: Union{<:Integer, Vector{<:Integer}},
+    T3 <: Union{<:Real, Vector{<:Real}},
+    T4 <: Union{<:Real, Vector{<:Real}},
+    T5 <: Union{<:Function, Vector{<:Function}},
+}
+```
+Every parameter has defaults, so users have the ability to provide only the ones they want to modify.
+
+If `rpeMode == true`, intensity is based on RPE, which lies in the interval ``x ∈ (0, 10]``. If `rpeMode == false`, then intensity is relative to training max and therefore lies in the interval ``x ∈ [0, 1]``. The lenghts of all input vectors must be equal.
+
+## Example
+Here we define a smple set scheme and we are not asking for any added weight via `addWeight`, it becomes a zero vector.
+```
+julia> SampleScheme = SetScheme(;
+           type = ["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"],
+           sets = [1, 2, 1, 1],
+           reps = [12, 14, 10, 5],
+           intensity = [9.5, 10, 10, 10 ],
+           roundMode = [floor, floor, ceil, ceil],
+           rpeMode = true,
+       )
+SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}(["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"], [1, 2, 1, 1], [12, 14, 10, 5], [0.6538806237677003, 0.6275409806672554, 0.7041013906002465, 0.8309098462816784], [9.5, 10.0, 10.0, 10.0], [0.0, 0.0, 0.0, 0.0], Function[floor, floor, ceil, ceil], [0.0, 0.0, 0.0, 0.0], true)
+```
 """
 mutable struct SetScheme{
     T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
@@ -261,6 +321,42 @@ mutable struct Progression{
     setScheme::T4
 end
 ```
+This structure holds user-defined progressions. Its parameters are as follows:
+- `type` is the progression type which is a subtype of [`AbstractProgression`](@ref),
+- `name` is the progression name,
+- `sessions` is the number of different sessions in a week,
+- `period` is the progression period,
+- `setScheme` is a previously defined set scheme or vector of set schemes, the length must be equal to `sessions * period`.
+
+This structure lets users create different types of progressions, from simple day in day out progressions to complex undulating periodisation and block progressions.
+
+Progressions are created with the following constructor function,
+```
+function Progression(;
+    type::T1,
+    name::T2,
+    sessions::T3 = 1,
+    period::T3 = 1,
+    setScheme::T4,
+) where {
+    T1 <: AbstractProgression,
+    T2 <: AbstractString,
+    T3 <: Integer,
+    T4 <: Union{<:SetScheme, Vector{<:SetScheme}},
+}
+```
+
+## Example
+
+Assuming we've run the example in [`SetScheme`](@ref) we can create a simple progression.
+```
+julia> SampleProgression = Progression(;
+           type = LinearProgression(),
+           name = "Progression Name",
+           setScheme = SampleScheme,
+       )
+Progression{LinearProgression,String,Int64,SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}}(LinearProgression(), "We Be Grindin'", 1, 1, SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}(["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"], [1, 2, 1, 1], [12, 14, 10, 5], [0.6538806237677003, 0.6275409806672554, 0.7041013906002465, 0.8309098462816784], [9.5, 10.0, 10.0, 10.0], [0.0, 0.0, 0.0, 0.0], Function[floor, floor, ceil, ceil], [0.0, 0.0, 0.0, 0.0], true))
+```
 """
 mutable struct Progression{
     T1 <: AbstractProgression,
@@ -277,8 +373,8 @@ mutable struct Progression{
     function Progression(;
         type::T1,
         name::T2,
-        sessions::T3,
-        period::T3,
+        sessions::T3 = 1,
+        period::T3 = 1,
         setScheme::T4,
     ) where {
         T1 <: AbstractProgression,
@@ -304,7 +400,7 @@ iterate(A::Progression, i = 1) =
 
 """
 ```
-struct Exercise{
+mutable struct Exercise{
     T1 <: AbstractString,
     T2 <: Union{AbstractString, Vector{<:AbstractString}},
     T3 <: Union{AbstractString, Vector{<:AbstractString}},
@@ -323,6 +419,56 @@ struct Exercise{
     roundBase::T7
     roundMode::T8
 end
+```
+User created exercises are encapsulated in this structure. Its parameters are as follows:
+- `name` is the exercise name,
+- `equipment` is the equipment required,
+- `modality` are any modifiers to the exercise (for example blocks),
+- `size` are the size/resistance of said modifiers (for example 2 inch),
+- `muscles` are the muscles targeted,
+- `trainingMax` is the training maximum used to calculate set weights when pairing with a progression,
+- `roundBase` is the base to which set weights are rounded,
+- `roundMode` is the rounding function used.
+
+This uses the following constructor which provides default values for anything users don't need/want to track,
+```
+function Exercise(;
+    name::T1,
+    equipment::T2 = "NA",
+    modality::T3 = "Default",
+    muscles::T4 = "NA",
+    trainingMax::T6 = 0,
+    size::T5 = "NA",
+    roundBase::T7 = 2.5,
+    roundMode::T8 = floor,
+) where {
+    T1 <: AbstractString,
+    T2 <: Union{AbstractString, Vector{<:AbstractString}},
+    T3 <: Union{AbstractString, Vector{<:AbstractString}},
+    T4 <: Union{AbstractString, Vector{<:AbstractString}},
+    T5 <: Union{AbstractString, Vector{<:AbstractString}},
+    T6 <: Real,
+    T7 <: Real,
+    T8 <: Function,
+}
+end
+```
+
+## Examples
+
+Say we want to bench press off a 1 inch block and a semi supinated grip on a swiss bar. We can easily create this exercise
+```
+julia> BenchAccessory = Exercise(;
+           name = "Swiss Bar Bench",
+           modality = ["Block" , "Semi-Supinated"],
+           equipment = "Swiss Bar",
+           size = "1 inch",
+           muscles = ["Pecs", "Triceps", "Front Delts"],
+           trainingMax = 100,
+           roundBase = 2.5,
+           roundMode = floor,
+       )
+Exercise{String,String,Array{String,1},String,Array{String,1},Float64,Float64,typeof(floor)}("Swiss Bar Bench", "Swiss Bar", ["Block", "Semi-Supinated"], "1 inch", ["Pecs", "Triceps", "Front Delts"], 100.0, 2.5, floor)
 ```
 """
 mutable struct Exercise{
@@ -391,6 +537,11 @@ length(x::Exercise) = 1
 iterate(A::Exercise, i = 1) =
     (@_inline_meta; (i % UInt) - 1 < length(A) ? (@inbounds A[1], i + 1) : nothing)
 
+"""
+```
+calcWeights(exercise::Exercise, setScheme::SetScheme)
+```
+"""
 function calcWeights(exercise::Exercise, setScheme::SetScheme)
     trainingMax = exercise.trainingMax
     roundBase = exercise.roundBase
@@ -415,34 +566,46 @@ end
 
 """
 ```
-struct Programme{T1 <: AbstractString, T2 <: Any}
-    name::T1
-    days::T2
+struct Programme{
+    T1 <: AbstractProgramme,
+    T2 <: AbstractString,
+    T3 <: Dict{Any, Any},
+    T4 <: Any,
+}
+    type::T1
+    name::T2
+    exerProg::T3
+    days::T4
 end
 ```
+User created programmes are made with this structure. The parameters are as follows:
+- `type` is the exercise type and is a subtype of [`AbstractProgramme`](@ref) (we recommend users define custom concrete types for their programmes),
+- `name` is the programme name (we recommend the name is the same as the programme type),
+- `exerProg` is a dictionary which pairs exercises and progressions with the key-value pair `name => (exercise, progression)`.
+- `days` is the programme schedule where each entry has all the exercise for the day so arrays of arrays are recommended.
 """
 struct Programme{
-    T0 <: AbstractProgramme,
-    T1 <: AbstractString,
-    T2 <: Dict{Any, Any},
-    T3 <: Any,
+    T1 <: AbstractProgramme,
+    T2 <: AbstractString,
+    T3 <: Dict{Any, Any},
+    T4 <: Any,
 }
 
-    type::T0
-    name::T1
-    exerProg::T2
-    days::T3
+    type::T1
+    name::T2
+    exerProg::T3
+    days::T4
 
     function Programme(
-        type::T0,
-        name::T1,
-        exerProg::T2,
-        days::T3,
+        type::T1,
+        name::T2,
+        exerProg::T3,
+        days::T4,
     ) where {
-        T0 <: AbstractProgramme,
-        T1 <: AbstractString,
-        T2 <: Dict{Any, Any},
-        T3 <: Any,
+        T1 <: AbstractProgramme,
+        T2 <: AbstractString,
+        T3 <: Dict{Any, Any},
+        T4 <: Any,
     }
 
         new{typeof(type), typeof(name), typeof(exerProg), typeof(days)}(
@@ -456,6 +619,7 @@ end
 
 getindex(p::Programme, idx...) = [p.days[i] for i in idx]
 getindex(p::Programme, i) = p.days[i]
+length(p::Programme) = length(p.days)
 
 import Base: push!
 function push!(
@@ -604,6 +768,9 @@ function adjustMaxes(name::AbstractString, dict::Dict{Any, Any}, actualReps::Int
     return trainingMax
 end
 
+"""
+    makeDays
+"""
 function makeDays end
 
 function updateMaxes!(prog::Programme, names, reps; idx = missing)

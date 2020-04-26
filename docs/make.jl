@@ -1,3 +1,4 @@
+using Revise
 using Documenter, Lifting
 
 makedocs(;
@@ -5,6 +6,8 @@ makedocs(;
     format=Documenter.HTML(),
     pages=[
         "Home" => "index.md",
+        "Input Output" => "io.md",
+        "Types" => "types.md",
     ],
     repo="https://github.com/dcelisgarza/Lifting.jl/blob/{commit}{path}#L{line}",
     sitename="Lifting.jl",
