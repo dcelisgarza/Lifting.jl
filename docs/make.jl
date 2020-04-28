@@ -9,7 +9,8 @@ makedocs(;
         "Home" => "index.md",
         "IO" => "io.md",
         "Types" => "types.md",
-        "Functions & Methods" => "functions.md"
+        "Functions & Methods" => "functions.md",
+        "Defaults" => "dictionaries.md",
     ],
     repo="https://github.com/dcelisgarza/Lifting.jl/blob/{commit}{path}#L{line}",
     sitename="Lifting.jl",
