@@ -29,8 +29,6 @@ push!(
     progression::Progression,
     i::Integer = 1,
 )
-```
-```@docs
 insert!(
     A::AbstractArray{T, 1} where {T},
     index::Integer,
@@ -50,14 +48,8 @@ One of the purposes of `Lifting.jl` is to provide an analytic approach to traini
 The building blocks of these more complex functions are [`calcIntensity`](@ref), [`calcRPE`](@ref), [`calcReps`](@ref). We also have a more primitive function [`intensityArb`](@ref) to calculate intensity that is used in various programmes I've found.
 ```@docs
 calcIntensity(reps::Integer, rpe::Real = 10)
-```
-```@docs
 calcRPE(reps::Integer, intensity::Real)
-```
-```@docs
 calcReps(reps::Integer, intensity::Real)
-```
-```@docs
 intensityArb(var::Integer)
 ```
 
@@ -69,24 +61,18 @@ calcIntensityRatio(
     targetReps::Integer,
     targetRPE::Real,
 )
-```
-```@docs
 calcRPERatio(
     actualReps::Integer,
     actualIntensity::Real,
     targetReps::Integer,
     targetIntensity::Real,
 )
-```
-```@docs
 calcRepRatio(
     actualIntensity::Real,
     actualRPE::Real,
     targetIntensity::Real,
     targetRPE::Real,
 )
-```
-```@docs
 calcRepMax(
     weight::Real,
     actualReps::Integer,
@@ -101,39 +87,22 @@ The last purely mathematical function is [`calcWeights`](@ref).
 calcWeights(exercise::Exercise, setScheme::SetScheme)
 ```
 
-In order to calculate and/or adjust training maxes as well as set the next cycle's weights according to a programme's goals we have [`calcWeights`](@ref), [`adjustMaxes!`](@ref), [`adjustMaxes`](@ref), [`updateMaxes!`](@ref) and [`updateMaxes`](@ref).
-
+In order to calculate and/or adjust training maxes as well as set the next cycle's weights according to a programme's goals we have [`makeDays`](@ref), [`calcWeights`](@ref), [`adjustMaxes!`](@ref), [`adjustMaxes`](@ref), [`updateMaxes!`](@ref) and [`updateMaxes`](@ref). For calculating training maxes from logs we have [`calcTrainingMaxLogs`](@ref).
 ```@docs
 makeDays()
-```
-
-```@docs
 adjustMaxes!(
     name::AbstractString,
     dict::Dict{Any, Any},
     actualReps::Integer;
     weight = missing,
 )
-```
-
-```@docs
 adjustMaxes(
     name::AbstractString,
     dict::Dict{Any, Any},
     actualReps::Integer;
     weight = missing,
 )
-```
-
-```@docs
 updateMaxes!(prog::Programme, names, reps; idx = missing)
-```
-
-```@docs
 updateMaxes(prog::Programme, names, reps; idx = missing)
-```
-
-For calculating training maxes from logs we have [`calcTrainingMaxLogs`](@ref).
-```@docs
-calcTrainingMaxLogs
+calcTrainingMaxLogs(prog::Programme, names, reps, weight)
 ```

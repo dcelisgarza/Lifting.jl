@@ -324,3 +324,51 @@ function plotData!(fig, prog::Programme, names, x, y, args...; kwargs...)
         end
     end
 end
+
+"""
+```
+scatterData(prog::Programme, names::Vector{Any}, x, y, args...; kwargs...)
+```
+Makes a scatter plot of the data. For mutating the same figure see [`scatterData!`](@ref).
+"""
+function scatterData(prog::Programme, names, x, y, args...; kwargs...)
+    # Ensure we don't loop through characters.
+    typeof(names) == String ? names = [names] : nothing
+
+    figArr = []
+
+    for name in names
+        if ismissing(x[name]) || ismissing(y[name])
+            continue
+        end
+        if haskey(kwargs, :label) == true
+            fig = scatter(x[name], y[name]; kwargs...)
+        else
+            fig = scatter(x[name], y[name]; label = prog.exerProg[name][1].name, kwargs...)
+        end
+        push!(figArr, fig)
+    end
+    return figArr
+end
+
+"""
+```
+scatterData!(fig, prog::Programme, names::Vector{Any}, x, y, args...; kwargs...)
+```
+Same as [`scatterData`](@ref) but mutates the figure.
+"""
+function scatterData!(fig, prog::Programme, names, x, y, args...; kwargs...)
+    # Ensure we don't loop through characters.
+    typeof(names) == String ? names = [names] : nothing
+
+    for name in names
+        if ismissing(x[name]) || ismissing(y[name])
+            continue
+        end
+        if haskey(kwargs, :label) == true
+            scatter!(fig, x[name], y[name]; kwargs...)
+        else
+            scatter!(fig, x[name], y[name]; label = prog.exerProg[name][1].name, kwargs...)
+        end
+    end
+end

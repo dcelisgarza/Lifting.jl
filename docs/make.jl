@@ -1,5 +1,7 @@
 using Documenter, Lifting
 
+import Lifting: Lifting_Aux, Lifting_Exercise_Names, Lifting_Progressions, Lifting_Programmes
+
 makedocs(;
     modules=[Lifting],
     format=Documenter.HTML(),

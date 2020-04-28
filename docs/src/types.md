@@ -4,7 +4,7 @@
 abstract type AbstractAnimal end
 abstract type AbstractPrimate <: AbstractAnimal end
 abstract type AbstractHuman <: AbstractPrimate end
-struct me <: AbstractHuman end
+struct Person <: AbstractHuman end
 ```
 
 The generalised framework for this package leans heavily on Julia's type system.

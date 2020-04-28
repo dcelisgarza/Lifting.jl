@@ -1,7 +1,43 @@
 """
-wakao
+```
+Lifting_Aux::Dict{String, Dict{String, String}}
+```
+Is a dictionary of dictionaries containing non-essential information about exercises and progressions. Its default keys are,
+```
+julia> keys(Lifting_Aux)
+Base.KeySet for a Dict{String,Dict{String,String}} with 5 entries. Keys:
+  "modality"
+  "setType"
+  "muscles"
+  "equipmentSize"
+  "equipment"
+```
+where each entry is a dictionary with its own keys and values.
 """
 Lifting_Aux = Dict{String, Dict{String, String}}()
+
+"""
+```
+Lifting_Exercise_Names::Dict{String, Dict{String, String}}
+```
+Is a dictionary of dictionaries containing lifting exercises. Its default keys are,
+```
+julia> import: Lifting_Exercise_Names
+julia> keys(Lifting_Exercise_Names)
+Base.KeySet for a Dict{String,Dict{String,String}} with 10 entries. Keys:
+  "grip"
+  "bench"
+  "squat"
+  "press"
+  "isometric"
+  "core"
+  "pull"
+  "row"
+  "deadlift"
+  "lowBack"
+```
+where each entry is a dictionary with its own keys and values.
+"""
 Lifting_Exercise_Names = Dict{String, Dict{String, String}}()
 
 modality = Dict(

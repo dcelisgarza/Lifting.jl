@@ -1,3 +1,29 @@
+"""
+```
+Lifting_Progressions::Dict{String, Progression}
+```
+Dictionary with preloaded progressions. These are just the progressions I use in my current programme.
+
+```
+julia> import Lifting: Lifting_Progressions
+julia> keys(Lifting_Progressions)
+Base.KeySet for a Dict{String,Progression} with 14 entries. Keys:
+  "AMRAP_Cali"
+  "nSuns_6Day_OHP"
+  "AMRAP_Grip"
+  "l23_lmh"
+  "m23_lmh"
+  "h23_lmh"
+  "CAP3_Bench_T1"
+  "CAP3_Row_T1"
+  "CAP3_Squat_T2"
+  "CAP3_Deadlift_T1"
+  "CAP3_Squat_T1"
+  "CAP3_Bench_T2"
+  "CAP3_Deadlift_T2"
+  "CAP3_Row_T2"
+```
+"""
 Lifting_Progressions = Dict{String, Progression}()
 
 SetsCAP3BenchT1 = [

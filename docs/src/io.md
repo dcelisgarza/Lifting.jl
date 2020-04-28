@@ -1,4 +1,4 @@
-# IO
+# Breathe in, breath out
 
 ```julia
 println("t00t t00t.")
@@ -17,7 +17,7 @@ The default printing does a poor job of displaying the programme so we multiple-
 println(::Programme, ::Any)
 ```
 
-May the [`Programme`](@ref) be with you, always. This lets you do so, implement the programme in your favourite app, put on google sheets, log your progress, and then use that log to analyse your progress with [`loadLogFile`](@ref) and [`plotData`](@ref). Alternatively be a monster and print everything out, who needs trees anyway?
+May the [`Programme`](@ref) be with you, always. This lets you do so, implement the programme in your favourite app, put on google sheets, log your progress, and then use that log to analyse your progress with [`loadLogFile`](@ref) and [`plotData`](@ref). Alternatively, be a monster and print everything out, who needs trees anyway?
 ```@docs
 write(
     ::AbstractString,
@@ -47,4 +47,6 @@ A picture is worth a thousand words, a lifter is worth at least half a human.
 ```@docs
 plotData(prog::Programme, names, x, y, args...; kwargs...)
 plotData!(figure, prog::Programme, names, x, y, args...; kwargs...)
+scatterData(prog::Programme, names::Vector{Any}, x, y, args...; kwargs...)
+scatterData!(fig, prog::Programme, names::Vector{Any}, x, y, args...; kwargs...)
 ```

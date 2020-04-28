@@ -36,7 +36,7 @@ This function calculates a set's intensity as a function of reps and RPE. It doe
 
 where ``z \\equiv`` intensity, ``x \\equiv`` reps, ``y \\equiv`` RPE, ``a = 0.995,~ b = 0.0333,~c = 0.0025,~d = 0.1``.
 
-We cap `rpe` to 10 but still ensure the return value is capped to 1.
+We cap `rpe` to 10 and `intensity` to 1.
 """
 function calcIntensity(reps::Integer, rpe::Real = 10)
     a = 0.995
@@ -56,11 +56,11 @@ calcRPE(reps::Integer, intensity::Real)
 ```
 Solving [`calcIntensity`](@ref) for `rpe` yields the following function:
 
-``x = \\dfrac{\\sqrt{\\left(a y z - b y^2 z + 10 b y z + c y z - d z - y\\right)^2 + 4 c y z (b y z + d z)} - a y z + b y^2 z - 10 b y z - c y z + d z + y}{2 z (b y + d)}``
+``x = \\dfrac{\\sqrt{\\left(a y z - b y^2 z + 10 b y z + c y z - d z - y\\right)^2 + 4 c y z (b y z + d z)} - a y z + b y^2 z - 10 b y z - c y z + d z + y}{2 z (b y + d)},``
 
 where the variables are the same as [`calcIntensity`](@ref).
 
-We cap `intensity` to 1 and the return value to 10.
+We cap `intensity` to 1 and the `rpe` to 10.
 """
 function calcRPE(reps::Integer, intensity::Real)
     a = 0.995
@@ -94,11 +94,11 @@ end
 
 """
 ```
-calcReps(reps::Integer, intensity::Real)
+calcReps(intensity::Real, rpe::Real)
 ```
 Solving [`calcIntensity`](@ref) for `reps` yields the following function:
 
-``y = \\dfrac{\\sqrt{\\left(a x z + b x^2 z + 10 b x z + c x z - c z - x\\right)^2 + 4 b x z \\left(d x^2 z - d x z\\right)} + a x z + b x^2 z + 10 b x z + c x z - c z - x}{2 b x z}``
+``y = \\dfrac{\\sqrt{\\left(a x z + b x^2 z + 10 b x z + c x z - c z - x\\right)^2 + 4 b x z \\left(d x^2 z - d x z\\right)} + a x z + b x^2 z + 10 b x z + c x z - c z - x}{2 b x z},``
 
 where the variables are the same as [`calcIntensity`](@ref).
 
@@ -243,7 +243,11 @@ end
 ```
 intensityArb(var::Integer)
 ```
-Calculates intensity given an arbitrary variable. I've seen this used as a proxy for reps at a given RPE. I've seen `var` be anything between the number of reps to the number of reps + 2, 4, 6, 8 depending on a target rpe. It makes for a good rough guide. `calcIntensity` however reproduces the desired effect and works over a very wide range of RPE and rep range combinations.
+Calculates intensity given an arbitrary variable. I've seen this used as a proxy for reps at a given RPE. I've seen `var` be anything between the number of reps to the number of reps + 2, 4, 6, 8 depending on a target rpe. It makes for a good rough guide. `calcIntensity` however reproduces the desired effect and works over a very wide range of RPE and rep range combinations. It is defined as
+
+``z = \\dfrac{1}(a + (b x)),``
+
+where ``x \\equiv`` var and the constants are the same as [`calcIntensity`](@ref).
 """
 function intensityArb(var::Integer)
     return 1 / (0.995 + (0.0333 * var))
@@ -1107,7 +1111,7 @@ The arguments are the same as [`updateMaxes!`](@ref).
 
 Calculates the would-be new training maxes and changes to the old training maxes for the next cycle according to what is expected by the programme vs actual performance but does **not** update the programme in any way. Returns a tuple `(trainingMaxes, change)` where each entry in the tuple is an array whose entries correspond 1 to 1 to the exercises in `names`. The new value for `trainingMax` is not necessarily going to equal to the old value of `trainingMax + change`, because `change` is calculated based on how far off the new value for `trainingMax` is from the old value of `trainingMax`, and the result is rounded according to the exercise's `roundBase` and `roundMode`.
 
-This is essentially calls [`adjustMaxes`](@rep) for all the arguments in `names`. In order to see what a programme's training days would look like under these new training maxes, the easiest thing to do is to create a deepcopy() of the programme and run [`updateMaxes!`](@ref) on it.
+This is essentially calls [`adjustMaxes`](@ref) for all the arguments in `names`. In order to see what a programme's training days would look like under these new training maxes, the easiest thing to do is to create a deepcopy() of the programme and run [`updateMaxes!`](@ref) on it.
 """
 function updateMaxes(prog::Programme, names, reps; idx = missing)
     typeof(names) == String ? names = [names] : nothing

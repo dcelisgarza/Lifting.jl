@@ -1,5 +1,5 @@
 using Lifting
-import Lifting: Lifting_Programmes
+import Lifting: Lifting_Programmes, Lifting_Aux, Lifting_Exercise_Names, Lifting_Progressions
 cd(@__DIR__)
 
 name = "nSunsCAP3_OHP_6Day_LP"
@@ -30,7 +30,11 @@ tm, change = calcTrainingMaxLogs(prog, keyArr, reps, wght)
 tm
 # Plots lifts individually and uses a cubic spline to interpolate values.
 figs = plotData(prog, keyArr, Δdays, tm; xlabel = "Days", ylabel = "Weight", lw=3)
+for (i, fig) in enumerate(figs)
+    scatterData!(fig, prog, keyArr[i], Δdays, tm; shape = :circle, markersize=5, label="")
+end
 display.(figs)
+
 
 # Calculates training maxes depending on the weight and intensities used in the progression and the reps provided.
 updateMaxes(prog, keyArr, reps)
