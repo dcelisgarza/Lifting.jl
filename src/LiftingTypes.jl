@@ -243,11 +243,14 @@ end
 ```
 intensityArb(var::Integer)
 ```
-Calculates intensity given an arbitrary variable. I've seen this used as a proxy for reps at a given RPE. I've seen `var` be anything between the number of reps to the number of reps + 2, 4, 6, 8 depending on a target rpe. It makes for a good rough guide. `calcIntensity` however reproduces the desired effect and works over a very wide range of RPE and rep range combinations. It is defined as
+Calculates intensity given an arbitrary variable. I've seen this used as a proxy for reps at a given RPE. I've seen `var` be anything between the number of reps to the number of reps + 2, 4, 6, 8 depending on a target rpe. This makes for a good rough guide. It is defined as
 
 ``z = \\dfrac{1}{a + b x},``
 
 where ``x \\equiv`` var and the constants are the same as [`calcIntensity`](@ref).
+
+!!! note
+    `calcIntensity` works over a *much* wider range of RPE and rep combinations.
 """
 function intensityArb(var::Integer)
     return 1 / (0.995 + 0.0333 * var)
