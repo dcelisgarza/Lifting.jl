@@ -121,7 +121,7 @@ Programme(BrosefDreamProgramme(), "BrosefDreamProgramme", exerProg, week)
 ```
 We need to create some dictionaries and arrays to hold the data as well as the type of the programme. This lets Julia work its multiple dispatch magic. There is also a function `makeDays` that can be extended to work with concrete subtypes of `AbstractProgramme`, allowing it to specialise for user defined programmes.
 
-To see a more advanced example that showcases the functionality of the package see function `/assets/nSunsCAP3_OHP_6Day_LP.jl`, in particular function `makeDays` in line 386.
+To see a more advanced example that showcases the functionality of the package see `/assets/nSunsCAP3_OHP_6Day_LP.jl`. An example `makeDays` function can be found in line 386 of the same file.
 
 ## Aditional Features
 

@@ -26,17 +26,42 @@ import Base: round, length, getindex, iterate, @_inline_meta
 round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
 length(x::Function) = 1
 
+"""
+```
+calcIntensity(reps::Integer, rpe::Real = 10)
+```
+This function calculates a set's intensity as a function of reps and RPE. It does a disconcertedly good job of reproducing RPE charts. It is defined as follows:
+
+``z = \\dfrac{1}{a + b (x + 10 - y) + (x - 1) \\left(\\dfrac{c}{x} + \\dfrac{d}{y}\\right)},``
+
+where ``z \\equiv`` intensity, ``x \\equiv`` reps, ``y \\equiv`` RPE, ``a = 0.995,~ b = 0.0333,~c = 0.0025,~d = 0.1``.
+
+We cap `rpe` to 10 but still ensure the return value is capped to 1.
+"""
 function calcIntensity(reps::Integer, rpe::Real = 10)
     a = 0.995
     b = 0.0333
     c = 0.0025
     d = 0.1
+    rpe = minimum((rpe, 10.0))
     return minimum((
         1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)),
         1.0,
     ))
 end
 
+"""
+```
+calcRPE(reps::Integer, intensity::Real)
+```
+Solving [`calcIntensity`](@ref) for `rpe` yields the following function:
+
+``x = \\dfrac{\\sqrt{\\left(a y z - b y^2 z + 10 b y z + c y z - d z - y\\right)^2 + 4 c y z (b y z + d z)} - a y z + b y^2 z - 10 b y z - c y z + d z + y}{2 z (b y + d)}``
+
+where the variables are the same as [`calcIntensity`](@ref).
+
+We cap `intensity` to 1 and the return value to 10.
+"""
 function calcRPE(reps::Integer, intensity::Real)
     a = 0.995
     b = 0.0333
@@ -67,6 +92,18 @@ function calcRPE(reps::Integer, intensity::Real)
     return minimum((rpe, 10.0))
 end
 
+"""
+```
+calcReps(reps::Integer, intensity::Real)
+```
+Solving [`calcIntensity`](@ref) for `reps` yields the following function:
+
+``y = \\dfrac{\\sqrt{\\left(a x z + b x^2 z + 10 b x z + c x z - c z - x\\right)^2 + 4 b x z \\left(d x^2 z - d x z\\right)} + a x z + b x^2 z + 10 b x z + c x z - c z - x}{2 b x z}``
+
+where the variables are the same as [`calcIntensity`](@ref).
+
+We cap `intensity` to 1 and `rpe` to 10.
+"""
 function calcReps(intensity::Real, rpe::Real)
     a = 0.995
     b = 0.0333
@@ -92,6 +129,19 @@ function calcReps(intensity::Real, rpe::Real)
     return Int(round(reps, digits = 0))
 end
 
+"""
+```
+calcIntensityRatio(
+    actualReps::Integer,
+    actualRPE::Real,
+    targetReps::Integer,
+    targetRPE::Real,
+)
+```
+Calculate the ratio between `targetIntensity/actualIntensity`.
+
+All RPE values are capped to 10.
+"""
 function calcIntensityRatio(
     actualReps::Integer,
     actualRPE::Real,
@@ -106,6 +156,46 @@ function calcIntensityRatio(
     return targetIntensity / actualIntensity
 end
 
+"""
+```
+calcRPERatio(
+    actualReps::Integer,
+    actualIntensity::Real,
+    targetReps::Integer,
+    targetIntensity::Real,
+)
+```
+Calculate the ratio between `targetRPE/actualRPE`.
+
+All intensity values are capped to 1.
+"""
+function calcRPERatio(
+    actualReps::Integer,
+    actualIntensity::Real,
+    targetReps::Integer,
+    targetIntensity::Real,
+)
+    actualIntensity = minimum((actualRPE, 1.0))
+    targetIntensity = minimum((targetRPE, 1.0))
+
+    actualRPE = calcRPE(actualReps, actualIntensity)
+    targetRPE = calcRPE(targetReps, targetIntensity)
+    return targetRPE / actualRPE
+end
+
+"""
+```
+calcRepRatio(
+    actualIntensity::Real,
+    actualRPE::Real,
+    targetIntensity::Real,
+    targetRPE::Real,
+)
+```
+Calculate the ratio between `targetReps/actualReps`.
+
+All intensity values are capped to 1 and all rpe values to 10.
+"""
 function calcRepRatio(
     actualIntensity::Real,
     actualRPE::Real,
@@ -122,20 +212,18 @@ function calcRepRatio(
     return targetReps / actualReps
 end
 
-function calcRPERatio(
+"""
+```
+calcRepMax(
+    weight::Real,
     actualReps::Integer,
-    actualIntensity::Real,
+    actualRPE::Real,
     targetReps::Integer,
-    targetIntensity::Real,
+    targetRPE::Real,
 )
-    actualIntensity = minimum((actualRPE, 1.0))
-    targetIntensity = minimum((targetRPE, 1.0))
-
-    actualRPE = calcRPE(actualReps, actualIntensity)
-    targetRPE = calcRPE(targetReps, targetIntensity)
-    return targetRPE / actualRPE
-end
-
+```
+Calculates the rep weight for a target number of reps, `targetReps`, at a target rpe, `targetRPE`, given an actual number of reps, `actualReps`, and an actual rpe, `actualRPE` and `weight`.
+"""
 function calcRepMax(
     weight::Real,
     actualReps::Integer,
@@ -151,6 +239,12 @@ function calcRepMax(
     return weight * intensity
 end
 
+"""
+```
+intensityArb(var::Integer)
+```
+Calculates intensity given an arbitrary variable. I've seen this used as a proxy for reps at a given RPE. I've seen `var` be anything between the number of reps to the number of reps + 2, 4, 6, 8 depending on a target rpe. It makes for a good rough guide. `calcIntensity` however reproduces the desired effect and works over a very wide range of RPE and rep range combinations.
+"""
 function intensityArb(var::Integer)
     return 1 / (0.995 + (0.0333 * var))
 end
@@ -209,7 +303,7 @@ Every parameter has defaults, so users have the ability to provide only the ones
 If `rpeMode == true`, intensity is based on RPE, which lies in the interval ``x ∈ (0, 10]``. If `rpeMode == false`, then intensity is relative to training max and therefore lies in the interval ``x ∈ [0, 1]``. The lenghts of all input vectors must be equal.
 
 ## Example
-Here we define a simple set scheme. As we are not providing any added weight via `addWeight`, that parameter becomes a zero vector.
+Here we define a simple set scheme. Since we are not providing any added weight via `addWeight`, that parameter becomes a zero vector.
 ```
 julia> SampleScheme = SetScheme(;
            type = ["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"],
@@ -541,6 +635,7 @@ iterate(A::Exercise, i = 1) =
 ```
 calcWeights(exercise::Exercise, setScheme::SetScheme)
 ```
+This function calculates and updates the weights for each set according to the training max specified in `exercise.trainingMax` and the intensities of the sets in `setScheme`.
 """
 function calcWeights(exercise::Exercise, setScheme::SetScheme)
     trainingMax = exercise.trainingMax
@@ -588,7 +683,7 @@ Each programme is different so the recommendation is to create a typed [`makeDay
 
 ## Examples
 
-Assuming we are using the previously defined exercise and progression we can create a programme. There are a few ways to do so but this is recommended.
+Assuming we are using the previously defined [`Exercise`](@ref) and [`Progression`](@ref), we can create a programme. There are a few ways to do so but this is recommended.
 ```julia
 # Define the programme's concrete type. Can be used to extend `makeDays`.
 struct SampleProgramme <: AbstractProgramme end
@@ -615,16 +710,20 @@ function makeDays(::SampleProgramme, exerProg)
     # One sub array per day you want to track.
     week = [[], [], [], [], [], [], []]
 
-    # You can do this for all your exercises or push them directly from the
-    # dictionary. Alternatively use index syntax like so,
-    # BenchAccessory = exerProg["BenchAccessory"][1]
-    # BenchAccessoryProg = exerProg["BenchAccessory"][2]
+    # You can 'unroll' the dictionary contents or push them directly to your
+    # schedule. If using named tuples dot syntax and normal numeric indexing
+    # both work
+    # exerProg["BenchAccessory"].exercise == exerProg["BenchAccessory"][1]
     BenchAccessory = exerProg["BenchAccessory"].exercise
     BenchAccessoryProg = exerProg["BenchAccessory"].progression
 
-    # Push the exercise and progression to the day of the week.
+
+    # Push the exercise and progression to whichever day of the week you want.
     # If the progression has multiple set schemes, the corresponding scheme can
     # be accessed by adding the index as the last argument.
+    # push!(week[1], BenchAccessory, BenchAccessoryProg, 2)
+    # Which would fail because there is only one set scheme, but if
+    # BenchAccessoryProg were to have more entries that would take the second.
     # push! is overloaded so it also automatically calculates the required
     # weights. You can do this manually but this is easier and more reliable.
     push!(week[1], BenchAccessory, BenchAccessoryProg)   # Day 1
@@ -689,7 +788,7 @@ getindex(p::Programme, idx...) = [p.days[i] for i in idx]
 getindex(p::Programme, i) = p.days[i]
 length(p::Programme) = length(p.days)
 
-import Base: push!
+import Base: push!, insert!
 """
 ```
 push!(
@@ -699,7 +798,7 @@ push!(
     i::Integer = 1,
 )
 ```
-Calculates set weights using the exercise.trainingMax and progression.setScheme. It also unrolls the relevant data into a named tuple for each day.
+Calculates set weights using `exercise.trainingMax` and `progression.setScheme`, then unrolls the relevant data into a named tuple and pushes it to the end of vector A. See [`insert!`](@ref) which does the same but at a specified index of A.
 """
 function push!(
     A::AbstractArray{T, 1} where {T},
@@ -743,6 +842,76 @@ function push!(
     end
 end
 
+"""
+```
+insert!(
+    A::AbstractArray{T, 1} where {T},
+    index::Integer,
+    exercise::Exercise,
+    progression::Progression,
+    i::Integer = 1,
+)
+```
+Calculates set weights using `exercise.trainingMax` and `progression.setScheme`, then unrolls the relevant data into a named tuple and pushes it to index `index` of vector A. See [`push!`](@ref) which does the same but in the last index of A.
+"""
+function insert!(
+    A::AbstractArray{T, 1} where {T},
+    index::Integer,
+    exercise::Exercise,
+    progression::Progression,
+    i::Integer = 1,
+)
+    calcWeights.(exercise, progression.setScheme[i])
+    if typeof(progression.setScheme[i].type) == String
+        type = progression.setScheme[i].type
+    else
+        type = Tuple(progression.setScheme[i].type)
+    end
+    if exercise.modality == "Default"
+        insert!(
+            A,
+            index,
+            (
+                name = exercise.name,
+                type = type,
+                sets = Tuple(progression.setScheme[i].sets),
+                reps = Tuple(progression.setScheme[i].reps),
+                wght = Tuple(progression.setScheme[i].wght),
+                rpe = Tuple(progression.setScheme[i].rpe),
+                intensity = Tuple(progression.setScheme[i].intensity),
+            ),
+        )
+    else
+        insert!(
+            A,
+            index,
+            (
+                name = exercise.name,
+                modality = exercise.modality,
+                type = type,
+                sets = Tuple(progression.setScheme[i].sets),
+                reps = Tuple(progression.setScheme[i].reps),
+                wght = Tuple(progression.setScheme[i].wght),
+                rpe = Tuple(progression.setScheme[i].rpe),
+                intensity = Tuple(progression.setScheme[i].intensity),
+            ),
+        )
+    end
+end
+
+"""
+```
+adjustMaxes!(
+    name::AbstractString,
+    dict::Dict{Any, Any},
+    actualReps::Integer;
+    weight = missing,
+)
+```
+Adjusts a programme's training maxes using what is expected by the programme and the actual reps, `actualReps` performed at the programme's highest intensity for the exercise `dict[name]`. However, if `weight` is provided, `updateMaxes!` will use it to calculate the new training max instead of whatever the programme prescribes.
+
+Adjustments made to training max are calculated based on what the programme expects vs actual performance. So if you spectacularly fail a set, the adjustment *down* will be relatively aggressive. Conversely if you absolutely smash it, the adjustment *up* will be relatively aggressive. Downward adjustments are more aggressive than upward ones.
+"""
 function adjustMaxes!(
     name::AbstractString,
     dict::Dict{Any, Any},
@@ -789,27 +958,43 @@ function adjustMaxes!(
     end
 
     roundBase = exercise.roundBase
+    roundMode = exercise.roundMode
     change = 0
     if metTarget
         if trainingMax < exercise.trainingMax
             change = roundBase
         else
-            change = div(trainingMax - exercise.trainingMax, roundBase)
+            change =
+                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
             change = maximum((change, roundBase))
         end
     else
         if trainingMax < exercise.trainingMax
-            change = div(exercise.trainingMax - trainingMax, roundBase)
+            change =
+                round(exercise.trainingMax - trainingMax, roundBase, roundMode)
             change = -maximum((change, roundBase))
         else
-            change = div(trainingMax - exercise.trainingMax, roundBase)
+            change =
+                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
             change = maximum((change, roundBase))
         end
     end
+
     exercise.trainingMax += change
     calcWeights(exercise, prog)
 end
 
+"""
+```
+adjustMaxes(
+    name::AbstractString,
+    dict::Dict{Any, Any},
+    actualReps::Integer;
+    weight = missing,
+)
+```
+Does the same as [`adjustMaxes!`](@ref) but without updating the programme's training maxes. It returns a tuple with the new training max and the would-be change to the programme's training max, `(trainingMax, change)``.
+"""
 function adjustMaxes(
     name::AbstractString,
     dict::Dict{Any, Any},
@@ -854,15 +1039,53 @@ function adjustMaxes(
         trainingMax =
             calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
     end
-    return trainingMax
+
+    roundBase = exercise.roundBase
+    roundMode = exercise.roundMode
+    change = 0
+    if metTarget
+        if trainingMax < exercise.trainingMax
+            change = roundBase
+        else
+            change =
+                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
+            change = maximum((change, roundBase))
+        end
+    else
+        if trainingMax < exercise.trainingMax
+            change =
+                round(exercise.trainingMax - trainingMax, roundBase, roundMode)
+            change = -maximum((change, roundBase))
+        else
+            change =
+                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
+            change = maximum((change, roundBase))
+        end
+    end
+
+    return trainingMax, change
 end
 
 """
-    makeDays
+```
+makeDays()
+```
+Generic function that can be explicitly typed by the user to create their programme's daily schedule. Typed `makeDays` functions are used by [`updateMaxes!`](@ref) to update the training days with the new training maxes calculated by [`adjustMaxes!`](@ref). See the example in [`Programme`](@ref) to see how to define typed `makeDays`.
 """
-function makeDays end
+function makeDays() end
 
+"""
+```
+updateMaxes!(prog::Programme, names, reps; idx = missing)
+```
+`names` are the keys of the exercises you want to update, `reps` contains the reps performed at the corresponding exercise's maximum intensity set of the cycle, `idx` is optional in case each entry of reps is a vector and you would like to specifically use an index instead of the last entry.
+
+Updates the programme's training maxes and adjusts the set weights for the next training cycle. It uses [`adjustMaxes`](@ref) to update training maxes and [`makeDays`](@ref) to calculate new set weights according to what is expected by the programme vs actual performance. All this is done on a per exercise basis.
+
+See [`updateMaxes`](@ref) for a non-mutating version of this function.
+"""
 function updateMaxes!(prog::Programme, names, reps; idx = missing)
+    typeof(names) == String ? names = [names] : nothing
 
     exerProg = prog.exerProg
     for (i, name) in enumerate(names)
@@ -876,27 +1099,49 @@ function updateMaxes!(prog::Programme, names, reps; idx = missing)
     return prog
 end
 
+"""
+```
+updateMaxes(prog::Programme, names, reps; idx = missing)
+```
+The arguments are the same as [`updateMaxes!`](@ref).
+
+Calculates the would-be new training maxes and changes to the old training maxes for the next cycle according to what is expected by the programme vs actual performance but does **not** update the programme in any way. Returns a tuple `(trainingMaxes, change)` where each entry in the tuple is an array whose entries correspond 1 to 1 to the exercises in `names`. The new value for `trainingMax` is not necessarily going to equal to the old value of `trainingMax + change`, because `change` is calculated based on how far off the new value for `trainingMax` is from the old value of `trainingMax`, and the result is rounded according to the exercise's `roundBase` and `roundMode`.
+
+This is essentially calls [`adjustMaxes`](@rep) for all the arguments in `names`. In order to see what a programme's training days would look like under these new training maxes, the easiest thing to do is to create a deepcopy() of the programme and run [`updateMaxes!`](@ref) on it.
+"""
 function updateMaxes(prog::Programme, names, reps; idx = missing)
+    typeof(names) == String ? names = [names] : nothing
 
     trainingMaxes = zeros(length(names))
+    change = zeros(length(names))
     exerProg = prog.exerProg
     for (i, name) in enumerate(names)
         isempty(reps[name]) ? continue : nothing
         ismissing(idx) ? numReps = reps[name][end] : numReps = reps[name][idx]
         numReps < 0 ? continue : nothing
-        trainingMaxes[i] = adjustMaxes(name, exerProg, numReps)
+        trainingMaxes[i], change[i] = adjustMaxes(name, exerProg, numReps)
     end
-    return trainingMaxes
+    return trainingMaxes, change
 
 end
 
+"""
+```
+calcTrainingMaxLogs(prog::Programme, names, reps, weight)
+```
+This function does something similar to [`updateMaxes`](@ref) but for the whole history of entries instead of a single point in time. This is useful for analysing progress.
+"""
 function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
+    typeof(names) == String ? names = [names] : nothing
+
     trainingMax = deepcopy(weight)
+    change = deepcopy(weight)
     for name in names
         isempty(reps[name]) ? continue : nothing
         for j = 1:length(reps[name])
+            change[name][j] = 0.0
             trainingMax[name][j] = 0.0
-            trainingMax[name][j] = adjustMaxes(
+            trainingMax[name][j], change[name][j] = adjustMaxes(
                 name,
                 prog.exerProg,
                 reps[name][j];
@@ -904,5 +1149,5 @@ function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
             )
         end
     end
-    return trainingMax
+    return trainingMax, change
 end

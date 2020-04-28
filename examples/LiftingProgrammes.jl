@@ -25,8 +25,9 @@ prog = deepcopy(Lifting_Programmes[name])
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(prog)
 
 # Calculates training maxes depending on the weight and reps provided but accounting for intensity defined in the progression.
-tm = calcTrainingMaxLogs(prog, keyArr, reps, wght)
+tm, change = calcTrainingMaxLogs(prog, keyArr, reps, wght)
 
+tm
 # Plots lifts individually and uses a cubic spline to interpolate values.
 figs = plotData(prog, keyArr, Δdays, tm; xlabel = "Days", ylabel = "Weight", lw=3)
 display.(figs)

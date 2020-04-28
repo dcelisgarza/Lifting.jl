@@ -12,14 +12,14 @@ end
 ## Ain't nuthin' but a peanut!
 
 > There is no reason to be alive if you can't do deadlifts!"  
-> - Jon Pall Sigmarsson
+> - Jon Pall Sigmarsson on the simple joys of life
 
 This is a tool for creating and analysing lifting programmes. It comes with a few premade dictionaries that users can import and modify to make things easier on them. These defaults as well as the programme I'm currently following are found in `/src/assets`. More details in [Defaults](#Defaults-1).
 
 ## Lightweight, Baby!
 
 > Just remember, somewhere, a little Chinese girl is warming up with your max.     
-> - Jim Conroy
+> - Jim Conroy on overachievers
 
 In order to make a programme you need 3 things:
 1. an exercise,
@@ -115,12 +115,12 @@ Programme(BrosefDreamProgramme(), "BrosefDreamProgramme", exerProg, week)
 ```
 We need to create some dictionaries and arrays to hold the data as well as the type of the programme. This lets Julia work its multiple dispatch magic. There is also a function `makeDays` that can be extended to work with concrete subtypes of `AbstractProgramme`, allowing it to specialise for user defined programmes.
 
-To see a more advanced example that showcases the functionality of the package see function `/assets/nSunsCAP3_OHP_6Day_LP.jl`, in particular function `makeDays` in line 386.
+To see a more advanced example that showcases the functionality of the package see `/assets/nSunsCAP3_OHP_6Day_LP.jl`. An example `makeDays` function can be found in line 386 of the same file.
 
 ## FAQ
 
 > What makes a weightlifting program successful? Your hard work and dedication.     
-> - Greg Everett
+> - Greg Everett on lifting
 
 - Is it overkill? Most definitely.
 - What does it do? Lets you create and analyse lifting programmes.
@@ -131,7 +131,7 @@ To see a more advanced example that showcases the functionality of the package s
 ## Defaults
 
 > This is for sex <*violent hip thrusts*>. This is for snatch <*brings barbell to hip crease*>.
-> - Dmitry Klokov
+> - Dmitry Klokov on the snatch ;)
 
 These are the default dictionaries defined in the programme. They are not explicitly exported so must be explicitly imported or accessed with the dot syntax:
 
@@ -188,5 +188,8 @@ Base.KeySet for a Dict{String,Programme} with 1 entry. Keys:
 ```
 
 ### Adding to the Package
+
+> Everybody wants to be a bodybuilder, but nobody wants to lift no heavy-ass weights!
+> - Ronnie Coleman on heavy metal
 
 The recommended way for users to add their own creations to the package is to do so in the relevant `/src/assets` files and push them to their corresponding dictionaries. These can then be imported as normal. Users may also define their own modules that expand `Lifting.jl`'s functionality. These user-made modules can then be imported instead. Alternatively, additions may be made in their local environments, it will simply crowd your workspace.
