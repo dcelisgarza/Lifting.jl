@@ -915,9 +915,10 @@ adjustMaxes!(
     weight = missing,
 )
 ```
-Adjusts a programme's training maxes using what is expected by the programme and the actual reps, `actualReps` performed at the programme's highest intensity for the exercise `dict[name]`. However, if `weight` is provided, `updateMaxes!` will use it to calculate the new training max instead of whatever the programme prescribes.
+Adjusts a programme's training maxes using what is expected by the programme and the actual reps, `actualReps`, performed at the programme's highest intensity for the exercise contained in `dict[name]`. However, if `weight` is provided, `updateMaxes!` will use that to calculate the new training max instead of whatever the programme prescribes.
 
-Adjustments made to training max are calculated based on what the programme expects vs actual performance. So if you spectacularly fail a set, the adjustment *down* will be relatively aggressive. Conversely if you absolutely smash it, the adjustment *up* will be relatively aggressive. Downward adjustments are more aggressive than upward ones.
+!!! note
+    Adjustments made to training max are calculated based on what the programme expects vs actual performance. So if you spectacularly fail a set, the adjustment *down* will be relatively aggressive. Conversely if you absolutely smash it, the adjustment *up* will be relatively aggressive. Downward adjustments are more aggressive than upward ones.
 """
 function adjustMaxes!(
     name::AbstractString,
