@@ -28,7 +28,7 @@ length(x::Function) = 1
 
 """
 ```
-calcIntensity(reps::Integer, rpe::Real = 10)
+calcIntensity(reps::Integer, rpe::Real)
 ```
 This function calculates a set's intensity as a function of reps and RPE. It does a disconcertedly good job of reproducing RPE charts. It is defined as follows:
 
@@ -38,15 +38,15 @@ where ``z \\equiv`` intensity, ``x \\equiv`` reps, ``y \\equiv`` RPE, ``a = 0.99
 
 We cap `rpe` to 10 and `intensity` to 1.
 """
-function calcIntensity(reps::Integer, rpe::Real = 10)
+@inline function calcIntensity(reps::Integer, rpe::Real)
     a = 0.995
     b = 0.0333
     c = 0.0025
     d = 0.1
-    rpe = minimum((rpe, 10.0))
+    rpe = minimum((rpe, 10))
     return minimum((
         1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)),
-        1.0,
+        1,
     ))
 end
 
@@ -62,12 +62,12 @@ where the variables are the same as [`calcIntensity`](@ref).
 
 We cap `intensity` to 1 and the `rpe` to 10.
 """
-function calcRPE(reps::Integer, intensity::Real)
+@inline function calcRPE(reps::Integer, intensity::Real)
     a = 0.995
     b = 0.0333
     c = 0.0025
     d = 0.1
-    intensity = minimum((intensity, 1.0))
+    intensity = minimum((intensity, 1))
     rpe =
         (
             sqrt(
@@ -89,7 +89,7 @@ function calcRPE(reps::Integer, intensity::Real)
             c * reps * intensity - c * intensity - reps
         ) / (2 * b * reps * intensity)
 
-    return minimum((rpe, 10.0))
+    return minimum((rpe, 10))
 end
 
 """
@@ -104,13 +104,13 @@ where the variables are the same as [`calcIntensity`](@ref).
 
 We cap `intensity` to 1 and `rpe` to 10.
 """
-function calcReps(intensity::Real, rpe::Real)
+@inline function calcReps(intensity::Real, rpe::Real)
     a = 0.995
     b = 0.0333
     c = 0.0025
     d = 0.1
-    intensity = minimum((intensity, 1.0))
-    rpe = minimum((rpe, 10.0))
+    intensity = minimum((intensity, 1))
+    rpe = minimum((rpe, 10))
     reps =
         (
             sqrt(
@@ -142,14 +142,14 @@ Calculate the ratio between `targetIntensity/actualIntensity`.
 
 All RPE values are capped to 10.
 """
-function calcIntensityRatio(
+@inline function calcIntensityRatio(
     actualReps::Integer,
     actualRPE::Real,
     targetReps::Integer,
     targetRPE::Real,
 )
-    actualRPE = minimum((actualRPE, 10.0))
-    targetRPE = minimum((targetRPE, 10.0))
+    actualRPE = minimum((actualRPE, 10))
+    targetRPE = minimum((targetRPE, 10))
 
     actualIntensity = calcIntensity(actualReps, actualRPE)
     targetIntensity = calcIntensity(targetReps, targetRPE)
@@ -169,14 +169,14 @@ Calculate the ratio between `targetRPE/actualRPE`.
 
 All intensity values are capped to 1.
 """
-function calcRPERatio(
+@inline function calcRPERatio(
     actualReps::Integer,
     actualIntensity::Real,
     targetReps::Integer,
     targetIntensity::Real,
 )
-    actualIntensity = minimum((actualRPE, 1.0))
-    targetIntensity = minimum((targetRPE, 1.0))
+    actualIntensity = minimum((actualIntensity, 1))
+    targetIntensity = minimum((targetIntensity, 1))
 
     actualRPE = calcRPE(actualReps, actualIntensity)
     targetRPE = calcRPE(targetReps, targetIntensity)
@@ -196,14 +196,14 @@ Calculate the ratio between `targetReps/actualReps`.
 
 All intensity values are capped to 1 and all rpe values to 10.
 """
-function calcRepRatio(
+@inline function calcRepRatio(
     actualIntensity::Real,
     actualRPE::Real,
     targetIntensity::Real,
     targetRPE::Real,
 )
-    actualIntensity = minimum((actualRPE, 1.0))
-    targetIntensity = minimum((targetRPE, 1.0))
+    actualIntensity = minimum((actualIntensity, 1.0))
+    targetIntensity = minimum((targetIntensity, 1.0))
     actualRPE = minimum((actualRPE, 10.0))
     targetRPE = minimum((targetRPE, 10.0))
 
@@ -224,7 +224,7 @@ calcRepMax(
 ```
 Calculates the rep weight for a target number of reps, `targetReps`, at a target rpe, `targetRPE`, given an actual number of reps, `actualReps`, and an actual rpe, `actualRPE` and `weight`. It's just the weight multiplied by the intensity ratio.
 """
-function calcRepMax(
+@inline function calcRepMax(
     weight::Real,
     actualReps::Integer,
     actualRPE::Real,
@@ -252,7 +252,7 @@ where ``x \\equiv`` var and the constants are the same as [`calcIntensity`](@ref
 !!! note
     `calcIntensity` works over a *much* wider range of RPE and rep combinations.
 """
-function intensityArb(var::Integer)
+@inline function intensityArb(var::Integer)
     return 1 / (0.995 + 0.0333 * var)
 end
 
@@ -316,7 +316,7 @@ julia> SampleScheme = SetScheme(;
            type = ["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"],
            sets = [1, 2, 1, 1],
            reps = [12, 14, 10, 5],
-           intensity = [9.5, 10, 10, 10 ],
+           intensity = [9.5, 10, 10, 10],
            roundMode = [floor, floor, ceil, ceil],
            rpeMode = true,
        )
@@ -409,7 +409,7 @@ iterate(A::SetScheme, i = 1) =
 
 """
 ```
-mutable struct Progression{
+struct Progression{
     T1 <: AbstractProgression,
     T2 <: AbstractString,
     T3 <: Integer,
@@ -459,7 +459,7 @@ julia> SampleProgression = Progression(;
 Progression{LinearProgression,String,Int64,SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}}(LinearProgression(), "Progression Name", 1, 1, SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool}(["Long Rest", "Longer Rest", "Longest Rest", "Optional Forced Reps"], [1, 2, 1, 1], [12, 14, 10, 5], [0.6538806237677003, 0.6275409806672554, 0.7041013906002465, 0.8309098462816784], [9.5, 10.0, 10.0, 10.0], [0.0, 0.0, 0.0, 0.0], Function[floor, floor, ceil, ceil], [0.0, 0.0, 0.0, 0.0], true))
 ```
 """
-mutable struct Progression{
+struct Progression{
     T1 <: AbstractProgression,
     T2 <: AbstractString,
     T3 <: Integer,
@@ -762,7 +762,7 @@ struct Programme{
     T1 <: AbstractProgramme,
     T2 <: AbstractString,
     T3 <: Dict{Any, Any},
-    T4 <: Vector{Any},
+    T4 <: Any,
 }
 
     type::T1
@@ -779,7 +779,7 @@ struct Programme{
         T1 <: AbstractProgramme,
         T2 <: AbstractString,
         T3 <: Dict{Any, Any},
-        T4 <: Vector{Any},
+        T4 <: Any,
     }
 
         new{typeof(type), typeof(name), typeof(exerProg), typeof(days)}(

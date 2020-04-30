@@ -1,6 +1,9 @@
-using Lifting
-using Test
+using SafeTestsets
 
-@testset "Lifting.jl" begin
-    # Write your own tests here.
+@safetestset "Maths" begin
+    include("./mathsTests.jl")
+end
+
+@safetestset "Structs" begin
+    include("./structTests.jl")
 end

@@ -47,7 +47,7 @@ One of the purposes of `Lifting.jl` is to provide an analytic approach to traini
 
 The building blocks of these more complex functions are [`calcIntensity`](@ref), [`calcRPE`](@ref), [`calcReps`](@ref). We also have a more primitive function [`intensityArb`](@ref) to calculate intensity that is used in various programmes I've found.
 ```@docs
-calcIntensity(reps::Integer, rpe::Real = 10)
+calcIntensity(reps::Integer, rpe::Real)
 calcRPE(reps::Integer, intensity::Real)
 calcReps(reps::Integer, intensity::Real)
 intensityArb(var::Integer)
