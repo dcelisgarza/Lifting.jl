@@ -97,7 +97,7 @@ function makeDays(::SampleProgramme, exerProg::Dict)
     push!(week[3], SampleExercise, SampleProgression)   # Day 3
     push!(week[4], "Rest")  # Day 4
     push!(week[5], SampleExercise3, SampleProgression3)   # Day 5
-    push!(week[5], "Rest")  # Day 6
+    push!(week[6], "Rest")  # Day 6
     push!(week[7], "Rest")  # Day 7
     return week
 end
