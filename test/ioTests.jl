@@ -192,6 +192,3 @@ adjustMaxes!("SampleExercise", exerProg, 13, weight = 100)
 @test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax ==
       new1 + 52.5
 @test sampleProgramme.exerProg["SampleExercise2"].exercise.trainingMax == new2
-
-using DelimitedFiles
-readdlm("./Log_SampleProgrammeP.csv")
