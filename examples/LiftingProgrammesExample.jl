@@ -34,6 +34,7 @@ figs = plotData(prog, keyArr, Δdays, tm; xlabel = "Days", ylabel = "Weight", lw
 for (i, fig) in enumerate(figs)
     scatterData!(fig, prog, keyArr[i], Δdays, tm; shape = :circle, markersize=5, label="")
 end
+figs
 display.(figs)
 
 # Calculates training maxes depending on the weight and intensities used in the progression and the reps provided.

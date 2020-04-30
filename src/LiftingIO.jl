@@ -287,7 +287,7 @@ function plotData(prog::Programme, names, x, y, args...; kwargs...)
         if ismissing(x[name]) || ismissing(y[name])
             continue
         end
-        length(x[name]) < 3 ? continue : nothing
+        length(x[name]) <= 3 ? continue : nothing
         spl = Spline1D(x[name], y[name], k=3)
         xrange = range(x[name][1]; stop = x[name][end], step=0.25)
         if haskey(kwargs, :label) == true

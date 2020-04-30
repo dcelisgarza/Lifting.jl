@@ -688,6 +688,9 @@ User created programmes are made with this structure. The parameters are as foll
 
 Each programme is different so the recommendation is to create a typed [`makeDays`](@ref) function for the programme type.
 
+!!! warning
+    [`makeDays`](@ref) must be explicitly imported either with `import Lifting: makeDays` or `Lifting.makeDays` for it to be automatically used in [`updateMaxes!`](@ref).
+
 ## Examples
 
 Assuming we are using the previously defined [`Exercise`](@ref) and [`Progression`](@ref), we can create a programme. There are a few ways to do so but this is recommended.
@@ -712,6 +715,7 @@ push!(
 # define rest days but you can leave them out if need be. `makeDays` will be
 # called for whatever type is given as its first argument. Different programme
 # types will necessarily have and call different `makeDays` functions.
+import Lifting: makeDays
 function makeDays(::SampleProgramme, exerProg)
 
     # One sub array per day you want to track.
@@ -1079,6 +1083,9 @@ end
 makeDays()
 ```
 Generic function that can be explicitly typed by the user to create their programme's daily schedule. Typed `makeDays` functions are used by [`updateMaxes!`](@ref) to update the training days with the new training maxes calculated by [`adjustMaxes!`](@ref). See the example in [`Programme`](@ref) to see how to define typed `makeDays`.
+
+!!! warning
+    [`makeDays`](@ref) must be explicitly imported either with `import Lifting: makeDays` or `Lifting.makeDays` for it to be automatically used in [`updateMaxes!`](@ref).
 """
 function makeDays() end
 

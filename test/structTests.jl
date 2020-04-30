@@ -1,6 +1,6 @@
 using Lifting
 using Test
-
+cd(@__DIR__)
 @testset "Struct" begin
     SampleExercise = Exercise(;
         name = "Swiss Bar Bench",
@@ -126,4 +126,5 @@ using Test
     test = []
     push!(test, SampleExercise2, SampleProgression2)
     @test week[1][1] == test[1]
+    @test sampleProgramme[1] == sampleProgramme.days[1]
 end
