@@ -255,3 +255,11 @@ new = tm
 @test change == 2.5
 adjustMaxes!("SampleExercise", exerProg, 10, weight =  92.5)
 @test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax == old + change
+
+old = sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax
+tm, change = adjustMaxes("SampleExercise", exerProg, 1, weight = 300)
+new = tm
+@test tm == 213.98592973630116
+@test change == 100.0
+adjustMaxes!("SampleExercise", exerProg, 1, weight =  300)
+@test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax == old + change

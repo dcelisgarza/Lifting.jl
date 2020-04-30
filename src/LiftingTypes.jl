@@ -1036,7 +1036,6 @@ function adjustMaxes(
     actualRPE = calcRPE(actualReps, targetIntensity)
     metTarget = targetRPE <= actualRPE
     actualRPE = 2 * targetRPE - actualRPE
-
     # If we gave a specific weight we want to use it instead of using the maximum weight.
     if ismissing(weight)
         trainingMax =

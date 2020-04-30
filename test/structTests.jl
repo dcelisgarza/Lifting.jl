@@ -2,6 +2,7 @@ using Lifting
 using Test
 
 @testset "Struct" begin
+    @test isdefined(Lifting, :makeDays)
     SampleExercise = Exercise(;
         name = "Swiss Bar Bench",
         modality = ["Block", "Semi-Supinated"],
