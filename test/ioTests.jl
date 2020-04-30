@@ -1,12 +1,8 @@
-# using Lifting
+using Lifting
 using Test
+import Lifting: Lifting_Programmes
 cd(@__DIR__)
 
-# import Lifting: Lifting_Programmes
-
-
-using Lifting
-import Lifting: Lifting_Programmes
 SampleExercise = Exercise(;
     name = "Swiss Bar Bench",
     modality = ["Block", "Semi-Supinated"],
@@ -85,7 +81,7 @@ week = makeDays(SampleProgramme(), exerProg)
 sampleProgramme =
     Programme(SampleProgramme(), "SampleProgramme", exerProg, week)
 
-@test println(sampleProgramme[1]) === println(sampleProgramme,1)
+@test println(sampleProgramme[1]) === println(sampleProgramme, 1)
 
 # Writes programme to test.cvt
 write("sampleProgramme.csv", sampleProgramme; log = false)
@@ -115,9 +111,26 @@ tm, change = calcTrainingMaxLogs(sampleProgramme, keyArr, reps, wght)
 
 # println(length(Δdays["SampleExercise"]))
 
-figs = plotData(sampleProgramme, keyArr, Δdays, tm; xlabel = "Days", ylabel = "Weight", lw=3)
+figs = plotData(
+    sampleProgramme,
+    keyArr,
+    Δdays,
+    tm;
+    xlabel = "Days",
+    ylabel = "Weight",
+    lw = 3,
+)
 for (i, fig) in enumerate(figs)
-    scatterData!(fig, sampleProgramme, keyArr[i], Δdays, tm; shape = :circle, markersize=5, label="")
+    scatterData!(
+        fig,
+        sampleProgramme,
+        keyArr[i],
+        Δdays,
+        tm;
+        shape = :circle,
+        markersize = 5,
+        label = "",
+    )
 end
 @test figs[1].n == 2
 
@@ -138,9 +151,9 @@ tm, change = adjustMaxes("SampleExercise", exerProg, 13, weight = 100)
 @test tm == 110.76583082526619
 @test change == 52.5
 adjustMaxes!("SampleExercise", exerProg, 13, weight = 100)
-@test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax == new1 + 52.5
+@test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax ==
+      new1 + 52.5
 @test sampleProgramme.exerProg["SampleExercise2"].exercise.trainingMax == new2
-
 
 # prog = Lifting_Programmes["nSunsCAP3_OHP_6Day_LP"]
 # test = println(prog[2])

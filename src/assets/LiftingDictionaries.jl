@@ -141,11 +141,11 @@ muscles = Dict(
     "brachialis" => "Brachialis",
     "rot cuff" => "Rotator Cuff",
 )
-push!(Lifting_Aux, "modality"=>modality)
-push!(Lifting_Aux, "setType"=>setType)
-push!(Lifting_Aux, "equipmentSize"=>equipmentSize)
-push!(Lifting_Aux, "equipment"=>equipment)
-push!(Lifting_Aux, "muscles"=>muscles)
+push!(Lifting_Aux, "modality" => modality)
+push!(Lifting_Aux, "setType" => setType)
+push!(Lifting_Aux, "equipmentSize" => equipmentSize)
+push!(Lifting_Aux, "equipment" => equipment)
+push!(Lifting_Aux, "muscles" => muscles)
 
 grip = Dict(
     # Wrist
@@ -263,13 +263,13 @@ isometric = Dict(
     "planche" => "Planche",
     "other" => "Other",
 )
-push!(Lifting_Exercise_Names, "grip"=>grip)
-push!(Lifting_Exercise_Names, "squat"=>squat)
-push!(Lifting_Exercise_Names, "bench"=>bench)
-push!(Lifting_Exercise_Names, "deadlift"=>deadlift)
-push!(Lifting_Exercise_Names, "press"=>press)
-push!(Lifting_Exercise_Names, "row"=>row)
-push!(Lifting_Exercise_Names, "pull"=>pull)
-push!(Lifting_Exercise_Names, "lowBack"=>lowBack)
-push!(Lifting_Exercise_Names, "core"=>core)
-push!(Lifting_Exercise_Names, "isometric"=>isometric)
+push!(Lifting_Exercise_Names, "grip" => grip)
+push!(Lifting_Exercise_Names, "squat" => squat)
+push!(Lifting_Exercise_Names, "bench" => bench)
+push!(Lifting_Exercise_Names, "deadlift" => deadlift)
+push!(Lifting_Exercise_Names, "press" => press)
+push!(Lifting_Exercise_Names, "row" => row)
+push!(Lifting_Exercise_Names, "pull" => pull)
+push!(Lifting_Exercise_Names, "lowBack" => lowBack)
+push!(Lifting_Exercise_Names, "core" => core)
+push!(Lifting_Exercise_Names, "isometric" => isometric)

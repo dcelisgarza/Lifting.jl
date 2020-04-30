@@ -15,14 +15,8 @@ BenchT2 = Exercise(
     muscles = [muscles["pecs"], muscles["triceps"], muscles["front delts"]],
     trainingMax = 75,
 )
-push!(
-    exerProg,
-    "BenchT1" => (exercise = BenchT1, progression = CAP3_Bench_T1),
-)
-push!(
-    exerProg,
-    "BenchT2" => (exercise = BenchT2, progression = CAP3_Bench_T2),
-)
+push!(exerProg, "BenchT1" => (exercise = BenchT1, progression = CAP3_Bench_T1))
+push!(exerProg, "BenchT2" => (exercise = BenchT2, progression = CAP3_Bench_T2))
 
 DeadliftT1 = Exercise(
     name = deadlift["dl"],
@@ -77,14 +71,8 @@ SquatT2 = Exercise(
     muscles = [muscles["quads"], muscles["glutes"], muscles["core"]],
     trainingMax = 80,
 )
-push!(
-    exerProg,
-    "SquatT1" => (exercise = SquatT1, progression = CAP3_Squat_T1),
-)
-push!(
-    exerProg,
-    "SquatT2" => (exercise = SquatT2, progression = CAP3_Squat_T2),
-)
+push!(exerProg, "SquatT1" => (exercise = SquatT1, progression = CAP3_Squat_T1))
+push!(exerProg, "SquatT2" => (exercise = SquatT2, progression = CAP3_Squat_T2))
 
 RowT1 = Exercise(
     name = row["pendlay"],
@@ -120,10 +108,7 @@ PressT1 = Exercise(
     muscles = [muscles["front delts"], muscles["triceps"], muscles["traps"]],
     trainingMax = 60,
 )
-push!(
-    exerProg,
-    "PressT1" => (exercise = PressT1, progression = nSuns_6Day_OHP),
-)
+push!(exerProg, "PressT1" => (exercise = PressT1, progression = nSuns_6Day_OHP))
 
 ### Accessories
 # Squat accessories.
@@ -588,4 +573,7 @@ function makeDays(::nSunsCAP3_OHP_6Day_LP, dict::Dict)
 end
 
 days = makeDays(nSunsCAP3_OHP_6Day_LP(), exerProg)
-push!(Lifting_Programmes, nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days))
+push!(
+    Lifting_Programmes,
+    nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days),
+)

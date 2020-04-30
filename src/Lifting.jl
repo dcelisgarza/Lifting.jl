@@ -33,7 +33,8 @@ export calcIntensity,
     makeDays,
     numDays
 include("LiftingIO.jl")
-export numDays, loadLogFile, loadLogFile, plotData, plotData!, scatterData, scatterData!
+export numDays,
+    loadLogFile, loadLogFile, plotData, plotData!, scatterData, scatterData!
 
 include("./assets/LiftingAssets.jl")
 # Default dictionaries, uncomment to auto export.
