@@ -96,37 +96,33 @@ end
 
 week = makeDays(SampleProgramme(), exerProg)
 sampleProgramme =
-    Programme(SampleProgramme(), "SampleProgramme", exerProg, week)
+    Programme(SampleProgramme(), "sampleProgramme", exerProg, week)
 
 @test println(sampleProgramme[1]) === println(sampleProgramme, 1)
 
 # Writes programme to test.cvt
-write("SampleProgramme.csv", sampleProgramme; log = false)
-rm("SampleProgramme.csv")
+write("sampleProgramme.csv", sampleProgramme; log = false)
+rm("sampleProgramme.csv")
 @test true
 
-write("SampleProgramme.csv", sampleProgramme, 3; log = false)
-rm("SampleProgramme.csv")
+write("sampleProgramme.csv", sampleProgramme, 3; log = false)
+rm("sampleProgramme.csv")
 @test true
 
-write("SampleProgramme.csv", sampleProgramme, 1:2:6; log = false)
-rm("SampleProgramme.csv")
+write("sampleProgramme.csv", sampleProgramme, 1:2:6; log = false)
+rm("sampleProgramme.csv")
 @test true
 
-write("SampleProgramme.csv", sampleProgramme; log = true)
+write("sampleProgramme.csv", sampleProgramme; log = true)
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
 @test keyArr[1] == "SampleExercise"
 @test keyArr[2] == "SampleExercise2"
-rm("Log_SampleProgramme.csv")
+rm("Log_sampleProgramme.csv")
 
 week = makeDays(SampleProgramme(), exerProg)
 sampleProgramme =
-    Programme(SampleProgramme(), "SampleProgrammeP", exerProg, week)
-try
-    keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
-catch e
-    println(readdir())
-end
+    Programme(SampleProgramme(), "sampleProgrammeP", exerProg, week)
+keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
 tm, change = calcTrainingMaxLogs(sampleProgramme, keyArr, reps, wght)
 @test length(tm) == 2
 
