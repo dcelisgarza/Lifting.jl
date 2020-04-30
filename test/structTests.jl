@@ -3,6 +3,7 @@ using Test
 
 @testset "Struct" begin
     @test isdefined(Lifting, :makeDays)
+    @test nothing === makeDays()
     SampleExercise = Exercise(;
         name = "Swiss Bar Bench",
         modality = ["Block", "Semi-Supinated"],
