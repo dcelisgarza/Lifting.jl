@@ -1,6 +1,5 @@
 using Lifting
 using Test
-import Lifting: Lifting_Programmes
 cd(@__DIR__)
 
 SampleExercise = Exercise(;
@@ -84,19 +83,19 @@ sampleProgramme =
 @test println(sampleProgramme[1]) === println(sampleProgramme, 1)
 
 # Writes programme to test.cvt
-write("sampleProgramme.csv", sampleProgramme; log = false)
-rm("sampleProgramme.csv")
+write("SampleProgramme.csv", sampleProgramme; log = false)
+rm("SampleProgramme.csv")
 @test true
 
-write("sampleProgramme.csv", sampleProgramme, 3; log = false)
-rm("sampleProgramme.csv")
+write("SampleProgramme.csv", sampleProgramme, 3; log = false)
+rm("SampleProgramme.csv")
 @test true
 
-write("sampleProgramme.csv", sampleProgramme, 1:2:6; log = false)
-rm("sampleProgramme.csv")
+write("SampleProgramme.csv", sampleProgramme, 1:2:6; log = false)
+rm("SampleProgramme.csv")
 @test true
 
-write("sampleProgramme.csv", sampleProgramme; log = true)
+write("SampleProgramme.csv", sampleProgramme; log = true)
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
 @test keyArr[1] == "SampleExercise"
 @test keyArr[2] == "SampleExercise2"
@@ -104,7 +103,7 @@ rm("Log_sampleProgramme.csv")
 
 week = makeDays(SampleProgramme(), exerProg)
 sampleProgramme =
-    Programme(SampleProgramme(), "sampleProgrammeP", exerProg, week)
+    Programme(SampleProgramme(), "SampleProgrammeP", exerProg, week)
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
 tm, change = calcTrainingMaxLogs(sampleProgramme, keyArr, reps, wght)
 @test length(tm) == 2
@@ -154,10 +153,3 @@ adjustMaxes!("SampleExercise", exerProg, 13, weight = 100)
 @test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax ==
       new1 + 52.5
 @test sampleProgramme.exerProg["SampleExercise2"].exercise.trainingMax == new2
-
-# prog = Lifting_Programmes["nSunsCAP3_OHP_6Day_LP"]
-# test = println(prog[2])
-# test
-#
-# prog[2]
-# prog.days[2]
