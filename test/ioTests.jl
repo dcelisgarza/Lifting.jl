@@ -82,13 +82,21 @@ function makeDays(::SampleProgramme, exerProg::Dict)
     week = [[], [], [], [], [], [], []]
     SampleExercise = exerProg["SampleExercise"].exercise
     SampleProgression = exerProg["SampleExercise"].progression
+
+    SampleExercise2 = exerProg["SampleExercise2"].exercise
+    SampleProgression2 = exerProg["SampleExercise2"].progression
+
+    SampleExercise3 = exerProg["SampleExercise3"].exercise
+    SampleProgression3 = exerProg["SampleExercise3"].progression
+
     push!(week[1], SampleExercise, SampleProgression)   # Day 1
     push!(week[1], SampleExercise, SampleProgression)   # Day 1
     insert!(week[1], 1, SampleExercise2, SampleProgression2)   # Day 1
+    insert!(week[1], 3, SampleExercise3, SampleProgression3)   # Day 1
     push!(week[2], "Rest")  # Day 2
     push!(week[3], SampleExercise, SampleProgression)   # Day 3
     push!(week[4], "Rest")  # Day 4
-    push!(week[5], SampleExercise, SampleProgression)   # Day 5
+    push!(week[5], SampleExercise3, SampleProgression3)   # Day 5
     push!(week[5], "Rest")  # Day 6
     push!(week[7], "Rest")  # Day 7
     return week
@@ -99,8 +107,10 @@ sampleProgramme =
     Programme(SampleProgramme(), "sampleProgramme", exerProg, week)
 
 @test println(sampleProgramme[1]) === println(sampleProgramme, 1)
+@test println(sampleProgramme) === println(sampleProgramme, 1:7)
+@test println(sampleProgramme[1:3]) === println(sampleProgramme, 1:7)
+@test println(sampleProgramme[1,3,5]) === println(sampleProgramme, 1:7)
 
-# Writes programme to test.cvt
 write("sampleProgramme.csv", sampleProgramme; log = false)
 rm("sampleProgramme.csv")
 @test true
@@ -148,6 +158,28 @@ for (i, fig) in enumerate(figs)
     )
 end
 @test figs[1].n == 2
+figs = plotData(
+    sampleProgramme,
+    keyArr,
+    Δdays,
+    tm;
+    xlabel = "Days",
+    ylabel = "Weight",
+    lw = 3,
+    label = "",
+)
+for (i, fig) in enumerate(figs)
+    scatterData!(
+        fig,
+        sampleProgramme,
+        keyArr[i],
+        Δdays,
+        tm;
+        shape = :circle,
+        markersize = 5,
+    )
+end
+@test figs[1].n == 2
 
 figs = scatterData(
     sampleProgramme,
@@ -170,7 +202,29 @@ for (i, fig) in enumerate(figs)
         label = "",
     )
 end
-@test figs[1].n == 1
+@test figs[1].n == 2
+figs = scatterData(
+    sampleProgramme,
+    keyArr,
+    Δdays,
+    tm;
+    xlabel = "Days",
+    ylabel = "Weight",
+    lw = 3,
+    label = "",
+)
+for (i, fig) in enumerate(figs)
+    plotData!(
+        fig,
+        sampleProgramme,
+        keyArr[i],
+        Δdays,
+        tm;
+        shape = :circle,
+        markersize = 5,
+    )
+end
+@test figs[1].n == 2
 
 tm, change = updateMaxes(sampleProgramme, keyArr, reps)
 @test tm == [56.32850633965048, 77.22038362825882]
@@ -192,3 +246,11 @@ adjustMaxes!("SampleExercise", exerProg, 13, weight = 100)
 @test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax ==
       new1 + 52.5
 @test sampleProgramme.exerProg["SampleExercise2"].exercise.trainingMax == new2
+
+old = sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax
+tm, change = adjustMaxes("SampleExercise", exerProg, 10, weight = 92.5)
+new = tm
+@test tm == 92.5
+@test change == 2.5
+adjustMaxes!("SampleExercise", exerProg, 10, weight =  92.5)
+@test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax == old + change
