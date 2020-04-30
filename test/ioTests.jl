@@ -99,7 +99,7 @@ write("SampleProgramme.csv", sampleProgramme; log = true)
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
 @test keyArr[1] == "SampleExercise"
 @test keyArr[2] == "SampleExercise2"
-rm("Log_sampleProgramme.csv")
+rm("Log_SampleProgramme.csv")
 
 week = makeDays(SampleProgramme(), exerProg)
 sampleProgramme =
