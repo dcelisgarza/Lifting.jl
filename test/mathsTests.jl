@@ -1,6 +1,5 @@
 using Lifting
 using Test
-cd(@__DIR__)
 
 @testset "Maths" begin
     @test isapprox(calcRPE(3, calcIntensity(3, 8)), 8)

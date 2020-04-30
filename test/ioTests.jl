@@ -122,7 +122,11 @@ rm("Log_SampleProgramme.csv")
 week = makeDays(SampleProgramme(), exerProg)
 sampleProgramme =
     Programme(SampleProgramme(), "SampleProgrammeP", exerProg, week)
-keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
+try
+    keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
+catch e
+    println(readdir())
+end
 tm, change = calcTrainingMaxLogs(sampleProgramme, keyArr, reps, wght)
 @test length(tm) == 2
 
@@ -192,3 +196,6 @@ adjustMaxes!("SampleExercise", exerProg, 13, weight = 100)
 @test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax ==
       new1 + 52.5
 @test sampleProgramme.exerProg["SampleExercise2"].exercise.trainingMax == new2
+
+using DelimitedFiles
+readdlm("./Log_SampleProgrammeP.csv")

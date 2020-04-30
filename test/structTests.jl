@@ -1,6 +1,5 @@
 using Lifting
 using Test
-cd(@__DIR__)
 
 @testset "Struct" begin
     SampleExercise = Exercise(;
