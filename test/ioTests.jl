@@ -14,6 +14,7 @@ SampleExercise = Exercise(;
 )
 SampleExercise2 = Exercise(;
     name = "Squat",
+    modality = "Pause",
     trainingMax = 130,
     roundBase = 2.5,
     roundMode = floor,
@@ -34,6 +35,13 @@ SampleScheme2 = SetScheme(;
     roundMode = [floor, floor, ceil],
     rpeMode = true,
 )
+SampleScheme3 = SetScheme(;
+    type = "Long Rest",
+    sets = 1,
+    reps = 12,
+    intensity = 7,
+    rpeMode = true,
+)
 SampleProgression = Progression(;
     type = LinearProgression(),
     name = "Progression Name",
@@ -46,6 +54,11 @@ SampleProgression2 = Progression(;
     period = 2,
     setScheme = [deepcopy(SampleScheme), SampleScheme2],
 )
+SampleProgression3 = Progression(;
+    type = LinearProgression(),
+    name = "Progression Name",
+    setScheme = SampleScheme3,
+)
 struct SampleProgramme <: AbstractProgramme end
 exerProg = Dict()
 push!(
@@ -57,6 +70,11 @@ push!(
     exerProg,
     "SampleExercise2" =>
         (exercise = SampleExercise2, progression = SampleProgression2),
+)
+push!(
+    exerProg,
+    "SampleExercise3" =>
+        (exercise = SampleExercise2, progression = SampleProgression3),
 )
 
 import Lifting: makeDays
@@ -108,8 +126,6 @@ keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
 tm, change = calcTrainingMaxLogs(sampleProgramme, keyArr, reps, wght)
 @test length(tm) == 2
 
-# println(length(Δdays["SampleExercise"]))
-
 figs = plotData(
     sampleProgramme,
     keyArr,
@@ -132,6 +148,29 @@ for (i, fig) in enumerate(figs)
     )
 end
 @test figs[1].n == 2
+
+figs = scatterData(
+    sampleProgramme,
+    keyArr,
+    Δdays,
+    tm;
+    xlabel = "Days",
+    ylabel = "Weight",
+    lw = 3,
+)
+for (i, fig) in enumerate(figs)
+    plotData!(
+        fig,
+        sampleProgramme,
+        keyArr[i],
+        Δdays,
+        tm;
+        shape = :circle,
+        markersize = 5,
+        label = "",
+    )
+end
+@test figs[1].n == 1
 
 tm, change = updateMaxes(sampleProgramme, keyArr, reps)
 @test tm == [56.32850633965048, 77.22038362825882]

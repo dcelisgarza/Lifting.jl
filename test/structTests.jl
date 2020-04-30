@@ -13,6 +13,12 @@ cd(@__DIR__)
         roundBase = 2.5,
         roundMode = floor,
     )
+    @test SampleExercise == SampleExercise[1]
+    @test length(SampleExercise) == 1
+    for i in SampleExercise
+        @test SampleExercise == i
+    end
+
     SampleExercise2 = Exercise(;
         name = "Squat",
         trainingMax = 130,
@@ -65,12 +71,21 @@ cd(@__DIR__)
     @test SampleScheme.roundMode == [floor, floor, floor]
     @test SampleScheme.rpeMode == false
     @test SampleScheme.wght == [0, 0, 0]
+    for i in SampleScheme
+        @test SampleScheme == i
+    end
 
     SampleProgression = Progression(;
         type = LinearProgression(),
         name = "Progression Name",
         setScheme = SampleScheme,
     )
+    @test SampleProgression == SampleProgression[1]
+    @test length(SampleProgression) == 1
+    for i in SampleProgression
+        @test SampleProgression == i
+    end
+
     SampleProgression2 = Progression(;
         type = LinearProgression(),
         name = "Progression Name",
@@ -128,4 +143,5 @@ cd(@__DIR__)
     push!(test, SampleExercise2, SampleProgression2)
     @test week[1][1] == test[1]
     @test sampleProgramme[1] == sampleProgramme.days[1]
+    @test sampleProgramme[1:2:3] == [sampleProgramme.days[1], sampleProgramme.days[3]]
 end

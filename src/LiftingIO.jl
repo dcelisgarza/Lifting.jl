@@ -284,9 +284,7 @@ function plotData(prog::Programme, names, x, y, args...; kwargs...)
     figArr = []
 
     for name in names
-        if ismissing(x[name]) || ismissing(y[name])
-            continue
-        end
+        ismissing(x[name]) || ismissing(y[name]) ? continue : nothing
         length(x[name]) <= 3 ? continue : nothing
         spl = Spline1D(x[name], y[name], k = 3)
         xrange = range(x[name][1]; stop = x[name][end], step = 0.25)
@@ -316,10 +314,8 @@ function plotData!(fig, prog::Programme, names, x, y, args...; kwargs...)
     typeof(names) == String ? names = [names] : nothing
 
     for name in names
-        if ismissing(x[name]) || ismissing(y[name])
-            continue
-        end
-        length(x[name]) < 3 ? continue : nothing
+        ismissing(x[name]) || ismissing(y[name]) ? continue : nothing
+        length(x[name]) <= 3 ? continue : nothing
         spl = Spline1D(x[name], y[name], k = 3)
         xrange = range(x[name][1]; stop = x[name][end], step = 0.25)
         if haskey(kwargs, :label) == true
@@ -349,9 +345,7 @@ function scatterData(prog::Programme, names, x, y, args...; kwargs...)
     figArr = []
 
     for name in names
-        if ismissing(x[name]) || ismissing(y[name])
-            continue
-        end
+        ismissing(x[name]) || ismissing(y[name]) ? continue : nothing
         if haskey(kwargs, :label) == true
             fig = scatter(x[name], y[name]; kwargs...)
         else
@@ -378,9 +372,7 @@ function scatterData!(fig, prog::Programme, names, x, y, args...; kwargs...)
     typeof(names) == String ? names = [names] : nothing
 
     for name in names
-        if ismissing(x[name]) || ismissing(y[name])
-            continue
-        end
+        ismissing(x[name]) || ismissing(y[name]) ? continue : nothing
         if haskey(kwargs, :label) == true
             scatter!(fig, x[name], y[name]; kwargs...)
         else

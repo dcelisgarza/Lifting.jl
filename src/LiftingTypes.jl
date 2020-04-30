@@ -356,15 +356,9 @@ mutable struct SetScheme{
         T5 <: Union{<:Function, Vector{<:Function}},
     }
         difSets = length(sets)
-        if difSets > 1 && length(intensity) == 1
-            intensity = fill(0.75, difSets)
-        end
-        if difSets > 1 && length(addWeight) == 1
-            addWeight = zeros(difSets)
-        end
-        if difSets > 1 && length(roundMode) == 1
-            roundMode = fill(floor, difSets)
-        end
+        difSets > 1 && length(intensity) == 1 ? intensity = fill(0.75, difSets) : nothing
+        difSets > 1 && length(addWeight) == 1 ? addWeight = zeros(difSets) : nothing
+        difSets > 1 && length(roundMode) == 1 ? roundMode = fill(floor, difSets) : nothing
 
         @assert length(sets) ==
                 length(reps) ==
