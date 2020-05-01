@@ -125,8 +125,6 @@ rm("sampleProgramme.csv")
 
 write("sampleProgramme.csv", sampleProgramme; log = true)
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
-@test keyArr[1] == "SampleExercise"
-@test keyArr[2] == "SampleExercise2"
 @test length(keyArr) == length(date) == length(day1) == length(Δdays) == length(reps) == length(wght) == length(rpe)
 rm("Log_sampleProgramme.csv")
 
