@@ -11,6 +11,7 @@ Base.KeySet for a Dict{String,Programme} with 1 entry. Keys:
   "nSunsCAP3_OHP_6Day_LP"
 ```
 """
-Lifting_Programmes = Dict{String, Programme}()
+Lifting_Programmes = Dict{String,Programme}()
 
 include("nSunsCAP3_OHP_6Day_LP.jl")
+include("DCG_YugeStr.jl")

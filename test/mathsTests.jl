@@ -3,10 +3,7 @@ using Test
 
 @testset "Maths" begin
     @test isapprox(calcRPE(3, calcIntensity(3, 8)), 8)
-    @test isapprox(
-        calcReps(calcIntensity(3, 8), calcRPE(3, calcIntensity(3, 8))),
-        3,
-    )
+    @test isapprox(calcReps(calcIntensity(3, 8), calcRPE(3, calcIntensity(3, 8))), 3)
 
     @test calcIntensity(1, 3) == 0.7927699381639448
     @test calcIntensity(1, 5) == 0.8369601606963508
@@ -137,8 +134,7 @@ using Test
     targetRPE = rand(1:10, 20)
 
     @test calcRepMax.(weight, actualReps, actualRPE, targetReps, targetRPE) ==
-          weight .*
-          calcIntensityRatio.(actualReps, actualRPE, targetReps, targetRPE)
+          weight .* calcIntensityRatio.(actualReps, actualRPE, targetReps, targetRPE)
 
     @test intensityArb(1) == 0.9724788485850433
     @test intensityArb(2) == 0.9419743782969102

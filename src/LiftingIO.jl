@@ -114,11 +114,7 @@ function write(
         open(filename, "w") do io
             days = programme.days
             write(io, "# Programme: ", programme.name, "\n")
-            writedlm(
-                io,
-                ["sets" "reps" "weight" "type" "rpe" "intensity"],
-                delim,
-            )
+            writedlm(io, ["sets" "reps" "weight" "type" "rpe" "intensity"], delim)
             for i in idx
                 writedlm(io, ["Day" i], delim)
                 if typeof(days[i]) == String
@@ -223,8 +219,8 @@ function loadLogFile(programme::Programme)
     data = readdlm("Log_" * programme.name * ".csv", ',')
 
     numExercises = data[1, 1]
-    keyArr = String.(data[1, 2:(numExercises + 1)])
-    data[data .== ""] .= missing
+    keyArr = String.(data[1, 2:(numExercises+1)])
+    data[data.==""] .= missing
     dates = data[3:end, 1]
 
     df = DataFrame(data[3:end, :])
@@ -291,12 +287,7 @@ function plotData(prog::Programme, names, x, y, args...; kwargs...)
         if haskey(kwargs, :label) == true
             fig = plot(xrange, spl(xrange); kwargs...)
         else
-            fig = plot(
-                xrange,
-                spl(xrange);
-                label = prog.exerProg[name][1].name,
-                kwargs...,
-            )
+            fig = plot(xrange, spl(xrange); label = prog.exerProg[name][1].name, kwargs...)
         end
         push!(figArr, fig)
     end
@@ -321,13 +312,7 @@ function plotData!(fig, prog::Programme, names, x, y, args...; kwargs...)
         if haskey(kwargs, :label) == true
             plot!(fig, xrange, spl(xrange); kwargs...)
         else
-            plot!(
-                fig,
-                xrange,
-                spl(xrange);
-                label = prog.exerProg[name][1].name,
-                kwargs...,
-            )
+            plot!(fig, xrange, spl(xrange); label = prog.exerProg[name][1].name, kwargs...)
         end
     end
 end
@@ -349,12 +334,7 @@ function scatterData(prog::Programme, names, x, y, args...; kwargs...)
         if haskey(kwargs, :label) == true
             fig = scatter(x[name], y[name]; kwargs...)
         else
-            fig = scatter(
-                x[name],
-                y[name];
-                label = prog.exerProg[name][1].name,
-                kwargs...,
-            )
+            fig = scatter(x[name], y[name]; label = prog.exerProg[name][1].name, kwargs...)
         end
         push!(figArr, fig)
     end
@@ -376,13 +356,7 @@ function scatterData!(fig, prog::Programme, names, x, y, args...; kwargs...)
         if haskey(kwargs, :label) == true
             scatter!(fig, x[name], y[name]; kwargs...)
         else
-            scatter!(
-                fig,
-                x[name],
-                y[name];
-                label = prog.exerProg[name][1].name,
-                kwargs...,
-            )
+            scatter!(fig, x[name], y[name]; label = prog.exerProg[name][1].name, kwargs...)
         end
     end
 end

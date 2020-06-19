@@ -35,13 +35,8 @@ SampleScheme2 = SetScheme(;
     roundMode = [floor, floor, ceil],
     rpeMode = true,
 )
-SampleScheme3 = SetScheme(;
-    type = "Long Rest",
-    sets = 1,
-    reps = 12,
-    intensity = 7,
-    rpeMode = true,
-)
+SampleScheme3 =
+    SetScheme(; type = "Long Rest", sets = 1, reps = 12, intensity = 7, rpeMode = true)
 SampleProgression = Progression(;
     type = LinearProgression(),
     name = "Progression Name",
@@ -63,18 +58,15 @@ struct SampleProgramme <: AbstractProgramme end
 exerProg = Dict()
 push!(
     exerProg,
-    "SampleExercise" =>
-        (exercise = SampleExercise, progression = SampleProgression),
+    "SampleExercise" => (exercise = SampleExercise, progression = SampleProgression),
 )
 push!(
     exerProg,
-    "SampleExercise2" =>
-        (exercise = SampleExercise2, progression = SampleProgression2),
+    "SampleExercise2" => (exercise = SampleExercise2, progression = SampleProgression2),
 )
 push!(
     exerProg,
-    "SampleExercise3" =>
-        (exercise = SampleExercise2, progression = SampleProgression3),
+    "SampleExercise3" => (exercise = SampleExercise2, progression = SampleProgression3),
 )
 
 import Lifting: makeDays
@@ -103,13 +95,12 @@ function makeDays(::SampleProgramme, exerProg::Dict)
 end
 
 week = makeDays(SampleProgramme(), exerProg)
-sampleProgramme =
-    Programme(SampleProgramme(), "sampleProgramme", exerProg, week)
+sampleProgramme = Programme(SampleProgramme(), "sampleProgramme", exerProg, week)
 
 @test println(sampleProgramme[1]) === println(sampleProgramme, 1)
 @test println(sampleProgramme) === println(sampleProgramme, 1:7)
 @test println(sampleProgramme[1:3]) === println(sampleProgramme, 1:7)
-@test println(sampleProgramme[1,3,5]) === println(sampleProgramme, 1:7)
+@test println(sampleProgramme[1, 3, 5]) === println(sampleProgramme, 1:7)
 
 write("sampleProgramme.csv", sampleProgramme; log = false)
 rm("sampleProgramme.csv")
@@ -125,25 +116,23 @@ rm("sampleProgramme.csv")
 
 write("sampleProgramme.csv", sampleProgramme; log = true)
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
-@test length(keyArr) == length(date) == length(day1) == length(Δdays) == length(reps) == length(wght) == length(rpe)
+@test length(keyArr) ==
+      length(date) ==
+      length(day1) ==
+      length(Δdays) ==
+      length(reps) ==
+      length(wght) ==
+      length(rpe)
 rm("Log_sampleProgramme.csv")
 
 week = makeDays(SampleProgramme(), exerProg)
-sampleProgramme =
-    Programme(SampleProgramme(), "sampleProgrammeP", exerProg, week)
+sampleProgramme = Programme(SampleProgramme(), "sampleProgrammeP", exerProg, week)
 keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(sampleProgramme)
 tm, change = calcTrainingMaxLogs(sampleProgramme, keyArr, reps, wght)
 @test length(tm) == 2
 
-figs = plotData(
-    sampleProgramme,
-    keyArr,
-    Δdays,
-    tm;
-    xlabel = "Days",
-    ylabel = "Weight",
-    lw = 3,
-)
+figs =
+    plotData(sampleProgramme, keyArr, Δdays, tm; xlabel = "Days", ylabel = "Weight", lw = 3)
 for (i, fig) in enumerate(figs)
     scatterData!(
         fig,
@@ -213,15 +202,7 @@ figs = scatterData(
     label = "",
 )
 for (i, fig) in enumerate(figs)
-    plotData!(
-        fig,
-        sampleProgramme,
-        keyArr[i],
-        Δdays,
-        tm;
-        shape = :circle,
-        markersize = 5,
-    )
+    plotData!(fig, sampleProgramme, keyArr[i], Δdays, tm; shape = :circle, markersize = 5)
 end
 @test figs[1].n == 2
 
@@ -242,8 +223,7 @@ tm, change = adjustMaxes("SampleExercise", exerProg, 13, weight = 100)
 @test tm == 110.76583082526619
 @test change == 52.5
 adjustMaxes!("SampleExercise", exerProg, 13, weight = 100)
-@test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax ==
-      new1 + 52.5
+@test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax == new1 + 52.5
 @test sampleProgramme.exerProg["SampleExercise2"].exercise.trainingMax == new2
 
 old = sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax
@@ -251,7 +231,7 @@ tm, change = adjustMaxes("SampleExercise", exerProg, 10, weight = 92.5)
 new = tm
 @test tm == 92.5
 @test change == 2.5
-adjustMaxes!("SampleExercise", exerProg, 10, weight =  92.5)
+adjustMaxes!("SampleExercise", exerProg, 10, weight = 92.5)
 @test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax == old + change
 
 old = sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax
@@ -259,5 +239,5 @@ tm, change = adjustMaxes("SampleExercise", exerProg, 1, weight = 300)
 new = tm
 @test tm == 213.98592973630116
 @test change == 100.0
-adjustMaxes!("SampleExercise", exerProg, 1, weight =  300)
+adjustMaxes!("SampleExercise", exerProg, 1, weight = 300)
 @test sampleProgramme.exerProg["SampleExercise"].exercise.trainingMax == old + change

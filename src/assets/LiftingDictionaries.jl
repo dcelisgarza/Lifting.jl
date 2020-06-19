@@ -14,7 +14,7 @@ Base.KeySet for a Dict{String,Dict{String,String}} with 5 entries. Keys:
 ```
 where each entry is a dictionary with its own keys and values.
 """
-Lifting_Aux = Dict{String, Dict{String, String}}()
+Lifting_Aux = Dict{String,Dict{String,String}}()
 
 """
 ```
@@ -38,7 +38,7 @@ Base.KeySet for a Dict{String,Dict{String,String}} with 10 entries. Keys:
 ```
 where each entry is a dictionary with its own keys and values.
 """
-Lifting_Exercise_Names = Dict{String, Dict{String, String}}()
+Lifting_Exercise_Names = Dict{String,Dict{String,String}}()
 
 modality = Dict(
     "default" => "Default",
@@ -211,6 +211,8 @@ deadlift = Dict(
     "dl" => "Deadlift",
     "sumo" => "Sumo Deadlift",
     "rdl" => "Romanian Deadlift",
+    "hip thrust" => "Hip Thrust",
+    "single leg hip thrust" => "Single Leg Hip Thrust",
     # Novelty.
     "rack pull" => "Rack Pull",
     "jefferson" => "Jefferson",
@@ -218,6 +220,7 @@ deadlift = Dict(
 )
 press = Dict(
     "ohp" => "Overhead Press",
+    "db ohp" => "Dumbell Overhead Press",
     "push" => "Push Press",
     "z" => "Z Press",
     "hspu" => "Handstand Push Up",
@@ -232,6 +235,7 @@ row = Dict(
 pull = Dict(
     "face" => "Face Pull",
     "pullup" => "Pullup",
+    "archer" => "Archer Pullup",
     "mu" => "Muscle Up",
     "chin up" => "Chin Up",
     "hammer" => "Hammer Curl",

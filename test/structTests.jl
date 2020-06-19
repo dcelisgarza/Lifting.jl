@@ -20,12 +20,8 @@ using Test
         @test SampleExercise == i
     end
 
-    SampleExercise2 = Exercise(;
-        name = "Squat",
-        trainingMax = 130,
-        roundBase = 2.5,
-        roundMode = floor,
-    )
+    SampleExercise2 =
+        Exercise(; name = "Squat", trainingMax = 130, roundBase = 2.5, roundMode = floor)
     @test SampleExercise.name == "Swiss Bar Bench"
     @test SampleExercise.modality == ["Block", "Semi-Supinated"]
     @test SampleExercise.equipment == "Swiss Bar"
@@ -101,20 +97,17 @@ using Test
 
     calcWeights(SampleExercise, SampleProgression)
     calcWeights(SampleExercise2, SampleProgression2)
-    @test SampleProgression.setScheme.wght ==
-          100 * [0.7, 0.65, 0.75] + [2.5, 5, 0]
+    @test SampleProgression.setScheme.wght == 100 * [0.7, 0.65, 0.75] + [2.5, 5, 0]
 
     struct SampleProgramme <: AbstractProgramme end
     exerProg = Dict()
     push!(
         exerProg,
-        "SampleExercise" =>
-            (exercise = SampleExercise, progression = SampleProgression),
+        "SampleExercise" => (exercise = SampleExercise, progression = SampleProgression),
     )
     push!(
         exerProg,
-        "SampleExercise2" =>
-            (exercise = SampleExercise2, progression = SampleProgression2),
+        "SampleExercise2" => (exercise = SampleExercise2, progression = SampleProgression2),
     )
 
     function makeDays(::SampleProgramme, exerProg)
@@ -134,8 +127,7 @@ using Test
     end
 
     week = makeDays(SampleProgramme(), exerProg)
-    sampleProgramme =
-        Programme(SampleProgramme(), "SampleProgramme", exerProg, week)
+    sampleProgramme = Programme(SampleProgramme(), "SampleProgramme", exerProg, week)
     @test sampleProgramme.type == SampleProgramme()
     @test sampleProgramme.name == "SampleProgramme"
     @test sampleProgramme.exerProg == exerProg

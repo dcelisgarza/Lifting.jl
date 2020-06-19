@@ -16,7 +16,7 @@ struct BlockProgression <: AbstractProgression end
 
 """
 ```
-AbstractProgramme
+abstract type AbstractProgramme end
 ```
 Programme types.
 """
@@ -44,10 +44,7 @@ We cap `rpe` to 10 and `intensity` to 1.
     c = 0.0025
     d = 0.1
     rpe = minimum((rpe, 10))
-    return minimum((
-        1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)),
-        1,
-    ))
+    return minimum((1 / (a + b * (reps + 10 - rpe) + (reps - 1) * (c / reps + d / rpe)), 1))
 end
 
 """
@@ -77,11 +74,7 @@ We cap `intensity` to 1 and the `rpe` to 10.
                     10 * b * reps * intensity +
                     c * reps * intensity - c * intensity - reps
                 )^2 +
-                4 *
-                b *
-                reps *
-                intensity *
-                (d * reps^2 * intensity - d * reps * intensity),
+                4 * b * reps * intensity * (d * reps^2 * intensity - d * reps * intensity),
             ) +
             a * reps * intensity +
             b * reps^2 * intensity +
@@ -118,10 +111,9 @@ We cap `intensity` to 1 and `rpe` to 10.
                     a * rpe * intensity - b * rpe^2 * intensity +
                     10 * b * rpe * intensity +
                     c * rpe * intensity - d * intensity - rpe
-                )^2 +
-                4 * c * rpe * intensity * (b * rpe * intensity + d * intensity),
-            ) - a * rpe * intensity + b * rpe^2 * intensity -
-            10 * b * rpe * intensity - c * rpe * intensity +
+                )^2 + 4 * c * rpe * intensity * (b * rpe * intensity + d * intensity),
+            ) - a * rpe * intensity + b * rpe^2 * intensity - 10 * b * rpe * intensity -
+            c * rpe * intensity +
             d * intensity +
             rpe
         ) / (2 * intensity * (b * rpe + d))
@@ -324,11 +316,11 @@ SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool
 ```
 """
 mutable struct SetScheme{
-    T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
-    T2 <: Union{<:Integer, Vector{<:Integer}},
-    T3 <: Union{<:Real, Vector{<:Real}},
-    T4 <: Union{<:Function, Vector{<:Function}},
-    T5 <: Bool,
+    T1<:Union{<:AbstractString,Vector{<:AbstractString}},
+    T2<:Union{<:Integer,Vector{<:Integer}},
+    T3<:Union{<:Real,Vector{<:Real}},
+    T4<:Union{<:Function,Vector{<:Function}},
+    T5<:Bool,
 }
     type::T1
     sets::T2
@@ -349,11 +341,11 @@ mutable struct SetScheme{
         roundMode::T5 = floor,
         rpeMode::Bool = false,
     ) where {
-        T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
-        T2 <: Union{<:Integer, Vector{<:Integer}},
-        T3 <: Union{<:Real, Vector{<:Real}},
-        T4 <: Union{<:Real, Vector{<:Real}},
-        T5 <: Union{<:Function, Vector{<:Function}},
+        T1<:Union{<:AbstractString,Vector{<:AbstractString}},
+        T2<:Union{<:Integer,Vector{<:Integer}},
+        T3<:Union{<:Real,Vector{<:Real}},
+        T4<:Union{<:Real,Vector{<:Real}},
+        T5<:Union{<:Function,Vector{<:Function}},
     }
         difSets = length(sets)
         difSets > 1 && length(intensity) == 1 ? intensity = fill(0.75, difSets) : nothing
@@ -377,13 +369,7 @@ mutable struct SetScheme{
         else
             rpe = calcRPE.(reps, intensity)
         end
-        new{
-            typeof(type),
-            typeof(sets),
-            typeof(intensity),
-            typeof(roundMode),
-            typeof(rpeMode),
-        }(
+        new{typeof(type),typeof(sets),typeof(intensity),typeof(roundMode),typeof(rpeMode)}(
             type,
             sets,
             reps,
@@ -454,10 +440,10 @@ Progression{LinearProgression,String,Int64,SetScheme{Array{String,1},Array{Int64
 ```
 """
 struct Progression{
-    T1 <: AbstractProgression,
-    T2 <: AbstractString,
-    T3 <: Integer,
-    T4 <: Union{<:SetScheme, Vector{<:SetScheme}},
+    T1<:AbstractProgression,
+    T2<:AbstractString,
+    T3<:Integer,
+    T4<:Union{<:SetScheme,Vector{<:SetScheme}},
 } <: AbstractProgression
     type::T1
     name::T2
@@ -472,14 +458,14 @@ struct Progression{
         period::T3 = 1,
         setScheme::T4,
     ) where {
-        T1 <: AbstractProgression,
-        T2 <: AbstractString,
-        T3 <: Integer,
-        T4 <: Union{<:SetScheme, Vector{<:SetScheme}},
+        T1<:AbstractProgression,
+        T2<:AbstractString,
+        T3<:Integer,
+        T4<:Union{<:SetScheme,Vector{<:SetScheme}},
     }
         @assert length(setScheme) == sessions * period "length of setScheme, $(length(setScheme)), must be equal to sessions * period, $(sessions*period)."
 
-        new{typeof(type), typeof(name), typeof(sessions), typeof(setScheme)}(
+        new{typeof(type),typeof(name),typeof(sessions),typeof(setScheme)}(
             type,
             name,
             sessions,
@@ -567,14 +553,14 @@ Exercise{String,String,Array{String,1},String,Array{String,1},Float64,Float64,ty
 ```
 """
 mutable struct Exercise{
-    T1 <: AbstractString,
-    T2 <: Union{AbstractString, Vector{<:AbstractString}},
-    T3 <: Union{AbstractString, Vector{<:AbstractString}},
-    T4 <: Union{AbstractString, Vector{<:AbstractString}},
-    T5 <: Union{AbstractString, Vector{<:AbstractString}},
-    T6 <: Real,
-    T7 <: Real,
-    T8 <: Function,
+    T1<:AbstractString,
+    T2<:Union{AbstractString,Vector{<:AbstractString}},
+    T3<:Union{AbstractString,Vector{<:AbstractString}},
+    T4<:Union{AbstractString,Vector{<:AbstractString}},
+    T5<:Union{AbstractString,Vector{<:AbstractString}},
+    T6<:Real,
+    T7<:Real,
+    T8<:Function,
 }
     name::T1
     equipment::T2
@@ -595,14 +581,14 @@ mutable struct Exercise{
         roundBase::T7 = 2.5,
         roundMode::T8 = floor,
     ) where {
-        T1 <: AbstractString,
-        T2 <: Union{AbstractString, Vector{<:AbstractString}},
-        T3 <: Union{AbstractString, Vector{<:AbstractString}},
-        T4 <: Union{AbstractString, Vector{<:AbstractString}},
-        T5 <: Union{AbstractString, Vector{<:AbstractString}},
-        T6 <: Real,
-        T7 <: Real,
-        T8 <: Function,
+        T1<:AbstractString,
+        T2<:Union{AbstractString,Vector{<:AbstractString}},
+        T3<:Union{AbstractString,Vector{<:AbstractString}},
+        T4<:Union{AbstractString,Vector{<:AbstractString}},
+        T5<:Union{AbstractString,Vector{<:AbstractString}},
+        T6<:Real,
+        T7<:Real,
+        T8<:Function,
     }
         trainingMaxRound = round(trainingMax, roundBase, roundMode)
 
@@ -647,8 +633,7 @@ function calcWeights(exercise::Exercise, setScheme::SetScheme)
     roundMode = setScheme.roundMode
 
     # Calculate wieghts.
-    setScheme.wght =
-        round.(trainingMax * intensity + addWeight, roundBase, roundMode)
+    setScheme.wght = round.(trainingMax * intensity + addWeight, roundBase, roundMode)
 
     # Calculate target minimum RPE for a set.
     intense = setScheme.wght / trainingMax
@@ -756,12 +741,7 @@ sampleProgramme = Programme(
 
 It's recommended users either import the default dictionary [`Lifting_Programmes`](@ref) and store their programmes there with key equal to the programme name and type. They can also create their own dictionary for their own creations.
 """
-struct Programme{
-    T1 <: AbstractProgramme,
-    T2 <: AbstractString,
-    T3 <: Dict{Any, Any},
-    T4 <: Any,
-}
+struct Programme{T1<:AbstractProgramme,T2<:AbstractString,T3<:Dict{Any,Any},T4<:Any}
 
     type::T1
     name::T2
@@ -773,14 +753,9 @@ struct Programme{
         name::T2,
         exerProg::T3,
         days::T4,
-    ) where {
-        T1 <: AbstractProgramme,
-        T2 <: AbstractString,
-        T3 <: Dict{Any, Any},
-        T4 <: Any,
-    }
+    ) where {T1<:AbstractProgramme,T2<:AbstractString,T3<:Dict{Any,Any},T4<:Any}
 
-        new{typeof(type), typeof(name), typeof(exerProg), typeof(days)}(
+        new{typeof(type),typeof(name),typeof(exerProg),typeof(days)}(
             type,
             name,
             exerProg,
@@ -806,7 +781,7 @@ push!(
 Calculates set weights using `exercise.trainingMax` and `progression.setScheme`, then unrolls the relevant data into a named tuple and pushes it to the end of vector A. See [`insert!`](@ref) which does the same but at a specified index of A.
 """
 function push!(
-    A::AbstractArray{T, 1} where {T},
+    A::AbstractArray{T,1} where {T},
     exercise::Exercise,
     progression::Progression,
     i::Integer = 1,
@@ -860,7 +835,7 @@ insert!(
 Calculates set weights using `exercise.trainingMax` and `progression.setScheme`, then unrolls the relevant data into a named tuple and pushes it to index `index` of vector A. See [`push!`](@ref) which does the same but in the last index of A.
 """
 function insert!(
-    A::AbstractArray{T, 1} where {T},
+    A::AbstractArray{T,1} where {T},
     index::Integer,
     exercise::Exercise,
     progression::Progression,
@@ -920,7 +895,7 @@ Adjusts a programme's training maxes using what is expected by the programme and
 """
 function adjustMaxes!(
     name::AbstractString,
-    dict::Dict{Any, Any},
+    dict::Dict{Any,Any},
     actualReps::Integer;
     weight = missing,
 )
@@ -956,11 +931,9 @@ function adjustMaxes!(
 
     # If we gave a specific weight we want to use it instead of using the maximum weight.
     if ismissing(weight)
-        trainingMax =
-            calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
+        trainingMax = calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
     else
-        trainingMax =
-            calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
+        trainingMax = calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
     end
 
     roundBase = exercise.roundBase
@@ -970,18 +943,15 @@ function adjustMaxes!(
         if trainingMax < exercise.trainingMax
             change = roundBase
         else
-            change =
-                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
+            change = round(trainingMax - exercise.trainingMax, roundBase, roundMode)
             change = maximum((change, roundBase))
         end
     else
         if trainingMax < exercise.trainingMax
-            change =
-                round(exercise.trainingMax - trainingMax, roundBase, roundMode)
+            change = round(exercise.trainingMax - trainingMax, roundBase, roundMode)
             change = -maximum((change, roundBase))
         else
-            change =
-                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
+            change = round(trainingMax - exercise.trainingMax, roundBase, roundMode)
             change = maximum((change, roundBase))
         end
     end
@@ -1003,7 +973,7 @@ Does the same as [`adjustMaxes!`](@ref) but without updating the programme's tra
 """
 function adjustMaxes(
     name::AbstractString,
-    dict::Dict{Any, Any},
+    dict::Dict{Any,Any},
     actualReps::Integer;
     weight = missing,
 )
@@ -1038,11 +1008,9 @@ function adjustMaxes(
     actualRPE = 2 * targetRPE - actualRPE
     # If we gave a specific weight we want to use it instead of using the maximum weight.
     if ismissing(weight)
-        trainingMax =
-            calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
+        trainingMax = calcRepMax(maxWght, actualReps, actualRPE, targetReps, targetRPE)
     else
-        trainingMax =
-            calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
+        trainingMax = calcRepMax(weight, actualReps, actualRPE, targetReps, targetRPE)
     end
 
     roundBase = exercise.roundBase
@@ -1052,18 +1020,15 @@ function adjustMaxes(
         if trainingMax < exercise.trainingMax
             change = roundBase
         else
-            change =
-                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
+            change = round(trainingMax - exercise.trainingMax, roundBase, roundMode)
             change = maximum((change, roundBase))
         end
     else
         if trainingMax < exercise.trainingMax
-            change =
-                round(exercise.trainingMax - trainingMax, roundBase, roundMode)
+            change = round(exercise.trainingMax - trainingMax, roundBase, roundMode)
             change = -maximum((change, roundBase))
         else
-            change =
-                round(trainingMax - exercise.trainingMax, roundBase, roundMode)
+            change = round(trainingMax - exercise.trainingMax, roundBase, roundMode)
             change = maximum((change, roundBase))
         end
     end
@@ -1149,12 +1114,8 @@ function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
         for j = 1:length(reps[name])
             change[name][j] = 0.0
             trainingMax[name][j] = 0.0
-            trainingMax[name][j], change[name][j] = adjustMaxes(
-                name,
-                prog.exerProg,
-                reps[name][j];
-                weight = weight[name][j],
-            )
+            trainingMax[name][j], change[name][j] =
+                adjustMaxes(name, prog.exerProg, reps[name][j]; weight = weight[name][j])
         end
     end
     return trainingMax, change

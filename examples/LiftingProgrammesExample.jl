@@ -1,9 +1,6 @@
 using Lifting
 import Lifting:
-    Lifting_Programmes,
-    Lifting_Aux,
-    Lifting_Exercise_Names,
-    Lifting_Progressions
+    Lifting_Programmes, Lifting_Aux, Lifting_Exercise_Names, Lifting_Progressions
 cd(@__DIR__)
 
 name = "nSunsCAP3_OHP_6Day_LP"
@@ -34,15 +31,7 @@ tm, change = calcTrainingMaxLogs(prog, keyArr, reps, wght)
 
 tm
 # Plots lifts individually and uses a cubic spline to interpolate values.
-figs = plotData(
-    prog,
-    keyArr,
-    Δdays,
-    tm;
-    xlabel = "Days",
-    ylabel = "Weight",
-    lw = 3,
-)
+figs = plotData(prog, keyArr, Δdays, tm; xlabel = "Days", ylabel = "Weight", lw = 3)
 for (i, fig) in enumerate(figs)
     scatterData!(
         fig,

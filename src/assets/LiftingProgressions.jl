@@ -86,7 +86,6 @@ CAP3_Bench_T1 = Progression(
     period = 3,
     setScheme = SetsCAP3BenchT1,
 )
-
 SetsCAP3BenchT2 = [
     # Week 1
     SetScheme(
@@ -215,12 +214,7 @@ CAP3_Deadlift_T2 = Progression(
 SetsCAP3SquatT1 = [
     # Week 1
     SetScheme(
-        type = [
-            setType["default"],
-            setType["default"],
-            setType["optional"],
-            setType["default"],
-        ],
+        type = [setType["default"], setType["default"], setType["optional"], setType["default"]],
         sets = [4, 2, 1, 1],
         reps = [3, 3, 3, 3],
         intensity = [0.77, 0.77, 0.77, 0.77],
@@ -403,75 +397,101 @@ nSuns_6Day_OHP = Progression(
 # High intensity burnout.
 H1 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [4, 6, 3],
-    intensity = [8, 8, 7],
-    roundMode = [ceil, floor, floor],
+    intensity = [9.5, 8, 5.5],
+    roundMode = [ceil, ceil, ceil],
     rpeMode = true,
 )
 H2 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [6, 8, 4],
-    intensity = [8, 8, 7],
-    roundMode = [ceil, floor, floor],
+    intensity = [9.5, 8, 5.5],
+    roundMode = [ceil, ceil, ceil],
     rpeMode = true,
 )
 H3 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [8, 10, 6],
-    intensity = [8, 8, 7],
-    roundMode = [ceil, floor, floor],
+    intensity = [9.5, 8, 5.5],
+    roundMode = [ceil, ceil, ceil],
     rpeMode = true,
 )
+H4 = SetScheme(
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
+    sets = [1, 2, 1],
+    reps = [10, 12, 8],
+    intensity = [9.5, 8, 5.5],
+    roundMode = [ceil, ceil, ceil],
+    rpeMode = true,
+)
+
 # Mid intensity burnout.
 M1 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [6, 8, 4],
-    intensity = [7, 7, 6],
-    roundMode = [ceil, floor, floor],
+    intensity = [8.5, 7, 4.5],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 M2 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [8, 10, 6],
-    intensity = [7, 7, 6],
-    roundMode = [ceil, floor, floor],
+    intensity = [8.5, 7, 4.5],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
 M3 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [10, 12, 8],
-    intensity = [7, 7, 6],
-    roundMode = [ceil, floor, floor],
+    intensity = [8.5, 7, 4.5],
+    roundMode = [ceil, ceil, floor],
     rpeMode = true,
 )
+M4 = SetScheme(
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
+    sets = [1, 2, 1],
+    reps = [12, 14, 10],
+    intensity = [8.5, 7, 4.5],
+    roundMode = [ceil, ceil, floor],
+    rpeMode = true,
+)
+
 # Low intensity burnout.
 L1 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [8, 10, 6],
-    intensity = [6, 6, 5],
+    intensity = [7.5, 6, 3.5],
     roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 L2 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [10, 12, 8],
-    intensity = [6, 6, 5],
+    intensity = [7.5, 6, 3.5],
     roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
 L3 = SetScheme(
     type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
-    sets = [1, 3, 1],
+    sets = [1, 2, 1],
     reps = [12, 14, 10],
-    intensity = [6, 6, 5],
+    intensity = [7.5, 6, 3.5],
+    roundMode = [ceil, floor, floor],
+    rpeMode = true,
+)
+L4 = SetScheme(
+    type = [setType["amrap"], setType["amrap"], setType["opt amrap emom"]],
+    sets = [1, 2, 1],
+    reps = [14, 16, 12],
+    intensity = [7.5, 6, 3.5],
     roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
@@ -497,8 +517,7 @@ l23_lmh = Progression(
     setScheme = [L3, M3, H3],
 )
 # Calisthenics.
-calisthenics =
-    SetScheme(; type = setType["amrap"], sets = 5, reps = 12, intensity = 0.8)
+calisthenics = SetScheme(; type = setType["amrap"], sets = 5, reps = 12, intensity = 0.8)
 AMRAP_Cali = Progression(
     type = LinearProgression(),
     name = "Calisthenics AMRAP",
@@ -537,3 +556,207 @@ push!(Lifting_Progressions, "m23_lmh" => m23_lmh)
 push!(Lifting_Progressions, "l23_lmh" => l23_lmh)
 push!(Lifting_Progressions, "AMRAP_Cali" => AMRAP_Cali)
 push!(Lifting_Progressions, "AMRAP_Grip" => AMRAP_Grip)
+
+## Custom programme: 9 week, 4 week hypertrophy, 4 week strength, 1 week test
+
+# Hypertrophy
+HyperDCG11 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [16, 14, 12],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+HyperDCG12 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [16, 14, 12],
+    intensity = [8, 8, 8],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+HyperDCG13 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [12, 10, 8],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+HyperDCG14 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [12, 10, 8],
+    intensity = [8, 8, 8],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+
+HyperDCG21 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [16, 14, 12],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+HyperDCG22 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [16, 14, 12],
+    intensity = [6, 6, 6],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+HyperDCG23 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [12, 10, 8],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+HyperDCG24 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1],
+    reps = [12, 10, 8],
+    intensity = [6, 6, 6],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+
+# Strength
+StrenDCG11 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [8, 6, 4],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+StrenDCG12 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [8, 6, 4],
+    intensity = [8, 8, 8],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+StrenDCG13 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [6, 4, 2],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+StrenDCG14 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [6, 4, 2],
+    intensity = [8, 8, 8],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+
+StrenDCG21 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [8, 6, 4],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+StrenDCG22 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [8, 6, 4],
+    intensity = [6, 6, 6],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+StrenDCG23 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [6, 4, 2],
+    intensity = [7, 7, 7],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+StrenDCG24 = SetScheme(
+    type = [setType["default"], setType["default"], setType["amrap"]],
+    sets = [2, 2, 1],
+    reps = [6, 4, 2],
+    intensity = [6, 6, 6],
+    roundMode = [floor, floor, floor],
+    rpeMode = true,
+)
+
+# Test
+TestDCG1 = SetScheme(
+    type = [
+        setType["default"],
+        setType["default"],
+        setType["test"],
+        setType["default"],
+        setType["default"],
+    ],
+    sets = [1, 1, 1, 1, 1],
+    reps = [5, 3, 1, 5, 8],
+    intensity = [7, 8, 9, 8, 7],
+    roundMode = [floor, floor, floor, floor, floor],
+    rpeMode = true,
+)
+TestDCG2 = SetScheme(
+    type = [
+        setType["default"],
+        setType["default"],
+        setType["test"],
+        setType["default"],
+        setType["default"],
+    ],
+    sets = [1, 1, 1, 1, 1],
+    reps = [8, 5, 3, 8, 10],
+    intensity = [7, 8, 9, 8, 7],
+    roundMode = [floor, floor, floor, floor, floor],
+    rpeMode = true,
+)
+
+# Progression
+DCGYugeStrT1 = Progression(
+    type = BlockProgression(),
+    name = "Yuge & Strong T1",
+    sessions = 1,
+    period = 9,
+    setScheme = [HyperDCG11, HyperDCG12, HyperDCG13, HyperDCG14, StrenDCG11, StrenDCG12, StrenDCG13, StrenDCG14, TestDCG1],
+)
+DCGYugeStrT2 = Progression(
+    type = BlockProgression(),
+    name = "Yuge & Strong T2",
+    sessions = 1,
+    period = 9,
+    setScheme = [HyperDCG21, HyperDCG22, HyperDCG23, HyperDCG24, StrenDCG21, StrenDCG22, StrenDCG23, StrenDCG24, TestDCG2],
+)
+DCGYugeStrT3 = Progression(
+    type = BlockProgression(),
+    name = "Yuge & Strong T3",
+    sessions = 1,
+    period = 9,
+    setScheme = [L3, M3, H3, L2, M2, H2, L1, M1, H1],
+)
+DCGYugeStrT4 = Progression(
+    type = BlockProgression(),
+    name = "Yuge & Strong T4",
+    sessions = 1,
+    period = 9,
+    setScheme = [L4, M4, H4, L3, M3, H3, L2, M2, H2],
+)
+
+
+
+
+push!(Lifting_Progressions, "DCGYugeStrT1" => DCGYugeStrT1)
+push!(Lifting_Progressions, "DCGYugeStrT2" => DCGYugeStrT2)
+push!(Lifting_Progressions, "DCGYugeStrT3" => DCGYugeStrT3)
+push!(Lifting_Progressions, "DCGYugeStrT4" => DCGYugeStrT4)

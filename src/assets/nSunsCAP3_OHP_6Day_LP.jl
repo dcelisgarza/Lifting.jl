@@ -46,14 +46,8 @@ DeadliftT2 = Exercise(
     ],
     trainingMax = 140,
 )
-push!(
-    exerProg,
-    "DeadliftT1" => (exercise = DeadliftT1, progression = CAP3_Deadlift_T1),
-)
-push!(
-    exerProg,
-    "DeadliftT2" => (exercise = DeadliftT2, progression = CAP3_Deadlift_T2),
-)
+push!(exerProg, "DeadliftT1" => (exercise = DeadliftT1, progression = CAP3_Deadlift_T1))
+push!(exerProg, "DeadliftT2" => (exercise = DeadliftT2, progression = CAP3_Deadlift_T2))
 SquatT1 = Exercise(
     name = squat["low"],
     equipment = equipment["bb"],
@@ -110,7 +104,7 @@ PressT1 = Exercise(
 )
 push!(exerProg, "PressT1" => (exercise = PressT1, progression = nSuns_6Day_OHP))
 
-### Accessories
+## Accessories
 # Squat accessories.
 lunges = Exercise(;
     name = squat["lunge"],
@@ -136,14 +130,8 @@ ProgLunges = deepcopy(h23_lmh)
 ProgBulg = deepcopy(h23_lmh)
 ProgCalfRaise = deepcopy(l23_lmh)
 push!(exerProg, "lunges" => (exercise = lunges, progression = ProgLunges))
-push!(
-    exerProg,
-    "bulgarianSplit" => (exercise = bulgarianSplit, progression = ProgBulg),
-)
-push!(
-    exerProg,
-    "calfRaise" => (exercise = calfRaise, progression = ProgCalfRaise),
-)
+push!(exerProg, "bulgarianSplit" => (exercise = bulgarianSplit, progression = ProgBulg))
+push!(exerProg, "calfRaise" => (exercise = calfRaise, progression = ProgCalfRaise))
 
 # Grip
 wristExt = Exercise(;
@@ -177,28 +165,15 @@ ProgWristCurl = deepcopy(AMRAP_Grip)
 ProgPlatePinch = deepcopy(AMRAP_Grip)
 ProgFingerCurl = deepcopy(AMRAP_Grip)
 push!(exerProg, "wristExt" => (exercise = wristExt, progression = ProgWristExt))
-push!(
-    exerProg,
-    "wristCurl" => (exercise = wristCurl, progression = ProgWristCurl),
-)
-push!(
-    exerProg,
-    "platePinch" => (exercise = platePinch, progression = ProgPlatePinch),
-)
-push!(
-    exerProg,
-    "fingerCurl" => (exercise = fingerCurl, progression = ProgFingerCurl),
-)
+push!(exerProg, "wristCurl" => (exercise = wristCurl, progression = ProgWristCurl))
+push!(exerProg, "platePinch" => (exercise = platePinch, progression = ProgPlatePinch))
+push!(exerProg, "fingerCurl" => (exercise = fingerCurl, progression = ProgFingerCurl))
 
 # Pulling
 facePull = Exercise(;
     name = pull["face"],
     equipment = equipment["cable"],
-    muscles = [
-        muscles["rear delts"],
-        muscles["rhomboids"],
-        muscles["rot cuff"],
-    ],
+    muscles = [muscles["rear delts"], muscles["rhomboids"], muscles["rot cuff"]],
     trainingMax = 30,
 )
 pullup = Exercise(;
@@ -226,14 +201,8 @@ ProgHammerCurl = deepcopy(l23_lmh)
 ProgZottmanCurl = deepcopy(l23_lmh)
 push!(exerProg, "facePull" => (exercise = facePull, progression = ProgFacePull))
 push!(exerProg, "pullup" => (exercise = pullup, progression = ProgPullup))
-push!(
-    exerProg,
-    "hammerCurl" => (exercise = hammerCurl, progression = ProgHammerCurl),
-)
-push!(
-    exerProg,
-    "zottmanCurl" => (exercise = zottmanCurl, progression = ProgZottmanCurl),
-)
+push!(exerProg, "hammerCurl" => (exercise = hammerCurl, progression = ProgHammerCurl))
+push!(exerProg, "zottmanCurl" => (exercise = zottmanCurl, progression = ProgZottmanCurl))
 
 # Pushing
 inclineDBBench = Exercise(;
@@ -258,16 +227,9 @@ sideRaise = Exercise(;
 ProgInclineDBBench = deepcopy(m23_lmh)
 ProgDips = deepcopy(m23_lmh)
 ProgSideRaise = deepcopy(l23_lmh)
-push!(
-    exerProg,
-    "inclineDBBench" =>
-        (exercise = inclineDBBench, progression = ProgInclineDBBench),
-)
+push!(exerProg, "inclineDBBench" => (exercise = inclineDBBench, progression = ProgInclineDBBench))
 push!(exerProg, "dips" => (exercise = dips, progression = ProgDips))
-push!(
-    exerProg,
-    "sideRaise" => (exercise = sideRaise, progression = ProgSideRaise),
-)
+push!(exerProg, "sideRaise" => (exercise = sideRaise, progression = ProgSideRaise))
 
 # Core
 dragonFlag = Exercise(;
@@ -320,22 +282,13 @@ ProgToeToBar = deepcopy(AMRAP_Cali)
 ProgAbRollout = deepcopy(AMRAP_Cali)
 ProgLandMine = deepcopy(m23_lmh)
 ProgParaCrunch = deepcopy(m23_lmh)
-push!(
-    exerProg,
-    "dragonFlag" => (exercise = dragonFlag, progression = ProgDragonFlag),
-)
+push!(exerProg, "dragonFlag" => (exercise = dragonFlag, progression = ProgDragonFlag))
 push!(exerProg, "vsit" => (exercise = vsit, progression = ProgVsit))
 push!(exerProg, "legRaise" => (exercise = legRaise, progression = ProgLegRaise))
 push!(exerProg, "toeToBar" => (exercise = toeToBar, progression = ProgToeToBar))
-push!(
-    exerProg,
-    "abRollout" => (exercise = abRollout, progression = ProgAbRollout),
-)
+push!(exerProg, "abRollout" => (exercise = abRollout, progression = ProgAbRollout))
 push!(exerProg, "landMine" => (exercise = landMine, progression = ProgLandMine))
-push!(
-    exerProg,
-    "paraCrunch" => (exercise = paraCrunch, progression = ProgParaCrunch),
-)
+push!(exerProg, "paraCrunch" => (exercise = paraCrunch, progression = ProgParaCrunch))
 
 # Calisthenics Isometrics
 frontLever = Exercise(;
@@ -349,26 +302,15 @@ backLever = Exercise(;
     name = isometric["back"],
     modality = modality["straddle"],
     equipment = equipment["pullup bar"],
-    muscles = [
-        muscles["lats"],
-        muscles["pecs"],
-        muscles["front delts"],
-        muscles["core"],
-    ],
+    muscles = [muscles["lats"], muscles["pecs"], muscles["front delts"], muscles["core"]],
     trainingMax = 15,
 )
 ProgFrontLever = deepcopy(AMRAP_Cali)
 ProgBackLever = deepcopy(AMRAP_Cali)
-push!(
-    exerProg,
-    "frontLever" => (exercise = frontLever, progression = ProgFrontLever),
-)
-push!(
-    exerProg,
-    "backLever" => (exercise = backLever, progression = ProgBackLever),
-)
+push!(exerProg, "frontLever" => (exercise = frontLever, progression = ProgFrontLever))
+push!(exerProg, "backLever" => (exercise = backLever, progression = ProgBackLever))
 
-###
+## Weeks
 import Lifting: makeDays
 function makeDays(::nSunsCAP3_OHP_6Day_LP, dict::Dict)
     week1 = [[], [], [], [], [], [], []]
@@ -573,7 +515,4 @@ function makeDays(::nSunsCAP3_OHP_6Day_LP, dict::Dict)
 end
 
 days = makeDays(nSunsCAP3_OHP_6Day_LP(), exerProg)
-push!(
-    Lifting_Programmes,
-    nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days),
-)
+push!(Lifting_Programmes, nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days))
