@@ -12,6 +12,8 @@ println(Lifting_Programmes[name], [2, 6, 9])
 
 println(Lifting_Programmes[name], length(Lifting_Programmes[name].days))
 
+
+write("yugenstronk.csv", Lifting_Programmes["DCG_YugeStr"]; log = true)
 #=
 # Writes programme to test.cvt
 write("test.csv", Lifting_Programmes[name]; log = false)

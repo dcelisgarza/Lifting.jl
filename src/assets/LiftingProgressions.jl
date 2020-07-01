@@ -577,19 +577,19 @@ HyperDCG12 = SetScheme(
     rpeMode = true,
 )
 HyperDCG13 = SetScheme(
-    type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [1, 1, 1],
-    reps = [12, 10, 8],
-    intensity = [7, 7, 7],
-    roundMode = [floor, floor, floor],
+    type = [setType["default"], setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1, 1],
+    reps = [12, 10, 8, 8],
+    intensity = [7, 7, 7, 7],
+    roundMode = [floor, floor, floor, floor],
     rpeMode = true,
 )
 HyperDCG14 = SetScheme(
-    type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [1, 1, 1],
-    reps = [12, 10, 8],
-    intensity = [8, 8, 8],
-    roundMode = [floor, floor, floor],
+    type = [setType["default"], setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1, 1],
+    reps = [12, 10, 8, 8],
+    intensity = [8, 8, 8, 8],
+    roundMode = [floor, floor, floor, floor],
     rpeMode = true,
 )
 
@@ -610,19 +610,19 @@ HyperDCG22 = SetScheme(
     rpeMode = true,
 )
 HyperDCG23 = SetScheme(
-    type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [1, 1, 1],
-    reps = [12, 10, 8],
-    intensity = [7, 7, 7],
-    roundMode = [floor, floor, floor],
+    type = [setType["default"], setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1, 1],
+    reps = [12, 10, 8, 8],
+    intensity = [7, 7, 7, 7],
+    roundMode = [floor, floor, floor, floor],
     rpeMode = true,
 )
 HyperDCG24 = SetScheme(
-    type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [1, 1, 1],
-    reps = [12, 10, 8],
-    intensity = [6, 6, 6],
-    roundMode = [floor, floor, floor],
+    type = [setType["default"], setType["default"], setType["default"], setType["amrap"]],
+    sets = [1, 1, 1, 1],
+    reps = [12, 10, 8, 8],
+    intensity = [6, 6, 6, 6],
+    roundMode = [floor, floor, floor, floor],
     rpeMode = true,
 )
 
@@ -645,7 +645,7 @@ StrenDCG12 = SetScheme(
 )
 StrenDCG13 = SetScheme(
     type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [2, 2, 1],
+    sets = [3, 2, 1],
     reps = [6, 4, 2],
     intensity = [7, 7, 7],
     roundMode = [floor, floor, floor],
@@ -653,7 +653,7 @@ StrenDCG13 = SetScheme(
 )
 StrenDCG14 = SetScheme(
     type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [2, 2, 1],
+    sets = [3, 2, 1],
     reps = [6, 4, 2],
     intensity = [8, 8, 8],
     roundMode = [floor, floor, floor],
@@ -678,7 +678,7 @@ StrenDCG22 = SetScheme(
 )
 StrenDCG23 = SetScheme(
     type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [2, 2, 1],
+    sets = [3, 2, 1],
     reps = [6, 4, 2],
     intensity = [7, 7, 7],
     roundMode = [floor, floor, floor],
@@ -686,7 +686,7 @@ StrenDCG23 = SetScheme(
 )
 StrenDCG24 = SetScheme(
     type = [setType["default"], setType["default"], setType["amrap"]],
-    sets = [2, 2, 1],
+    sets = [3, 2, 1],
     reps = [6, 4, 2],
     intensity = [6, 6, 6],
     roundMode = [floor, floor, floor],
@@ -717,8 +717,8 @@ TestDCG2 = SetScheme(
         setType["default"],
     ],
     sets = [1, 1, 1, 1, 1],
-    reps = [8, 5, 3, 8, 10],
-    intensity = [7, 8, 9, 8, 7],
+    reps = [5, 3, 1, 5, 8],
+    intensity = [6, 7, 8, 7, 6],
     roundMode = [floor, floor, floor, floor, floor],
     rpeMode = true,
 )
@@ -754,9 +754,9 @@ DCGYugeStrT4 = Progression(
 )
 
 
-
-
 push!(Lifting_Progressions, "DCGYugeStrT1" => DCGYugeStrT1)
 push!(Lifting_Progressions, "DCGYugeStrT2" => DCGYugeStrT2)
 push!(Lifting_Progressions, "DCGYugeStrT3" => DCGYugeStrT3)
 push!(Lifting_Progressions, "DCGYugeStrT4" => DCGYugeStrT4)
+
+## Hypertrophy
