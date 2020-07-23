@@ -26,6 +26,7 @@ Base.KeySet for a Dict{String,Progression} with 14 entries. Keys:
 """
 Lifting_Progressions = Dict{String, Progression}()
 
+## nSuns CAP3
 SetsCAP3BenchT1 = [
     # Week 1
     SetScheme(
@@ -348,6 +349,72 @@ CAP3_Row_T2 = Progression(
     period = 3,
     setScheme = SetsCAP3RowT2,
 )
+SetsCAP3OHPT1 = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 3],
+        intensity = intensityArb.([8, 10, 10]),
+        roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"]],
+        sets = [1, 3],
+        reps = [10, 5],
+        intensity = intensityArb.([12, 15]),
+        roundMode = [ceil, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = intensityArb.([10, 12, 12]),
+        roundMode = [ceil, floor, floor],
+    ),
+]
+CAP3_OHP_T1 = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 OHP T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3OHPT1,
+)
+SetsCAP3OHPT2 = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = intensityArb.([10, 12, 12]),
+        roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [12, 10, 6],
+        intensity = intensityArb.([15, 18, 18]),
+        roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = intensityArb.([12, 15, 15]),
+        roundMode = [ceil, floor, floor],
+    ),
+]
+CAP3_OHP_T2 = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 OHP T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3OHPT2,
+)
 Sets6DayPressT1 = [
     # Session 1
     SetScheme(
@@ -392,7 +459,422 @@ nSuns_6Day_OHP = Progression(
     period = 1,
     setScheme = Sets6DayPressT1,
 )
-### Accessories
+
+## nSuns-DCG RPE CAP3
+SetsCAP3BenchT1_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [4, 4, 4],
+        intensity = [4.5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 3, 1],
+        reps = [3, 3, 3],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [6, 5, 5],
+        intensity = [6.5, 7.5, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["test"], setType["test"], setType["test"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 2],
+        intensity = [9, 9, 9],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+]
+CAP3_Bench_T1_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Bench T1",
+    sessions = 2,
+    period = 3,
+    setScheme = SetsCAP3BenchT1_RPE,
+)
+SetsCAP3BenchT2_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = [8, 6, 4.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = [8.5, 6.5, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = [9, 7, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"]],
+        sets = [1, 3],
+        reps = [8, 6],
+        intensity = [8.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [12, 10, 6],
+        intensity = [8, 6.5, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 10, 5],
+        intensity = [8, 7, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+CAP3_Bench_T2_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Bench T2",
+    sessions = 2,
+    period = 3,
+    setScheme = SetsCAP3BenchT2_RPE,
+)
+
+SetsCAP3DeadliftT1_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["test"], setType["test"], setType["test"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 2],
+        intensity = [9, 9, 9],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [4, 4, 4],
+        intensity = [5.5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 3, 1],
+        reps = [3, 3, 3],
+        intensity = [6, 7, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+]
+CAP3_Deadlift_T1_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Deadlift T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3DeadliftT1_RPE,
+)
+SetsCAP3DeadliftT2_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [5, 4, 4],
+        intensity = [6, 7, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [5, 7, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+]
+CAP3_Deadlift_T2_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Deadlift T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3DeadliftT2_RPE,
+)
+
+SetsCAP3SquatT1_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"], setType["default"]],
+        sets = [4, 2, 1, 1],
+        reps = [3, 3, 3, 3],
+        intensity = [5, 6.5, 6.5, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["test"], setType["test"], setType["test"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 2],
+        intensity = [9, 9, 9],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [3, 3, 1],
+        reps = [4, 4, 4],
+        intensity = [6, 7, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+]
+CAP3_Squat_T1_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Squat T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3SquatT1_RPE,
+)
+SetsCAP3SquatT2_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [5, 4, 4],
+        intensity = [5.5, 6.5, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [6, 7, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+]
+CAP3_Squat_T2_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Squat T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3SquatT2_RPE,
+)
+
+SetsCAP3RowT1_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"]],
+        sets = [1, 3],
+        reps = [12, 10],
+        intensity = [7.5, 6.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = [8, 7, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = [8.5, 7.5, 6.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+CAP3_Row_T1_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Row T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3RowT1_RPE,
+)
+SetsCAP3RowT2_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 3],
+        intensity = [9, 7, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 6, 5],
+        intensity = [8, 6, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 5, 4],
+        intensity = [7.5, 6.5, 5.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+CAP3_Row_T2_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 Row T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3RowT2_RPE,
+)
+
+SetsCAP3OHPT1_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 3],
+        intensity = [9, 7, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"]],
+        sets = [1, 3],
+        reps = [10, 5],
+        intensity = [7.5, 6.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = [8, 7, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+CAP3_OHP_T1_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 OHP T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3OHPT1_RPE,
+)
+SetsCAP3OHPT2_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = [9, 7.5, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [12, 10, 6],
+        intensity = [7.5, 6.5, 5.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = [8, 6, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+CAP3_OHP_T2_RPE = Progression(
+    type = PeriodProgression(),
+    name = "nSuns CAP 3 OHP T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsCAP3OHPT2_RPE,
+)
+
+## Accessories
 # Low, mid, high reps.
 # High intensity burnout.
 H1 = SetScheme(
@@ -550,12 +1032,25 @@ push!(Lifting_Progressions, "CAP3_Squat_T1" => CAP3_Squat_T1)
 push!(Lifting_Progressions, "CAP3_Squat_T2" => CAP3_Squat_T2)
 push!(Lifting_Progressions, "CAP3_Row_T1" => CAP3_Row_T1)
 push!(Lifting_Progressions, "CAP3_Row_T2" => CAP3_Row_T2)
+push!(Lifting_Progressions, "CAP3_OHP_T1" => CAP3_OHP_T1)
+push!(Lifting_Progressions, "CAP3_OHP_T2" => CAP3_OHP_T2)
 push!(Lifting_Progressions, "nSuns_6Day_OHP" => nSuns_6Day_OHP)
 push!(Lifting_Progressions, "h23_lmh" => h23_lmh)
 push!(Lifting_Progressions, "m23_lmh" => m23_lmh)
 push!(Lifting_Progressions, "l23_lmh" => l23_lmh)
 push!(Lifting_Progressions, "AMRAP_Cali" => AMRAP_Cali)
 push!(Lifting_Progressions, "AMRAP_Grip" => AMRAP_Grip)
+push!(Lifting_Progressions, "CAP3_Bench_T1_RPE" => CAP3_Bench_T1)
+push!(Lifting_Progressions, "CAP3_Bench_T2_RPE" => CAP3_Bench_T2)
+push!(Lifting_Progressions, "CAP3_Deadlift_T1_RPE" => CAP3_Deadlift_T1)
+push!(Lifting_Progressions, "CAP3_Deadlift_T2_RPE" => CAP3_Deadlift_T2)
+push!(Lifting_Progressions, "CAP3_Squat_T1_RPE" => CAP3_Squat_T1)
+push!(Lifting_Progressions, "CAP3_Squat_T2_RPE" => CAP3_Squat_T2)
+push!(Lifting_Progressions, "CAP3_Row_T1_RPE" => CAP3_Row_T1)
+push!(Lifting_Progressions, "CAP3_Row_T2_RPE" => CAP3_Row_T2)
+push!(Lifting_Progressions, "CAP3_OHP_T1_RPE" => CAP3_OHP_T1)
+push!(Lifting_Progressions, "CAP3_OHP_T2_RPE" => CAP3_OHP_T2)
+
 
 ## Custom programme: 9 week, 4 week hypertrophy, 4 week strength, 1 week test
 

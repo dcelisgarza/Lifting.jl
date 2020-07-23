@@ -1,3 +1,4 @@
+using Revise
 using Lifting
 import Lifting:
     Lifting_Programmes, Lifting_Aux, Lifting_Exercise_Names, Lifting_Progressions
@@ -11,7 +12,6 @@ println(Lifting_Programmes[name])
 println(Lifting_Programmes[name], [2, 6, 9])
 
 println(Lifting_Programmes[name], length(Lifting_Programmes[name].days))
-
 
 write("yugenstronk.csv", Lifting_Programmes["DCG_YugeStr"]; log = true)
 #=
@@ -54,3 +54,10 @@ updateMaxes(prog, keyArr, reps)
 
 # Same as above but also updates the programme with the new values. Run this a couple of times and see how the training maxes change by running the one above.
 updateMaxes!(prog, keyArr, reps)
+
+
+println(Lifting_Programmes["nSunsCAP3_RPE"], 1)
+println(Lifting_Programmes["nSunsCAP3"], 1)
+
+
+Lifting_Programmes["nSunsCAP3_RPE"]

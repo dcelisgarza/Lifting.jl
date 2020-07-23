@@ -15,3 +15,5 @@ Lifting_Programmes = Dict{String,Programme}()
 
 include("nSunsCAP3_OHP_6Day_LP.jl")
 include("DCG_YugeStr.jl")
+include("nSunsCAP3.jl")
+include("nSunsCAP3_RPE.jl")
