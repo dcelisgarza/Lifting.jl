@@ -227,7 +227,10 @@ sideRaise = Exercise(;
 ProgInclineDBBench = deepcopy(m23_lmh)
 ProgDips = deepcopy(m23_lmh)
 ProgSideRaise = deepcopy(l23_lmh)
-push!(exerProg, "inclineDBBench" => (exercise = inclineDBBench, progression = ProgInclineDBBench))
+push!(
+    exerProg,
+    "inclineDBBench" => (exercise = inclineDBBench, progression = ProgInclineDBBench),
+)
 push!(exerProg, "dips" => (exercise = dips, progression = ProgDips))
 push!(exerProg, "sideRaise" => (exercise = sideRaise, progression = ProgSideRaise))
 
@@ -515,4 +518,7 @@ function makeDays(::nSunsCAP3_OHP_6Day_LP, dict::Dict)
 end
 
 days = makeDays(nSunsCAP3_OHP_6Day_LP(), exerProg)
-push!(Lifting_Programmes, nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days))
+push!(
+    Lifting_Programmes,
+    nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days),
+)

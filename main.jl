@@ -17,6 +17,6 @@ println(keys(Lifting_Programmes[name].exerProg))
 
 name = "DCG_YugeStr"
 Lifting_Programmes[name].days
-println(Lifting_Programmes[name],1)
+println(Lifting_Programmes[name], 1)
 
 write("Yuge_n_Stronk.csv", Lifting_Programmes[name])

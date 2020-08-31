@@ -202,4 +202,7 @@ function makeDays(::nSunsCAP3, dict::Dict)
 end
 
 days = makeDays(nSunsCAP3(), exerProg)
-push!(Lifting_Programmes, nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days))
+push!(
+    Lifting_Programmes,
+    nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days),
+)

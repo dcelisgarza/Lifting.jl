@@ -24,7 +24,7 @@ Base.KeySet for a Dict{String,Progression} with 14 entries. Keys:
   "CAP3_Row_T2"
 ```
 """
-Lifting_Progressions = Dict{String, Progression}()
+Lifting_Progressions = Dict{String,Progression}()
 
 ## nSuns CAP3
 SetsCAP3BenchT1 = [
@@ -215,7 +215,12 @@ CAP3_Deadlift_T2 = Progression(
 SetsCAP3SquatT1 = [
     # Week 1
     SetScheme(
-        type = [setType["default"], setType["default"], setType["optional"], setType["default"]],
+        type = [
+            setType["default"],
+            setType["default"],
+            setType["optional"],
+            setType["default"],
+        ],
         sets = [4, 2, 1, 1],
         reps = [3, 3, 3, 3],
         intensity = [0.77, 0.77, 0.77, 0.77],
@@ -658,7 +663,12 @@ CAP3_Deadlift_T2_RPE = Progression(
 SetsCAP3SquatT1_RPE = [
     # Week 1
     SetScheme(
-        type = [setType["default"], setType["default"], setType["optional"], setType["default"]],
+        type = [
+            setType["default"],
+            setType["default"],
+            setType["optional"],
+            setType["default"],
+        ],
         sets = [4, 2, 1, 1],
         reps = [3, 3, 3, 3],
         intensity = [5, 6.5, 6.5, 8],
@@ -1224,14 +1234,34 @@ DCGYugeStrT1 = Progression(
     name = "Yuge & Strong T1",
     sessions = 1,
     period = 9,
-    setScheme = [HyperDCG11, HyperDCG12, HyperDCG13, HyperDCG14, StrenDCG11, StrenDCG12, StrenDCG13, StrenDCG14, TestDCG1],
+    setScheme = [
+        HyperDCG11,
+        HyperDCG12,
+        HyperDCG13,
+        HyperDCG14,
+        StrenDCG11,
+        StrenDCG12,
+        StrenDCG13,
+        StrenDCG14,
+        TestDCG1,
+    ],
 )
 DCGYugeStrT2 = Progression(
     type = BlockProgression(),
     name = "Yuge & Strong T2",
     sessions = 1,
     period = 9,
-    setScheme = [HyperDCG21, HyperDCG22, HyperDCG23, HyperDCG24, StrenDCG21, StrenDCG22, StrenDCG23, StrenDCG24, TestDCG2],
+    setScheme = [
+        HyperDCG21,
+        HyperDCG22,
+        HyperDCG23,
+        HyperDCG24,
+        StrenDCG21,
+        StrenDCG22,
+        StrenDCG23,
+        StrenDCG24,
+        TestDCG2,
+    ],
 )
 DCGYugeStrT3 = Progression(
     type = BlockProgression(),

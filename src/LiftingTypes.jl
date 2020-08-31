@@ -38,7 +38,7 @@ where ``z \\equiv`` intensity, ``x \\equiv`` reps, ``y \\equiv`` RPE, ``a = 0.99
 
 We cap `rpe` to 10 and `intensity` to 1.
 """
-@inline function calcIntensity(reps::Integer, rpe::Real)
+function calcIntensity(reps::Integer, rpe::Real)
     a = 0.995
     b = 0.0333
     c = 0.0025
@@ -59,7 +59,7 @@ where the variables are the same as [`calcIntensity`](@ref).
 
 We cap `intensity` to 1 and the `rpe` to 10.
 """
-@inline function calcRPE(reps::Integer, intensity::Real)
+function calcRPE(reps::Integer, intensity::Real)
     a = 0.995
     b = 0.0333
     c = 0.0025
@@ -97,7 +97,7 @@ where the variables are the same as [`calcIntensity`](@ref).
 
 We cap `intensity` to 1 and `rpe` to 10.
 """
-@inline function calcReps(intensity::Real, rpe::Real)
+function calcReps(intensity::Real, rpe::Real)
     a = 0.995
     b = 0.0333
     c = 0.0025
@@ -134,7 +134,7 @@ Calculate the ratio between `targetIntensity/actualIntensity`.
 
 All RPE values are capped to 10.
 """
-@inline function calcIntensityRatio(
+function calcIntensityRatio(
     actualReps::Integer,
     actualRPE::Real,
     targetReps::Integer,
@@ -161,7 +161,7 @@ Calculate the ratio between `targetRPE/actualRPE`.
 
 All intensity values are capped to 1.
 """
-@inline function calcRPERatio(
+function calcRPERatio(
     actualReps::Integer,
     actualIntensity::Real,
     targetReps::Integer,
@@ -188,7 +188,7 @@ Calculate the ratio between `targetReps/actualReps`.
 
 All intensity values are capped to 1 and all rpe values to 10.
 """
-@inline function calcRepRatio(
+function calcRepRatio(
     actualIntensity::Real,
     actualRPE::Real,
     targetIntensity::Real,
@@ -216,7 +216,7 @@ calcRepMax(
 ```
 Calculates the rep weight for a target number of reps, `targetReps`, at a target rpe, `targetRPE`, given an actual number of reps, `actualReps`, and an actual rpe, `actualRPE` and `weight`. It's just the weight multiplied by the intensity ratio.
 """
-@inline function calcRepMax(
+function calcRepMax(
     weight::Real,
     actualReps::Integer,
     actualRPE::Real,
@@ -244,7 +244,7 @@ where ``x \\equiv`` var and the constants are the same as [`calcIntensity`](@ref
 !!! note
     `calcIntensity` works over a *much* wider range of RPE and rep combinations.
 """
-@inline function intensityArb(var::Integer)
+function intensityArb(var::Integer)
     return 1 / (0.995 + 0.0333 * var)
 end
 
@@ -316,11 +316,11 @@ SetScheme{Array{String,1},Array{Int64,1},Array{Float64,1},Array{Function,1},Bool
 ```
 """
 mutable struct SetScheme{
-    T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
-    T2 <: Union{<:Integer, Vector{<:Integer}},
-    T3 <: Union{<:Real, Vector{<:Real}},
-    T4 <: Union{<:Function, Vector{<:Function}},
-    T5 <: Bool,
+    T1<:Union{<:AbstractString,Vector{<:AbstractString}},
+    T2<:Union{<:Integer,Vector{<:Integer}},
+    T3<:Union{<:Real,Vector{<:Real}},
+    T4<:Union{<:Function,Vector{<:Function}},
+    T5<:Bool,
 }
     type::T1
     sets::T2
@@ -341,11 +341,11 @@ mutable struct SetScheme{
         roundMode::T5 = floor,
         rpeMode::Bool = false,
     ) where {
-        T1 <: Union{<:AbstractString, Vector{<:AbstractString}},
-        T2 <: Union{<:Integer, Vector{<:Integer}},
-        T3 <: Union{<:Real, Vector{<:Real}},
-        T4 <: Union{<:Real, Vector{<:Real}},
-        T5 <: Union{<:Function, Vector{<:Function}},
+        T1<:Union{<:AbstractString,Vector{<:AbstractString}},
+        T2<:Union{<:Integer,Vector{<:Integer}},
+        T3<:Union{<:Real,Vector{<:Real}},
+        T4<:Union{<:Real,Vector{<:Real}},
+        T5<:Union{<:Function,Vector{<:Function}},
     }
         difSets = length(sets)
         difSets > 1 && length(intensity) == 1 ? intensity = fill(0.75, difSets) : nothing
@@ -391,7 +391,7 @@ end
 getindex(x::SetScheme, i::Integer) = i == 1 ? x : throw(BoundsError)
 length(x::SetScheme) = 1
 iterate(A::SetScheme, i = 1) =
-    (@_inline_meta; (i % UInt) - 1 < length(A) ? (@inbounds A[1], i + 1) : nothing)
+    (@_inline_meta; (i % UInt) - 1 < length(A) ? (A[1], i + 1) : nothing)
 
 """
 ```
@@ -446,10 +446,10 @@ Progression{LinearProgression,String,Int64,SetScheme{Array{String,1},Array{Int64
 ```
 """
 struct Progression{
-    T1 <: AbstractProgression,
-    T2 <: AbstractString,
-    T3 <: Integer,
-    T4 <: Union{<:SetScheme, Vector{<:SetScheme}},
+    T1<:AbstractProgression,
+    T2<:AbstractString,
+    T3<:Integer,
+    T4<:Union{<:SetScheme,Vector{<:SetScheme}},
 } <: AbstractProgression
     type::T1
     name::T2
@@ -464,14 +464,14 @@ struct Progression{
         period::T3 = 1,
         setScheme::T4,
     ) where {
-        T1 <: AbstractProgression,
-        T2 <: AbstractString,
-        T3 <: Integer,
-        T4 <: Union{<:SetScheme, Vector{<:SetScheme}},
+        T1<:AbstractProgression,
+        T2<:AbstractString,
+        T3<:Integer,
+        T4<:Union{<:SetScheme,Vector{<:SetScheme}},
     }
         @assert length(setScheme) == sessions * period "length of setScheme, $(length(setScheme)), must be equal to sessions * period, $(sessions*period)."
 
-        return new{typeof(type), typeof(name), typeof(sessions), typeof(setScheme)}(
+        return new{typeof(type),typeof(name),typeof(sessions),typeof(setScheme)}(
             type,
             name,
             sessions,
@@ -483,7 +483,7 @@ end
 getindex(x::Progression, i::Integer) = i == 1 ? x : throw(BoundsError)
 length(x::Progression) = 1
 iterate(A::Progression, i = 1) =
-    (@_inline_meta; (i % UInt) - 1 < length(A) ? (@inbounds A[1], i + 1) : nothing)
+    (@_inline_meta; (i % UInt) - 1 < length(A) ? (A[1], i + 1) : nothing)
 
 """
 ```
@@ -559,14 +559,14 @@ Exercise{String,String,Array{String,1},String,Array{String,1},Float64,Float64,ty
 ```
 """
 mutable struct Exercise{
-    T1 <: AbstractString,
-    T2 <: Union{AbstractString, Vector{<:AbstractString}},
-    T3 <: Union{AbstractString, Vector{<:AbstractString}},
-    T4 <: Union{AbstractString, Vector{<:AbstractString}},
-    T5 <: Union{AbstractString, Vector{<:AbstractString}},
-    T6 <: Real,
-    T7 <: Real,
-    T8 <: Function,
+    T1<:AbstractString,
+    T2<:Union{AbstractString,Vector{<:AbstractString}},
+    T3<:Union{AbstractString,Vector{<:AbstractString}},
+    T4<:Union{AbstractString,Vector{<:AbstractString}},
+    T5<:Union{AbstractString,Vector{<:AbstractString}},
+    T6<:Real,
+    T7<:Real,
+    T8<:Function,
 }
     name::T1
     equipment::T2
@@ -587,14 +587,14 @@ mutable struct Exercise{
         roundBase::T7 = 2.5,
         roundMode::T8 = floor,
     ) where {
-        T1 <: AbstractString,
-        T2 <: Union{AbstractString, Vector{<:AbstractString}},
-        T3 <: Union{AbstractString, Vector{<:AbstractString}},
-        T4 <: Union{AbstractString, Vector{<:AbstractString}},
-        T5 <: Union{AbstractString, Vector{<:AbstractString}},
-        T6 <: Real,
-        T7 <: Real,
-        T8 <: Function,
+        T1<:AbstractString,
+        T2<:Union{AbstractString,Vector{<:AbstractString}},
+        T3<:Union{AbstractString,Vector{<:AbstractString}},
+        T4<:Union{AbstractString,Vector{<:AbstractString}},
+        T5<:Union{AbstractString,Vector{<:AbstractString}},
+        T6<:Real,
+        T7<:Real,
+        T8<:Function,
     }
         trainingMaxRound = round(trainingMax, roundBase, roundMode)
 
@@ -622,7 +622,7 @@ end
 getindex(x::Exercise, i::Integer) = i == 1 ? x : throw(BoundsError)
 length(x::Exercise) = 1
 iterate(A::Exercise, i = 1) =
-    (@_inline_meta; (i % UInt) - 1 < length(A) ? (@inbounds A[1], i + 1) : nothing)
+    (@_inline_meta; (i % UInt) - 1 < length(A) ? (A[1], i + 1) : nothing)
 
 """
 ```
@@ -747,12 +747,7 @@ sampleProgramme = Programme(
 
 It's recommended users either import the default dictionary [`Lifting_Programmes`](@ref) and store their programmes there with key equal to the programme name and type. They can also create their own dictionary for their own creations.
 """
-struct Programme{
-    T1 <: AbstractProgramme,
-    T2 <: AbstractString,
-    T3 <: Dict{Any, Any},
-    T4 <: Any,
-}
+struct Programme{T1<:AbstractProgramme,T2<:AbstractString,T3<:Dict{Any,Any},T4<:Any}
 
     type::T1
     name::T2
@@ -764,9 +759,9 @@ struct Programme{
         name::T2,
         exerProg::T3,
         days::T4,
-    ) where {T1 <: AbstractProgramme, T2 <: AbstractString, T3 <: Dict{Any, Any}, T4 <: Any}
+    ) where {T1<:AbstractProgramme,T2<:AbstractString,T3<:Dict{Any,Any},T4<:Any}
 
-        return new{typeof(type), typeof(name), typeof(exerProg), typeof(days)}(
+        return new{typeof(type),typeof(name),typeof(exerProg),typeof(days)}(
             type,
             name,
             exerProg,
@@ -792,7 +787,7 @@ push!(
 Calculates set weights using `exercise.trainingMax` and `progression.setScheme`, then unrolls the relevant data into a named tuple and pushes it to the end of vector A. See [`insert!`](@ref) which does the same but at a specified index of A.
 """
 function push!(
-    A::AbstractArray{T, 1} where {T},
+    A::AbstractArray{T,1} where {T},
     exercise::Exercise,
     progression::Progression,
     i::Integer = 1,
@@ -846,7 +841,7 @@ insert!(
 Calculates set weights using `exercise.trainingMax` and `progression.setScheme`, then unrolls the relevant data into a named tuple and pushes it to index `index` of vector A. See [`push!`](@ref) which does the same but in the last index of A.
 """
 function insert!(
-    A::AbstractArray{T, 1} where {T},
+    A::AbstractArray{T,1} where {T},
     index::Integer,
     exercise::Exercise,
     progression::Progression,
@@ -906,7 +901,7 @@ Adjusts a programme's training maxes using what is expected by the programme and
 """
 function adjustMaxes!(
     name::AbstractString,
-    dict::Dict{Any, Any},
+    dict::Dict{Any,Any},
     actualReps::Integer;
     weight = missing,
 )
@@ -921,7 +916,7 @@ function adjustMaxes!(
     tmp = 0.0
     old = 0.0
     maxWght = 0
-    for i in 1:numSets
+    for i = 1:numSets
         old = tmp
         wght = setScheme[i].wght
         tmp = maximum(wght)
@@ -984,7 +979,7 @@ Does the same as [`adjustMaxes!`](@ref) but without updating the programme's tra
 """
 function adjustMaxes(
     name::AbstractString,
-    dict::Dict{Any, Any},
+    dict::Dict{Any,Any},
     actualReps::Integer;
     weight = missing,
 )
@@ -999,7 +994,7 @@ function adjustMaxes(
     tmp = 0.0
     old = 0.0
     maxWght = 0
-    for i in 1:numSets
+    for i = 1:numSets
         old = tmp
         wght = setScheme[i].wght
         tmp = maximum(wght)
@@ -1122,7 +1117,7 @@ function calcTrainingMaxLogs(prog::Programme, names, reps, weight)
     change = deepcopy(weight)
     for name in names
         isempty(reps[name]) ? continue : nothing
-        for j in 1:length(reps[name])
+        for j = 1:length(reps[name])
             change[name][j] = 0.0
             trainingMax[name][j] = 0.0
             trainingMax[name][j], change[name][j] =

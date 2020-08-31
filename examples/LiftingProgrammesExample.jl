@@ -56,7 +56,7 @@ updateMaxes(prog, keyArr, reps)
 updateMaxes!(prog, keyArr, reps)
 
 
-println(Lifting_Programmes["nSunsCAP3_RPE"], 1)
+write("nSunsCAP3_RPE.csv", Lifting_Programmes["nSunsCAP3_RPE"])
 println(Lifting_Programmes["nSunsCAP3"], 1)
 
 

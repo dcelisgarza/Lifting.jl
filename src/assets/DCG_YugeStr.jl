@@ -66,8 +66,14 @@ DeadliftT2 = Exercise(
     ],
     trainingMax = 140,
 )
-push!(exerProg, "DeadliftT1" => (exercise = DeadliftT1, progression = deepcopy(DCGYugeStrT1)))
-push!(exerProg, "DeadliftT2" => (exercise = DeadliftT2, progression = deepcopy(DCGYugeStrT2)))
+push!(
+    exerProg,
+    "DeadliftT1" => (exercise = DeadliftT1, progression = deepcopy(DCGYugeStrT1)),
+)
+push!(
+    exerProg,
+    "DeadliftT2" => (exercise = DeadliftT2, progression = deepcopy(DCGYugeStrT2)),
+)
 
 RowT1 = Exercise(
     name = row["pendlay"],
@@ -143,7 +149,10 @@ InclineDBBench = Exercise(;
     trainingMax = 45,
 )
 push!(exerProg, "Dips" => (exercise = Dips, progression = deepcopy(DCGYugeStrT3)))
-push!(exerProg, "InclineDBBench" => (exercise = InclineDBBench, progression = deepcopy(DCGYugeStrT3)))
+push!(
+    exerProg,
+    "InclineDBBench" => (exercise = InclineDBBench, progression = deepcopy(DCGYugeStrT3)),
+)
 
 HipThrustT1 = Exercise(;
     name = deadlift["hip thrust"],
@@ -167,8 +176,14 @@ HipThrustT2 = Exercise(;
     ],
     trainingMax = 10,
 )
-push!(exerProg, "HipThrustT1" => (exercise = HipThrustT1, progression = deepcopy(DCGYugeStrT1)))
-push!(exerProg, "HipThrustT2" => (exercise = HipThrustT2, progression = deepcopy(DCGYugeStrT2)))
+push!(
+    exerProg,
+    "HipThrustT1" => (exercise = HipThrustT1, progression = deepcopy(DCGYugeStrT1)),
+)
+push!(
+    exerProg,
+    "HipThrustT2" => (exercise = HipThrustT2, progression = deepcopy(DCGYugeStrT2)),
+)
 
 Lunges = Exercise(;
     name = squat["lunge"],
@@ -184,22 +199,25 @@ BulgarianSplit = Exercise(;
     trainingMax = 37.5,
 )
 push!(exerProg, "Lunges" => (exercise = Lunges, progression = deepcopy(DCGYugeStrT3)))
-push!(exerProg, "BulgarianSplit" => (exercise = BulgarianSplit, progression = deepcopy(DCGYugeStrT3)))
+push!(
+    exerProg,
+    "BulgarianSplit" => (exercise = BulgarianSplit, progression = deepcopy(DCGYugeStrT3)),
+)
 
 # Grip
 WristExt = Exercise(;
-name = grip["wrist extension"],
-equipment = equipment["db"],
-muscles = muscles["wrist extensors"],
-trainingMax = 10,
-roundBase = 1,
+    name = grip["wrist extension"],
+    equipment = equipment["db"],
+    muscles = muscles["wrist extensors"],
+    trainingMax = 10,
+    roundBase = 1,
 )
 WristCurl = Exercise(;
-name = grip["wrist curl"],
-equipment = equipment["db"],
-muscles = muscles["wrist extensors"],
-trainingMax = 10,
-roundBase = 1,
+    name = grip["wrist curl"],
+    equipment = equipment["db"],
+    muscles = muscles["wrist extensors"],
+    trainingMax = 10,
+    roundBase = 1,
 )
 FingerCurl = Exercise(;
     name = grip["finger curl"],
@@ -215,8 +233,14 @@ PlatePinch = Exercise(;
 )
 push!(exerProg, "WristExt" => (exercise = wristExt, progression = deepcopy(DCGYugeStrT4)))
 push!(exerProg, "WristCurl" => (exercise = wristCurl, progression = deepcopy(DCGYugeStrT4)))
-push!(exerProg, "FingerCurl" => (exercise = FingerCurl, progression = deepcopy(DCGYugeStrT4)))
-push!(exerProg, "PlatePinch" => (exercise = PlatePinch, progression = deepcopy(DCGYugeStrT4)))
+push!(
+    exerProg,
+    "FingerCurl" => (exercise = FingerCurl, progression = deepcopy(DCGYugeStrT4)),
+)
+push!(
+    exerProg,
+    "PlatePinch" => (exercise = PlatePinch, progression = deepcopy(DCGYugeStrT4)),
+)
 
 # Core
 DragonFlag = Exercise(;
@@ -267,7 +291,10 @@ push!(exerProg, "ParaCrunch" => (exercise = ParaCrunch, progression = deepcopy(A
 push!(exerProg, "LegRaise" => (exercise = LegRaise, progression = deepcopy(DCGYugeStrT3)))
 push!(exerProg, "AbRollout" => (exercise = AbRollout, progression = deepcopy(AMRAP_Cali)))
 push!(exerProg, "LandMine" => (exercise = LandMine, progression = deepcopy(DCGYugeStrT3)))
-push!(exerProg, "ParaCrunch" => (exercise = ParaCrunch, progression = deepcopy(DCGYugeStrT3)))
+push!(
+    exerProg,
+    "ParaCrunch" => (exercise = ParaCrunch, progression = deepcopy(DCGYugeStrT3)),
+)
 push!(exerProg, "Vsit" => (exercise = Vsit, progression = deepcopy(AMRAP_Cali)))
 
 # Calisthenics Isometrics
@@ -321,8 +348,14 @@ CalfRaise = Exercise(;
     trainingMax = 20,
 )
 push!(exerProg, "FacePull" => (exercise = FacePull, progression = deepcopy(DCGYugeStrT4)))
-push!(exerProg, "HammerCurl" => (exercise = HammerCurl, progression = deepcopy(DCGYugeStrT4)))
-push!(exerProg, "ZottmanCurl" => (exercise = ZottmanCurl, progression = deepcopy(DCGYugeStrT4)))
+push!(
+    exerProg,
+    "HammerCurl" => (exercise = HammerCurl, progression = deepcopy(DCGYugeStrT4)),
+)
+push!(
+    exerProg,
+    "ZottmanCurl" => (exercise = ZottmanCurl, progression = deepcopy(DCGYugeStrT4)),
+)
 push!(exerProg, "SideRaise" => (exercise = SideRaise, progression = deepcopy(DCGYugeStrT4)))
 push!(exerProg, "CalfRaise" => (exercise = CalfRaise, progression = deepcopy(DCGYugeStrT4)))
 
@@ -851,4 +884,7 @@ function makeDays(::DCG_YugeStr, dict::Dict)
 end
 
 days = makeDays(typeProgramme, exerProg)
-push!(Lifting_Programmes, nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days))
+push!(
+    Lifting_Programmes,
+    nameProgramme => Programme(typeProgramme, nameProgramme, exerProg, days),
+)
