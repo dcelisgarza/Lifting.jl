@@ -884,6 +884,80 @@ CAP3_OHP_T2_RPE = Progression(
     setScheme = SetsCAP3OHPT2_RPE,
 )
 
+SetsDCG_CAP3OHPT1_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 3, 1],
+        reps = [3, 3, 3],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["test"], setType["test"], setType["test"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 2],
+        intensity = [9, 9, 9],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [4, 4, 4],
+        intensity = [4.5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+DCG_CAP3_OHP_T1_RPE = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 3 OHP T1",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsDCG_CAP3OHPT1_RPE,
+)
+
+SetsDCG_CAP3OHPT2_RPE = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [6, 5, 5],
+        intensity = [6.5, 7.5, 8.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+DCG_CAP3_OHP_T2_RPE = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 3 OHP T2",
+    sessions = 1,
+    period = 3,
+    setScheme = SetsDCG_CAP3OHPT2_RPE,
+)
+
 ## Accessories
 # Low, mid, high reps.
 # High intensity burnout.
@@ -1060,6 +1134,11 @@ push!(Lifting_Progressions, "CAP3_Row_T1_RPE" => CAP3_Row_T1)
 push!(Lifting_Progressions, "CAP3_Row_T2_RPE" => CAP3_Row_T2)
 push!(Lifting_Progressions, "CAP3_OHP_T1_RPE" => CAP3_OHP_T1)
 push!(Lifting_Progressions, "CAP3_OHP_T2_RPE" => CAP3_OHP_T2)
+push!(Lifting_Progressions, "DCG_CAP3_OHP_T1_RPE" => DCG_CAP3_OHP_T1_RPE)
+push!(Lifting_Progressions, "DCG_CAP3_OHP_T2_RPE" => DCG_CAP3_OHP_T2_RPE)
+
+
+
 
 
 ## Custom programme: 9 week, 4 week hypertrophy, 4 week strength, 1 week test

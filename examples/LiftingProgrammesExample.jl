@@ -14,14 +14,13 @@ println(Lifting_Programmes[name], [2, 6, 9])
 println(Lifting_Programmes[name], length(Lifting_Programmes[name].days))
 
 write("yugenstronk.csv", Lifting_Programmes["DCG_YugeStr"]; log = true)
-#=
+#= 
 # Writes programme to test.cvt
 write("test.csv", Lifting_Programmes[name]; log = false)
 # Writes days provided in the third argument programme to test.cvt
 write("test.csv", Lifting_Programmes[name], [9,15,21]; log = false)
 # Write csv file for logging reps, weight and performance for all the lifts. Open the file up in google docs and be log your stuff there.
-write("test.csv", Lifting_Programmes[name]; log = true)
-=#
+write("test.csv", Lifting_Programmes[name]; log = true) =#
 # Makes a complete copy of the lifting programme with the given name.
 prog = deepcopy(Lifting_Programmes[name])
 
@@ -57,7 +56,7 @@ updateMaxes!(prog, keyArr, reps)
 
 
 write("nSunsCAP3_RPE.csv", Lifting_Programmes["nSunsCAP3_RPE"])
-println(Lifting_Programmes["nSunsCAP3"], 1)
+println(Lifting_Programmes["nSunsCAP3_RPE"], 22)
 
 
 Lifting_Programmes["nSunsCAP3_RPE"]

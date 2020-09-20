@@ -109,8 +109,8 @@ PressT2 = Exercise(
     muscles = [muscles["front delts"], muscles["triceps"], muscles["traps"]],
     trainingMax = 60,
 )
-push!(exerProg, "PressT1" => (exercise = PressT1, progression = CAP3_OHP_T1_RPE))
-push!(exerProg, "PressT2" => (exercise = PressT2, progression = CAP3_OHP_T2_RPE))
+push!(exerProg, "PressT1" => (exercise = PressT1, progression = DCG_CAP3_OHP_T1_RPE))
+push!(exerProg, "PressT2" => (exercise = PressT2, progression = DCG_CAP3_OHP_T2_RPE))
 
 ## Accessories
 # Squat accessories.

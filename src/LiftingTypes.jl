@@ -22,9 +22,9 @@ Programme types.
 """
 abstract type AbstractProgramme end
 
-import Base: round, length, getindex, iterate, @_inline_meta
-round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
-length(x::Function) = 1
+import Base: getindex, iterate, @_inline_meta
+Base.round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
+Base.length(x::Function) = 1
 
 """
 ```
@@ -925,7 +925,7 @@ function adjustMaxes!(
             maxWght = tmp
             idx1 = i
             idx3 = findfirst(x -> x == maxWght, wght)
-            idx3 != nothing ? idx2 = idx3 : idx2 = idx1
+            !isnothing(idx3) ? idx2 = idx3 : idx2 = idx1
         end
     end
     targetReps = setScheme[idx1].reps[idx2]
@@ -1003,7 +1003,7 @@ function adjustMaxes(
             maxWght = tmp
             idx1 = i
             idx3 = findfirst(x -> x == maxWght, wght)
-            idx3 != nothing ? idx2 = idx3 : idx2 = idx1
+            !isnothing(idx3) ? idx2 = idx3 : idx2 = idx1
         end
     end
     targetReps = setScheme[idx1].reps[idx2]
