@@ -22,7 +22,7 @@ Programme types.
 """
 abstract type AbstractProgramme end
 
-import Base: getindex, iterate, @_inline_meta
+import Base: length, round, getindex, iterate, @_inline_meta
 Base.round(x::Real, y::Real, mode::Function = floor) = mode(x / y) * y
 Base.length(x::Function) = 1
 
