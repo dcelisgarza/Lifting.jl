@@ -1061,6 +1061,38 @@ L4 = SetScheme(
     roundMode = [ceil, floor, floor],
     rpeMode = true,
 )
+
+# Deload
+D1 = SetScheme(
+    type = setType["amrap"],
+    sets = 3,
+    reps = 6,
+    intensity = 3,
+    rpeMode = true,
+)
+D2 = SetScheme(
+    type = setType["amrap"],
+    sets = 3,
+    reps = 8,
+    intensity = 3,
+    rpeMode = true,
+)
+D3 = SetScheme(
+    type = setType["amrap"],
+    sets = 3,
+    reps = 10,
+    intensity = 3,
+    rpeMode = true,
+)
+D4 = SetScheme(
+    type = setType["amrap"],
+    sets = 3,
+    reps = 12,
+    intensity = 3,
+    rpeMode = true,
+)
+
+
 h23_lmh = Progression(
     type = PeriodProgression(),
     name = "Low Rep LMH",
@@ -1082,6 +1114,29 @@ l23_lmh = Progression(
     period = 3,
     setScheme = [L3, M3, H3],
 )
+
+h_lmhd = Progression(
+    type = PeriodProgression(),
+    name = "Low Rep LMHD",
+    sessions = 1,
+    period = 4,
+    setScheme = [L1, M1, H1, D1],
+)
+m_lmhd = Progression(
+    type = PeriodProgression(),
+    name = "Mid Rep LMHD",
+    sessions = 1,
+    period = 4,
+    setScheme = [L2, M2, H2, D2],
+)
+l_lmhd = Progression(
+    type = PeriodProgression(),
+    name = "High Rep LMHD",
+    sessions = 1,
+    period = 4,
+    setScheme = [L3, M3, H3, D3],
+)
+
 # Calisthenics.
 calisthenics = SetScheme(; type = setType["amrap"], sets = 5, reps = 12, intensity = 0.8)
 AMRAP_Cali = Progression(
@@ -1122,6 +1177,9 @@ push!(Lifting_Progressions, "nSuns_6Day_OHP" => nSuns_6Day_OHP)
 push!(Lifting_Progressions, "h23_lmh" => h23_lmh)
 push!(Lifting_Progressions, "m23_lmh" => m23_lmh)
 push!(Lifting_Progressions, "l23_lmh" => l23_lmh)
+push!(Lifting_Progressions, "h_lmhd" => h_lmhd)
+push!(Lifting_Progressions, "m_lmhd" => m_lmhd)
+push!(Lifting_Progressions, "l_lmhd" => l_lmhd)
 push!(Lifting_Progressions, "AMRAP_Cali" => AMRAP_Cali)
 push!(Lifting_Progressions, "AMRAP_Grip" => AMRAP_Grip)
 push!(Lifting_Progressions, "CAP3_Bench_T1_RPE" => CAP3_Bench_T1)
@@ -1136,10 +1194,6 @@ push!(Lifting_Progressions, "CAP3_OHP_T1_RPE" => CAP3_OHP_T1)
 push!(Lifting_Progressions, "CAP3_OHP_T2_RPE" => CAP3_OHP_T2)
 push!(Lifting_Progressions, "DCG_CAP3_OHP_T1_RPE" => DCG_CAP3_OHP_T1_RPE)
 push!(Lifting_Progressions, "DCG_CAP3_OHP_T2_RPE" => DCG_CAP3_OHP_T2_RPE)
-
-
-
-
 
 ## Custom programme: 9 week, 4 week hypertrophy, 4 week strength, 1 week test
 
@@ -1356,11 +1410,531 @@ DCGYugeStrT4 = Progression(
     period = 9,
     setScheme = [L4, M4, H4, L3, M3, H3, L2, M2, H2],
 )
-
-
 push!(Lifting_Progressions, "DCGYugeStrT1" => DCGYugeStrT1)
 push!(Lifting_Progressions, "DCGYugeStrT2" => DCGYugeStrT2)
 push!(Lifting_Progressions, "DCGYugeStrT3" => DCGYugeStrT3)
 push!(Lifting_Progressions, "DCGYugeStrT4" => DCGYugeStrT4)
 
-## Hypertrophy
+## DCG_CAP4
+Sets_DCG_CAP4_Bench_T1 = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [4, 4, 4],
+        intensity = [4.5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 3, 1],
+        reps = [3, 3, 3],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [6, 5, 5],
+        intensity = [6.5, 7.5, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["default"], setType["test"], setType["test"], setType["test"], setType["default"], setType["amrap"]],
+        sets = [1, 1, 1, 1, 1, 1, 1, 1],
+        reps = [3, 5, 1, 6, 4, 2, 3, 8],
+        intensity = [0.14, 0.76, -5.32, 9, 9, 9, 1.312, 1.54],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 4
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+   SetScheme(
+        type = setType["default"],
+        sets = 4,
+        reps = 8,
+        intensity = 3,
+        rpeMode = true,
+    )
+]
+DCG_CAP4_Bench_T1 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Bench T1",
+    sessions = 2,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Bench_T1,
+)
+Sets_DCG_CAP4_Bench_T2 = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = [8, 6, 4.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = [8.5, 6.5, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = [9, 7, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    SetScheme(
+        type = [setType["default"], setType["default"]],
+        sets = [1, 3],
+        reps = [8, 6],
+        intensity = [8.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+   SetScheme(
+        type = setType["default"],
+        sets = 4,
+        reps = 8,
+        intensity = 3,
+        rpeMode = true,
+    ),
+    # Week 4
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [12, 10, 6],
+        intensity = [8, 6.5, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 10, 5],
+        intensity = [8, 7, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+DCG_CAP4_Bench_T2 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Bench T2",
+    sessions = 2,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Bench_T2,
+)
+
+Sets_DCG_CAP4_Deadlift_T1 = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["default"], setType["test"], setType["test"], setType["test"], setType["default"], setType["amrap"]],
+        sets = [1, 1, 1, 1, 1, 1, 1, 1],
+        reps = [3, 5, 1, 6, 4, 2, 3, 8],
+        intensity = [0.14, 0.76, -5.32, 9, 9, 9, 1.312, 1.54],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [4, 4, 4],
+        intensity = [5.5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 4
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 3, 1],
+        reps = [3, 3, 3],
+        intensity = [6, 7, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+]
+DCG_CAP4_Deadlift_T1 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Deadlift T1",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Deadlift_T1,
+)
+Sets_DCG_CAP4_Deadlift_T2 = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [5, 4, 4],
+        intensity = [6, 7, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [5, 7, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 4
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+]
+DCG_CAP4_Deadlift_T2 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Deadlift T2",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Deadlift_T2,
+)
+
+Sets_DCG_CAP4_Squat_T1 = [
+    # Week 1
+    SetScheme(
+        type = [
+            setType["default"],
+            setType["default"],
+            setType["optional"],
+            setType["default"],
+        ],
+        sets = [4, 2, 1, 1],
+        reps = [3, 3, 3, 3],
+        intensity = [5, 6.5, 6.5, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["default"], setType["test"], setType["test"], setType["test"], setType["default"], setType["amrap"]],
+        sets = [1, 1, 1, 1, 1, 1, 1, 1],
+        reps = [3, 5, 1, 6, 4, 2, 3, 8],
+        intensity = [0.14, 0.76, -5.32, 9, 9, 9, 1.312, 1.54],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+    # Week 4
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [3, 3, 1],
+        reps = [4, 4, 4],
+        intensity = [6, 7, 8],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+]
+DCG_CAP4_Squat_T1 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Squat T1",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Squat_T1,
+)
+Sets_DCG_CAP4_Squat_T2 = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [5, 4, 4],
+        intensity = [5.5, 6.5, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [6, 7, 8.5],
+        rpeMode = true,
+        # roundMode = [floor, ceil, ceil],
+    ),
+    # Week 4
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+]
+DCG_CAP4_Squat_T2 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Squat T2",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Squat_T2,
+)
+
+Sets_DCG_CAP4_Row_T1 = [
+    # Week 1
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [6, 4, 3],
+        intensity = [9, 7, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 6, 5],
+        intensity = [8, 6, 5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 4
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 5, 4],
+        intensity = [7.5, 6.5, 5.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+DCG_CAP4_Row_T1 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Row T1",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Row_T1,
+)
+Sets_DCG_CAP4_Row_T2 = [
+    # Week 1
+    SetScheme(
+        type = [setType["default"], setType["default"]],
+        sets = [1, 3],
+        reps = [12, 10],
+        intensity = [7.5, 6.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [10, 8, 5],
+        intensity = [8, 7, 6],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["amrap"], setType["amrap"], setType["amrap emom"]],
+        sets = [1, 1, 1],
+        reps = [8, 6, 4],
+        intensity = [8.5, 7.5, 6.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 4
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+]
+DCG_CAP4_Row_T2 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 Row T2",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_Row_T2,
+)
+
+Sets_DCG_CAP4_OHP_T1 = [
+    # Week 1
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [4, 4, 4],
+        intensity = [4.5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 3, 1],
+        reps = [3, 3, 3],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 4
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["default"], setType["test"], setType["test"], setType["test"], setType["default"], setType["amrap"]],
+        sets = [1, 1, 1, 1, 1, 1, 1, 1],
+        reps = [3, 5, 1, 6, 4, 2, 3, 8],
+        intensity = [0.14, 0.76, -5.32, 9, 9, 9, 1.312, 1.54],
+        rpeMode = true,
+        # roundMode = [ceil, ceil, ceil],
+    ),
+]
+DCG_CAP4_OHP_T1 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 OHP T1",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_OHP_T1,
+)
+Sets_DCG_CAP4_OHP_T2 = [
+    # Week 1
+    SetScheme(
+        type = setType["default"],
+        sets = 3,
+        reps = 10,
+        intensity = 2,
+        rpeMode = true,
+    ),
+    # Week 2
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+    # Week 3
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [5, 2, 1],
+        reps = [6, 5, 5],
+        intensity = [5, 6.5, 7.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor],
+    ),
+    # Week 4
+    SetScheme(
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [6, 5, 5],
+        intensity = [6.5, 7.5, 8.5],
+        rpeMode = true,
+        # roundMode = [ceil, floor, floor],
+    ),
+]
+DCG_CAP4_OHP_T2 = Progression(
+    type = PeriodProgression(),
+    name = "DCG CAP 4 OHP T2",
+    sessions = 1,
+    period = 4,
+    setScheme = Sets_DCG_CAP4_OHP_T2,
+)
+
+push!(Lifting_Progressions, "DCG_CAP4_Bench_T1" => DCG_CAP4_Bench_T1)
+push!(Lifting_Progressions, "DCG_CAP4_Bench_T2" => DCG_CAP4_Bench_T2)
+push!(Lifting_Progressions, "DCG_CAP4_Deadlift_T1" => DCG_CAP4_Deadlift_T1)
+push!(Lifting_Progressions, "DCG_CAP4_Deadlift_T2" => DCG_CAP4_Deadlift_T2)
+push!(Lifting_Progressions, "DCG_CAP4_Squat_T1" => DCG_CAP4_Squat_T1)
+push!(Lifting_Progressions, "DCG_CAP4_Squat_T2" => DCG_CAP4_Squat_T2)
+push!(Lifting_Progressions, "DCG_CAP4_Row_T1" => DCG_CAP4_Row_T1)
+push!(Lifting_Progressions, "DCG_CAP4_Row_T2" => DCG_CAP4_Row_T2)
+push!(Lifting_Progressions, "DCG_CAP4_OHP_T1" => DCG_CAP4_OHP_T1)
+push!(Lifting_Progressions, "DCG_CAP4_OHP_T2" => DCG_CAP4_OHP_T2)

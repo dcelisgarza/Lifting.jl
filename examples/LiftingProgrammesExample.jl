@@ -59,4 +59,6 @@ write("nSunsCAP3_RPE.csv", Lifting_Programmes["nSunsCAP3_RPE"])
 println(Lifting_Programmes["nSunsCAP3_RPE"], 22)
 
 
-Lifting_Programmes["nSunsCAP3_RPE"]
+Lifting_Programmes["DCG_CAP4"]
+
+println(Lifting_Programmes["DCG_CAP4"])
