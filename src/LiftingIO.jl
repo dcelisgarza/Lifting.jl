@@ -35,7 +35,7 @@ function println(programme::Programme, idx = 1:length(programme))
                 break
             end
             numSets = length(days[i][j].sets)
-            println("  Exercise ", j)
+            # println("  Exercise ", j)
             name = days[i][j].name
             type = days[i][j].type
             set = days[i][j].sets
@@ -44,7 +44,7 @@ function println(programme::Programme, idx = 1:length(programme))
             rpe = days[i][j].rpe
             intensity = round.(days[i][j].intensity .* 100, digits = 2)
 
-            print("    ")
+            print("  ")
             print(name)
             if haskey(days[i][j], :modality)
                 print(": ")
