@@ -517,6 +517,7 @@ function makeDays(::DCG_CAP4, dict::Dict)
         week4[3],
         week4[4],
         week4[5],
+        "Rest",
         week4[6],
         "Rest"
     ]
