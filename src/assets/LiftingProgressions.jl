@@ -1646,19 +1646,19 @@ DCG_CAP4_Squat_T1 = Progression(
 Sets_DCG_CAP4_Squat_T2 = [
     # Week 1
     SetScheme(
-        type = [setType["default"], setType["default"], setType["optional"]],
-        sets = [4, 4, 1],
-        reps = [5, 4, 4],
-        intensity = [5.5, 6.5, 8.5],
+        type = [setType["default"], setType["default"], setType["amrap"]],
+        sets = [4, 2, 1],
+        reps = [8, 6, 6],
+        intensity = [5, 6, 7],
         rpeMode = true,
         # roundMode = [floor, ceil, ceil],
     ),
     # Week 2
     SetScheme(
-        type = [setType["default"], setType["default"], setType["amrap"]],
-        sets = [4, 2, 1],
-        reps = [8, 6, 6],
-        intensity = [5, 6, 7],
+        type = [setType["default"], setType["default"], setType["optional"]],
+        sets = [4, 4, 1],
+        reps = [5, 4, 4],
+        intensity = [5.5, 6.5, 8.5],
         rpeMode = true,
         # roundMode = [floor, ceil, ceil],
     ),

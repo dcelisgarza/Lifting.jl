@@ -61,5 +61,21 @@ println(Lifting_Programmes["nSunsCAP3_RPE"], 22)
 
 Lifting_Programmes["DCG_CAP4"]
 
-println(Lifting_Programmes["DCG_CAP4"])
+println(Lifting_Programmes["DCG_CAP4"], 1)
 write("DCG_CAP4.csv", Lifting_Programmes["DCG_CAP4"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+println(Lifting_Programmes["DCG_CAP4"], 7+7+8+8)#+8+7+8)
