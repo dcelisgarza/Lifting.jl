@@ -6,12 +6,12 @@ nameProgramme = "DCG_CAP4"
 BenchT1 = Exercise(
     name = bench["flat"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 92.5,
 )
 BenchT2 = Exercise(
     name = bench["cg"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 75,
 )
 push!(exerProg, "BenchT1" => (exercise = BenchT1, progression = DCG_CAP4_Bench_T1))
 push!(exerProg, "BenchT2" => (exercise = BenchT2, progression = DCG_CAP4_Bench_T2))
@@ -19,12 +19,12 @@ push!(exerProg, "BenchT2" => (exercise = BenchT2, progression = DCG_CAP4_Bench_T
 DeadliftT1 = Exercise(
     name = deadlift["dl"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 160,
 )
 DeadliftT2 = Exercise(
     name = deadlift["sumo"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 142.5,
 )
 push!(exerProg, "DeadliftT1" => (exercise = DeadliftT1, progression = DCG_CAP4_Deadlift_T1))
 push!(exerProg, "DeadliftT2" => (exercise = DeadliftT2, progression = DCG_CAP4_Deadlift_T2))
@@ -32,12 +32,12 @@ push!(exerProg, "DeadliftT2" => (exercise = DeadliftT2, progression = DCG_CAP4_D
 SquatT1 = Exercise(
     name = squat["low"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 112.5,
 )
 SquatT2 = Exercise(
     name = squat["front"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 82.5,
 )
 push!(exerProg, "SquatT1" => (exercise = SquatT1, progression = DCG_CAP4_Squat_T1))
 push!(exerProg, "SquatT2" => (exercise = SquatT2, progression = DCG_CAP4_Squat_T2))
@@ -46,12 +46,12 @@ RowT1 = Exercise(
     name = row["pendlay"],
     modality = modality["cheat"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 112.5,
 )
 RowT2 = Exercise(
     name = row["kroc"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 40,
 )
 push!(exerProg, "RowT1" => (exercise = RowT1, progression = DCG_CAP4_Row_T1))
 push!(exerProg, "RowT2" => (exercise = RowT2, progression = DCG_CAP4_Row_T2))
@@ -59,12 +59,12 @@ push!(exerProg, "RowT2" => (exercise = RowT2, progression = DCG_CAP4_Row_T2))
 PressT1 = Exercise(
     name = press["ohp"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 57.5,
 )
 PressT2 = Exercise(
     name = press["ohp"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 57.5,
 )
 push!(exerProg, "PressT1" => (exercise = PressT1, progression = DCG_CAP4_OHP_T1))
 push!(exerProg, "PressT2" => (exercise = PressT2, progression = DCG_CAP4_OHP_T2))
@@ -75,18 +75,18 @@ lunges = Exercise(;
     name = squat["lunge"],
     modality = [modality["walking"], modality["backstep"], modality["dragon"]],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 47.5,
 )
 bulgarianSplit = Exercise(;
     name = squat["bulgarian"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 42.5,
 )
 calfRaise = Exercise(;
     name = squat["calf raise"],
     modality = modality["standing"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 17.5,
 )
 ProgLunges = deepcopy(h_lmhd)
 ProgBulg = deepcopy(h_lmhd)
@@ -99,24 +99,24 @@ push!(exerProg, "calfRaise" => (exercise = calfRaise, progression = ProgCalfRais
 wristExt = Exercise(;
     name = grip["wrist extension"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 10,
     roundBase = 1,
 )
 wristCurl = Exercise(;
     name = grip["wrist curl"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 10,
     roundBase = 1,
 )
 platePinch = Exercise(;
     name = grip["plate pinch"],
     equipment = equipment["plate"],
-    trainingMax = 100,
+    trainingMax = 15,
 )
 fingerCurl = Exercise(;
     name = grip["finger curl"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 17.5,
 )
 ProgWristExt = deepcopy(AMRAP_Grip)
 ProgWristCurl = deepcopy(AMRAP_Grip)
@@ -131,23 +131,23 @@ push!(exerProg, "fingerCurl" => (exercise = fingerCurl, progression = ProgFinger
 facePull = Exercise(;
     name = pull["face"],
     equipment = equipment["cable"],
-    trainingMax = 100,
+    trainingMax = 32.5,
 )
 pullup = Exercise(;
     name = pull["pullup"],
     equipment = equipment["pullup bar"],
-    trainingMax = 100,
+    trainingMax = 0,
     roundBase = 1.25,
 )
 hammerCurl = Exercise(;
     name = pull["hammer"],
     equipment = [equipment["db"], equipment["fat grips"]],
-    trainingMax = 100,
+    trainingMax = 17.5,
 )
 zottmanCurl = Exercise(;
     name = pull["zottman"],
     equipment = [equipment["db"], equipment["fat grips"]],
-    trainingMax = 100,
+    trainingMax = 12.5,
 )
 ProgFacePull = deepcopy(l_lmhd)
 ProgPullup = deepcopy(h_lmhd)
@@ -162,18 +162,18 @@ push!(exerProg, "zottmanCurl" => (exercise = zottmanCurl, progression = ProgZott
 inclineDBBench = Exercise(;
     name = bench["db incline"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 45,
 )
 dips = Exercise(;
     name = bench["dips"],
     equipment = [equipment["parallette"], equipment["chain belt"]],
-    trainingMax = 100,
+    trainingMax = 0,
     roundBase = 1.25,
 )
 sideRaise = Exercise(;
     name = press["side raise"],
     equipment = equipment["db"],
-    trainingMax = 100,
+    trainingMax = 12.5,
 )
 ProgInclineDBBench = deepcopy(m_lmhd)
 ProgDips = deepcopy(m_lmhd)
@@ -199,7 +199,7 @@ vsit = Exercise(;
 legRaise = Exercise(;
     name = core["leg raise"],
     equipment = equipment["pullup bar"],
-    trainingMax = 100,
+    trainingMax = 10,
 )
 toeToBar = Exercise(;
     name = core["toes to bar"],
@@ -215,12 +215,12 @@ abRollout = Exercise(;
 landMine = Exercise(;
     name = core["landmine"],
     equipment = equipment["bb"],
-    trainingMax = 100,
+    trainingMax = 47.5,
 )
 paraCrunch = Exercise(;
     name = core["parallette crunch"],
     equipment = [equipment["parallette"], equipment["db"]],
-    trainingMax = 100,
+    trainingMax = 0,
 )
 ProgDragonFlag = deepcopy(AMRAP_Cali)
 ProgVsit = deepcopy(AMRAP_Cali)
