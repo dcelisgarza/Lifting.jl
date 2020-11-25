@@ -61,7 +61,7 @@ println(Lifting_Programmes["nSunsCAP3_RPE"], 22)
 
 Lifting_Programmes["DCG_CAP4"]
 
-println(Lifting_Programmes["DCG_CAP4"], 1)
+println(Lifting_Programmes["DCG_CAP4"])
 write("DCG_CAP4.csv", Lifting_Programmes["DCG_CAP4"])
 
 
@@ -78,4 +78,9 @@ write("DCG_CAP4.csv", Lifting_Programmes["DCG_CAP4"])
 
 
 
-println(Lifting_Programmes["DCG_CAP4"], 7+7+8+8)#+8+7+8)
+println(Lifting_Programmes["DCG_CAP4"], [1,8,16,23]) # Bench T11 & Bench T21
+println(Lifting_Programmes["DCG_CAP4"], [2,9,17,24]) # DL T2 & Row T1
+println(Lifting_Programmes["DCG_CAP4"], [3,11,18,26]) # Squat T1 & OHP T2
+println(Lifting_Programmes["DCG_CAP4"], [4,12,19,27]) # Bench T12 & Bench T22
+println(Lifting_Programmes["DCG_CAP4"], [6,13,21,28]) # DL T1 & Row T2
+println(Lifting_Programmes["DCG_CAP4"], [7,14,22,30]) # OHP T1 & Squat T2
