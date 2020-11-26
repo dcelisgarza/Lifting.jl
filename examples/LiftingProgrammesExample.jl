@@ -31,6 +31,7 @@ keyArr, date, day1, Δdays, reps, wght, rpe = loadLogFile(prog)
 tm, change = calcTrainingMaxLogs(prog, keyArr, reps, wght)
 
 tm
+change
 # Plots lifts individually and uses a cubic spline to interpolate values.
 figs = plotData(prog, keyArr, Δdays, tm; xlabel = "Days", ylabel = "Weight", lw = 3)
 for (i, fig) in enumerate(figs)
@@ -61,23 +62,9 @@ println(Lifting_Programmes["nSunsCAP3_RPE"], 22)
 
 Lifting_Programmes["DCG_CAP4"]
 
-println(Lifting_Programmes["DCG_CAP4"])
 write("DCG_CAP4.csv", Lifting_Programmes["DCG_CAP4"])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+write("DCG_CAP4.csv", Lifting_Programmes["DCG_CAP4"]; log = true)
+println(Lifting_Programmes["DCG_CAP4"]) 
 println(Lifting_Programmes["DCG_CAP4"], [1,8,16,23]) # Bench T11 & Bench T21
 println(Lifting_Programmes["DCG_CAP4"], [2,9,17,24]) # DL T2 & Row T1
 println(Lifting_Programmes["DCG_CAP4"], [3,11,18,26]) # Squat T1 & OHP T2
