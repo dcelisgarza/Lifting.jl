@@ -77,6 +77,7 @@ setType = Dict(
     "amrap emom" => "AMRAP EMOM",
     "test" => "Test",
     "optional" => "Optional",
+    "opt amrap" => "Optional AMRAP",
     "opt amrap emom" => "Opt AMRAP EMOM",
 )
 equipmentSize = Dict(
